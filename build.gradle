@@ -1,0 +1,17 @@
+plugins {
+	id 'java-library'
+}
+
+group = 'ru.icbcom.aistdap'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.hateoas:spring-hateoas:0.25.1.RELEASE'
+	compileOnly 'org.projectlombok:lombok:1.18.6'
+	annotationProcessor 'org.projectlombok:lombok:1.18.6'
+}
