@@ -8,8 +8,10 @@ import ru.icbcom.aistdapsdkjava.api.query.Criteria;
 public class DefaultCriteria<T extends Criteria<T>> implements Criteria<T> {
 
     private Order order;
+    private Integer pageSize;
+    private Integer pageNumber;
 
-    public T orderBy(String propertyName) {
+    protected T orderBy(String propertyName) {
         return setOrder(Order.asc(propertyName));
     }
 
@@ -38,11 +40,22 @@ public class DefaultCriteria<T extends Criteria<T>> implements Criteria<T> {
 
     @Override
     public T pageSize(int pageSize) {
-        return null;
+        this.pageSize = sanitizePageSize(pageSize);
+        return (T) this;
+    }
+
+    private int sanitizePageSize(int pageSize) {
+        return Math.max(1, pageSize);
     }
 
     @Override
     public T pageNumber(int pageNumber) {
-        return null;
+        this.pageNumber = sanitizePageNumber(pageNumber);
+        return (T) this;
     }
+
+    private int sanitizePageNumber(int pageNumber) {
+        return Math.max(0, pageNumber);
+    }
+
 }

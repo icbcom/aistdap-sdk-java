@@ -3,6 +3,7 @@ package ru.icbcom.aistdapsdkjava.api.resource;
 import org.springframework.hateoas.Link;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Ресурс.
@@ -26,10 +27,8 @@ public interface Resource {
 
     /**
      * Возвращает ссылку с заданным именем отношения.
-     * </p>
-     * Если такой ссылки нет, то будет возвращен null.
      */
-    Link getLink(String rel);
+    Optional<Link> getLink(String rel);
 
     /**
      * Возвращает список ссылок с заданным именем отношения.

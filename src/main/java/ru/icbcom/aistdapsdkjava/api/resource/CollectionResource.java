@@ -11,7 +11,7 @@ public interface CollectionResource<T extends Resource> extends Resource, Iterab
     int getSize();
 
     /**
-     * Возвращает общее колиичество доступных элементов.
+     * Возвращает общее количество доступных элементов.
      */
     long getTotalElements();
 
