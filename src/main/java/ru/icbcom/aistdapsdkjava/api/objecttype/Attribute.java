@@ -1,12 +1,14 @@
 package ru.icbcom.aistdapsdkjava.api.objecttype;
 
+import ru.icbcom.aistdapsdkjava.api.resource.Resource;
+
 import java.util.Collection;
 import java.util.Optional;
 
 /**
  * Атрибут типа объекта.
  */
-public interface Attribute {
+public interface Attribute extends Resource {
 
     /**
      * Возвращает название данного атрибута.

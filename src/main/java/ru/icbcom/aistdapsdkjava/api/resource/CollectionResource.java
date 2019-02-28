@@ -11,12 +11,12 @@ public interface CollectionResource<T extends Resource> extends Resource, Iterab
     int getSize();
 
     /**
-     * Возвращает общее количество доступных элементов.
+     * Возвращает общее количество доступных элементов во всей коллекции.
      */
     long getTotalElements();
 
     /**
-     * Возвращает общее количество доступных страниц.
+     * Возвращает общее количество доступных страниц для все коллекции.
      */
     long getTotalPages();
 
@@ -24,45 +24,5 @@ public interface CollectionResource<T extends Resource> extends Resource, Iterab
      * Возвращает номер текущей страницы.
      */
     int getNumber();
-
-    /**
-     * Доступна ли ссылка на первую страницу.
-     */
-    boolean hasFirst();
-
-    /**
-     * Доступна ли ссылка на предыдущую страницу.
-     */
-    boolean hasPrevious();
-
-    /**
-     * Доступна ли ссылка на следующую страницу.
-     */
-    boolean hasNext();
-
-    /**
-     * Доступна ли ссылка на последнюю страницу.
-     */
-    boolean hasLast();
-
-    /**
-     * Получение коллекции ресурсов соответствующих первой странице.
-     */
-    CollectionResource<T> first();
-
-    /**
-     * Получение коллекции ресурсов соответствующих предыдущей странице.
-     */
-    CollectionResource<T> previous();
-
-    /**
-     * Получение коллекции ресурсов соответствующих следующей странице.
-     */
-    CollectionResource<T> next();
-
-    /**
-     * Получение коллекции ресурсов соответствующих последней странице.
-     */
-    CollectionResource<T> last();
 
 }

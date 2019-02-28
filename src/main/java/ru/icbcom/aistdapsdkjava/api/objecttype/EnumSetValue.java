@@ -1,9 +1,11 @@
 package ru.icbcom.aistdapsdkjava.api.objecttype;
 
+import ru.icbcom.aistdapsdkjava.api.resource.Resource;
+
 /**
  * Элемент перечисления/множества.
  */
-public interface EnumSetValue {
+public interface EnumSetValue extends Resource {
 
     /**
      * Возвращает номер данного перечисления/множества.

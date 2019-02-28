@@ -1,5 +1,6 @@
 package ru.icbcom.aistdapsdkjava.impl.auth;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 @Data

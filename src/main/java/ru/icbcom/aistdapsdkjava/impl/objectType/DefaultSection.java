@@ -2,58 +2,75 @@ package ru.icbcom.aistdapsdkjava.impl.objectType;
 
 import ru.icbcom.aistdapsdkjava.api.objecttype.Attribute;
 import ru.icbcom.aistdapsdkjava.api.objecttype.Section;
+import ru.icbcom.aistdapsdkjava.impl.resource.AbstractResource;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
-public class DefaultSection implements Section {
+public class DefaultSection extends AbstractResource implements Section {
+
+    private String name;
+    private String caption;
+    private String comment;
+    private Collection<Attribute> attributes = new ArrayList<>();
+
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 
     @Override
     public Section setName(String name) {
-        return null;
+        this.name = name;
+        return this;
     }
 
     @Override
     public String getCaption() {
-        return null;
+        return caption;
     }
 
     @Override
     public Section setCaption(String caption) {
-        return null;
+        this.caption = caption;
+        return this;
     }
 
     @Override
     public String getComment() {
-        return null;
+        return comment;
     }
 
     @Override
     public Section setComment(String comment) {
-        return null;
+        this.comment = comment;
+        return this;
     }
 
     @Override
     public Collection<Attribute> getAttributes() {
-        return null;
+        return attributes;
     }
 
     @Override
     public Section setAttributes(Collection<Attribute> attributes) {
-        return null;
+        this.attributes = attributes;
+        return this;
     }
 
     @Override
     public Optional<Attribute> getAttributeByName(String name) {
-        return Optional.empty();
+        return getAttributes() == null ? Optional.empty() :
+                getAttributes().stream()
+                        .filter(attribute -> attribute.getName().equals(name))
+                        .findAny();
     }
 
     @Override
     public Section addAttribute(Attribute attribute) {
-        return null;
+        attributes.add(attribute);
+        return this;
     }
+
 }

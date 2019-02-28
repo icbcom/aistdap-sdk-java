@@ -11,11 +11,15 @@ import org.springframework.web.client.RestTemplate;
 import ru.icbcom.aistdapsdkjava.api.client.Client;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypeCriteria;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypeList;
+import ru.icbcom.aistdapsdkjava.api.resource.Resource;
+import ru.icbcom.aistdapsdkjava.api.resource.ResourceFactory;
 import ru.icbcom.aistdapsdkjava.api.resource.VoidResource;
 import ru.icbcom.aistdapsdkjava.impl.auth.AuthenticationRequest;
 import ru.icbcom.aistdapsdkjava.impl.auth.AuthenticationResponse;
 import ru.icbcom.aistdapsdkjava.impl.auth.DefaultAuthenticationRequest;
 import ru.icbcom.aistdapsdkjava.impl.auth.DefaultAuthenticationResponse;
+import ru.icbcom.aistdapsdkjava.impl.objectmapper.ObjectMappers;
+import ru.icbcom.aistdapsdkjava.impl.resource.DefaultResourceFactory;
 import ru.icbcom.aistdapsdkjava.impl.resource.DefaultVoidResource;
 
 @Slf4j
@@ -26,7 +30,7 @@ public class DefaultClient implements Client {
     private final String password;
     private final RestTemplate restTemplate;
 
-    private ObjectMapper objectMapper;
+    private final ResourceFactory resourceFactory;
 
     private AuthenticationResponse authenticationResponse;
 
@@ -35,22 +39,24 @@ public class DefaultClient implements Client {
         this.login = login;
         this.password = password;
         this.restTemplate = newRestTemplateInstance();
+        this.resourceFactory = new DefaultResourceFactory();
     }
 
     private RestTemplate newRestTemplateInstance() {
-        objectMapper = new ObjectMapper();
-        objectMapper.registerModule(new Jackson2HalModule());
-        objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
-
         MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
         messageConverter.setPrettyPrint(true);
-        messageConverter.setObjectMapper(objectMapper);
+        messageConverter.setObjectMapper(ObjectMappers.create());
 
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().removeIf(m -> m.getClass().getName().equals(MappingJackson2HttpMessageConverter.class.getName()));
         restTemplate.getMessageConverters().add(messageConverter);
 
         return restTemplate;
+    }
+
+    @Override
+    public <T extends Resource> T instantiate(Class<T> clazz) {
+        return resourceFactory.instantiate(clazz);
     }
 
     @Override

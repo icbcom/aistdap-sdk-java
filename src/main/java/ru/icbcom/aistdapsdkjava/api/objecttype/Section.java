@@ -1,12 +1,14 @@
 package ru.icbcom.aistdapsdkjava.api.objecttype;
 
+import ru.icbcom.aistdapsdkjava.api.resource.Resource;
+
 import java.util.Collection;
 import java.util.Optional;
 
 /**
  * Секция для группировки атрибутов типов объектов.
  */
-public interface Section {
+public interface Section extends Resource {
 
     /**
      * Возвращает название данной секции.

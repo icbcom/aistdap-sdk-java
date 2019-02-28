@@ -8,6 +8,7 @@ import ru.icbcom.aistdapsdkjava.impl.resource.AbstractResource;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class DefaultObjectType extends AbstractResource implements ObjectType {
 
@@ -29,77 +30,94 @@ public class DefaultObjectType extends AbstractResource implements ObjectType {
 
     @Override
     public ObjectType setId(Long id) {
-        return null;
+        this.id = id;
+        return this;
     }
 
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 
     @Override
     public ObjectType setName(String name) {
-        return null;
+        this.name = name;
+        return this;
     }
 
     @Override
     public String getCaption() {
-        return null;
+        return caption;
     }
 
     @Override
     public ObjectType setCaption(String caption) {
-        return null;
+        this.caption = caption;
+        return this;
     }
 
     @Override
     public boolean isDevice() {
-        return false;
+        return device;
     }
 
     @Override
     public ObjectType setDevice(boolean device) {
-        return null;
+        this.device = device;
+        return this;
     }
 
     @Override
     public Collection<Section> getSections() {
-        return null;
+        return sections;
     }
 
     @Override
     public ObjectType setSections(Collection<Section> sections) {
-        return null;
+        this.sections = sections;
+        return this;
     }
 
     @Override
     public boolean isEnabled() {
-        return false;
+        return enabled;
     }
 
     @Override
     public ObjectType setEnabled(boolean enabled) {
-        return null;
+        this.enabled = enabled;
+        return this;
     }
 
     @Override
     public Collection<Attribute> getAttributes() {
-        return null;
+        return getSections() == null ? null :
+                getSections().stream()
+                        .filter(section -> section.getAttributes() != null)
+                        .flatMap(section -> section.getAttributes().stream())
+                        .collect(Collectors.toList());
     }
 
     @Override
     public Optional<Section> getSectionByName(String name) {
-        return Optional.empty();
+        return getSections() == null ? Optional.empty() :
+                getSections().stream()
+                        .filter(section -> section.getName().equals(name))
+                        .findAny();
     }
 
     @Override
     public Optional<Attribute> getAttributeByName(String name) {
-        return Optional.empty();
+        return getAttributes() == null ? Optional.empty() :
+                getAttributes().stream()
+                        .filter(attribute -> attribute.getName().equals(name))
+                        .findAny();
     }
 
     @Override
     public ObjectType addSection(Section section) {
-        return null;
+        sections.add(section);
+        return this;
     }
 
 }

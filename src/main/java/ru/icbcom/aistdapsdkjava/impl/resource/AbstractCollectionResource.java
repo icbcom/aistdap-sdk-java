@@ -5,10 +5,7 @@ import ru.icbcom.aistdapsdkjava.api.resource.Resource;
 
 import java.util.Iterator;
 
-public abstract class AbstractCollectionResource<T extends Resource, C extends CollectionResource<T>> extends AbstractResource implements CollectionResource<T> {
-
-    // Что находится здесь?
-    // Это аналог PagedResource.
+public abstract class AbstractCollectionResource<T extends Resource> extends AbstractResource implements CollectionResource<T> {
 
     @Override
     public int getSize() {
@@ -28,46 +25,6 @@ public abstract class AbstractCollectionResource<T extends Resource, C extends C
     @Override
     public int getNumber() {
         return 0;
-    }
-
-    @Override
-    public boolean hasFirst() {
-        return hasLink("first");
-    }
-
-    @Override
-    public boolean hasPrevious() {
-        return hasLink("prev");
-    }
-
-    @Override
-    public boolean hasNext() {
-        return hasLink("next");
-    }
-
-    @Override
-    public boolean hasLast() {
-        return hasLink("last");
-    }
-
-    @Override
-    public C first() {
-        return null;
-    }
-
-    @Override
-    public C previous() {
-        return null;
-    }
-
-    @Override
-    public C next() {
-        return null;
-    }
-
-    @Override
-    public C last() {
-        return null;
     }
 
     @Override
