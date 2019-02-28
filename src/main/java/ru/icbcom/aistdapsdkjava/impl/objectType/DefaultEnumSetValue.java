@@ -1,8 +1,10 @@
 package ru.icbcom.aistdapsdkjava.impl.objectType;
 
+import lombok.ToString;
 import ru.icbcom.aistdapsdkjava.api.objecttype.EnumSetValue;
 import ru.icbcom.aistdapsdkjava.impl.resource.AbstractResource;
 
+@ToString
 public class DefaultEnumSetValue extends AbstractResource implements EnumSetValue {
 
     private int number;

@@ -4,10 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.hateoas.Link;
 import ru.icbcom.aistdapsdkjava.api.client.Client;
 import ru.icbcom.aistdapsdkjava.api.client.Clients;
-import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
-import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypeCriteria;
-import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypeList;
-import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypes;
+import ru.icbcom.aistdapsdkjava.api.objecttype.*;
 
 import java.util.List;
 
