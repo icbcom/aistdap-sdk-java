@@ -1,5 +1,7 @@
 package ru.icbcom.aistdapsdkjava.impl.objectType;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.ToString;
 import ru.icbcom.aistdapsdkjava.api.objecttype.Attribute;
 import ru.icbcom.aistdapsdkjava.api.objecttype.Section;
 import ru.icbcom.aistdapsdkjava.impl.resource.AbstractResource;
@@ -8,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
+@ToString
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class DefaultSection extends AbstractResource implements Section {
 
     private String name;

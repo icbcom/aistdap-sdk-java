@@ -1,5 +1,8 @@
 package ru.icbcom.aistdapsdkjava.impl.objectType;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.ToString;
 import ru.icbcom.aistdapsdkjava.api.objecttype.Attribute;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
 import ru.icbcom.aistdapsdkjava.api.objecttype.Section;
@@ -10,6 +13,8 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@ToString
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class DefaultObjectType extends AbstractResource implements ObjectType {
 
     static final String ID_PROPERTY = "id";
@@ -90,6 +95,7 @@ public class DefaultObjectType extends AbstractResource implements ObjectType {
     }
 
     @Override
+    @JsonIgnore
     public Collection<Attribute> getAttributes() {
         return getSections() == null ? null :
                 getSections().stream()

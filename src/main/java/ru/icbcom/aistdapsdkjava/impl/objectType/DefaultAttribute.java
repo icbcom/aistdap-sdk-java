@@ -1,8 +1,6 @@
 package ru.icbcom.aistdapsdkjava.impl.objectType;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import lombok.ToString;
 import ru.icbcom.aistdapsdkjava.api.objecttype.Attribute;
 import ru.icbcom.aistdapsdkjava.api.objecttype.AttributeType;

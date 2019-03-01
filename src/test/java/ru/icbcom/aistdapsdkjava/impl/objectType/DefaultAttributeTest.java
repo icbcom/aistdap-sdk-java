@@ -3,9 +3,14 @@ package ru.icbcom.aistdapsdkjava.impl.objectType;
 import org.junit.jupiter.api.Test;
 import ru.icbcom.aistdapsdkjava.api.objecttype.Attribute;
 import ru.icbcom.aistdapsdkjava.api.objecttype.AttributeType;
+import ru.icbcom.aistdapsdkjava.api.objecttype.EnumSetValue;
+
+import java.util.Optional;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DefaultAttributeTest {
 
@@ -86,6 +91,13 @@ class DefaultAttributeTest {
                         )
                 )))
         ));
+        Optional<EnumSetValue> enumSetValueOptional = attribute.getEnumSetValueByNumber(1);
+        assertTrue(enumSetValueOptional.isPresent());
+        assertThat(enumSetValueOptional.get(), allOf(
+                hasProperty("number", is(1)),
+                hasProperty("caption", is("1200"))
+        ));
+        assertFalse(attribute.getEnumSetValueByNumber(20).isPresent());
     }
 
     @Test
