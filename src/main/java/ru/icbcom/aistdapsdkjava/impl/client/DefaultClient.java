@@ -1,11 +1,8 @@
 package ru.icbcom.aistdapsdkjava.impl.client;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.hateoas.Link;
-import org.springframework.hateoas.hal.Jackson2HalModule;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 import ru.icbcom.aistdapsdkjava.api.client.Client;

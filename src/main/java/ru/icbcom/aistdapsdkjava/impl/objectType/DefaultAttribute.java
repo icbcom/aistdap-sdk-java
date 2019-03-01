@@ -1,5 +1,9 @@
 package ru.icbcom.aistdapsdkjava.impl.objectType;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import lombok.ToString;
 import ru.icbcom.aistdapsdkjava.api.objecttype.Attribute;
 import ru.icbcom.aistdapsdkjava.api.objecttype.AttributeType;
 import ru.icbcom.aistdapsdkjava.api.objecttype.EnumSetValue;
@@ -9,6 +13,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Optional;
 
+@ToString
+@JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class DefaultAttribute extends AbstractResource implements Attribute {
 
     private String name;

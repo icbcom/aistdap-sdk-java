@@ -35,4 +35,19 @@ public interface Resource {
      */
     List<Link> getLinks(String rel);
 
+    /**
+     * Добавление ссылки {@link Link} к данному ресурсу.
+     */
+    void add(Link link);
+
+    /**
+     * Добавление нескольких ссылок {@link Link} к данному ресурсу.
+     */
+    void add(Iterable<Link> links);
+
+    /**
+     * Добавление нескольких ссылок {@link Link} к данному ресурсу.
+     */
+    void add(Link... links);
+
 }
