@@ -2,6 +2,7 @@ package ru.icbcom.aistdapsdkjava.impl.resource;
 
 import ru.icbcom.aistdapsdkjava.api.resource.CollectionResource;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
+import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 
 import java.util.Iterator;
 
