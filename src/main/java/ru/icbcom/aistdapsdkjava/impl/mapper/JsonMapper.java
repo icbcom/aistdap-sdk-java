@@ -1,4 +1,4 @@
-package ru.icbcom.aistdapsdkjava.impl.objectmapper;
+package ru.icbcom.aistdapsdkjava.impl.mapper;
 
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
 

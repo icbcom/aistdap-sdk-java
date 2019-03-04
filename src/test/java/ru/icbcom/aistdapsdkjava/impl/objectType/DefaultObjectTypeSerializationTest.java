@@ -7,25 +7,26 @@ import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import ru.icbcom.aistdapsdkjava.api.objecttype.AttributeType;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
-import ru.icbcom.aistdapsdkjava.impl.objectmapper.ObjectMappers;
+import ru.icbcom.aistdapsdkjava.impl.datastore.DummyDataStore;
+import ru.icbcom.aistdapsdkjava.impl.mapper.ObjectMappers;
 
 class DefaultObjectTypeSerializationTest {
 
-    private ObjectMapper objectMapper = ObjectMappers.create();
+    private ObjectMapper objectMapper = ObjectMappers.create(new DummyDataStore());
 
     @Test
     void serializationShouldWorkProperly() throws JsonProcessingException, JSONException {
-        ObjectType objectType = new DefaultObjectType()
+        ObjectType objectType = new DefaultObjectType(null)
                 .setId(1L)
                 .setName("ObjectTypeName")
                 .setCaption("Заголовок типа объекта")
                 .setDevice(false)
                 .addSection(
-                        new DefaultSection()
+                        new DefaultSection(null)
                                 .setName("SectionName")
                                 .setCaption("Заголовок секции")
                                 .addAttribute(
-                                        new DefaultAttribute()
+                                        new DefaultAttribute(null)
                                                 .setName("InterbyteTimeout")
                                                 .setCaption("Таймаут межсимвольного интервала (мс)")
                                                 .setType(AttributeType.INTEGER)
@@ -33,7 +34,7 @@ class DefaultObjectTypeSerializationTest {
                                                 .setMax("500")
                                 )
                                 .addAttribute(
-                                        new DefaultAttribute()
+                                        new DefaultAttribute(null)
                                                 .setName("Password")
                                                 .setCaption("Пароль")
                                                 .setType(AttributeType.STRING)

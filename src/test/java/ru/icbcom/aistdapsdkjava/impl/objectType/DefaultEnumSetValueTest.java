@@ -11,7 +11,7 @@ class DefaultEnumSetValueTest {
 
     @Test
     void fieldsInitializationShouldWorkProperly() {
-        EnumSetValue enumSetValue = new DefaultEnumSetValue();
+        EnumSetValue enumSetValue = new DefaultEnumSetValue(null);
         enumSetValue
                 .setNumber(10)
                 .setCaption("Some Caption");

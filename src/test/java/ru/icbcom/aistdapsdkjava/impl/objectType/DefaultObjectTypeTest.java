@@ -17,17 +17,17 @@ class DefaultObjectTypeTest {
 
     @Test
     void fieldsInitializationShouldWorkProperly() {
-        ObjectType objectType = new DefaultObjectType()
+        ObjectType objectType = new DefaultObjectType(null)
                 .setId(1L)
                 .setName("ObjectTypeName")
                 .setCaption("Заголовок типа объекта")
                 .setDevice(false)
                 .addSection(
-                        new DefaultSection()
+                        new DefaultSection(null)
                                 .setName("SectionName")
                                 .setCaption("Заголовок секции")
                                 .addAttribute(
-                                        new DefaultAttribute()
+                                        new DefaultAttribute(null)
                                                 .setName("InterbyteTimeout")
                                                 .setCaption("Таймаут межсимвольного интервала (мс)")
                                                 .setType(AttributeType.INTEGER)
@@ -35,7 +35,7 @@ class DefaultObjectTypeTest {
                                                 .setMax("500")
                                 )
                                 .addAttribute(
-                                        new DefaultAttribute()
+                                        new DefaultAttribute(null)
                                                 .setName("Password")
                                                 .setCaption("Пароль")
                                                 .setType(AttributeType.STRING)

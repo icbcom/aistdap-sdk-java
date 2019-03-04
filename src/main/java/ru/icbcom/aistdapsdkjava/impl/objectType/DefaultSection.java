@@ -1,5 +1,6 @@
 package ru.icbcom.aistdapsdkjava.impl.objectType;
 
+import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.ToString;
 import ru.icbcom.aistdapsdkjava.api.objecttype.Attribute;
@@ -19,6 +20,10 @@ public class DefaultSection extends AbstractResource implements Section {
     private String caption;
     private String comment;
     private Collection<Attribute> attributes = new ArrayList<>();
+
+    public DefaultSection(@JacksonInject DataStore dataStore) {
+        super(dataStore);
+    }
 
     @Override
     public String getName() {

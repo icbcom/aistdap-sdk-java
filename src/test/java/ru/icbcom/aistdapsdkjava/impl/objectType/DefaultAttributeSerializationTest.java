@@ -7,15 +7,16 @@ import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import ru.icbcom.aistdapsdkjava.api.objecttype.Attribute;
 import ru.icbcom.aistdapsdkjava.api.objecttype.AttributeType;
-import ru.icbcom.aistdapsdkjava.impl.objectmapper.ObjectMappers;
+import ru.icbcom.aistdapsdkjava.impl.datastore.DummyDataStore;
+import ru.icbcom.aistdapsdkjava.impl.mapper.ObjectMappers;
 
 class DefaultAttributeSerializationTest {
 
-    private ObjectMapper objectMapper = ObjectMappers.create();
+    private ObjectMapper objectMapper = ObjectMappers.create(new DummyDataStore());
 
     @Test
     void integerAttributeSerializationTest() throws JsonProcessingException, JSONException {
-        Attribute attribute = new DefaultAttribute()
+        Attribute attribute = new DefaultAttribute(null)
                 .setName("InterbyteTimeout")
                 .setCaption("Таймаут межсимвольного интервала (мс)")
                 .setType(AttributeType.INTEGER)
@@ -35,7 +36,7 @@ class DefaultAttributeSerializationTest {
 
     @Test
     void stringAttributeSerializationTest() throws JsonProcessingException, JSONException {
-        Attribute attribute = new DefaultAttribute()
+        Attribute attribute = new DefaultAttribute(null)
                 .setName("Password")
                 .setCaption("Пароль")
                 .setType(AttributeType.STRING)
@@ -58,7 +59,7 @@ class DefaultAttributeSerializationTest {
 
     @Test
     void booleanAttributeSerializationTest() throws JsonProcessingException, JSONException {
-        Attribute attribute = new DefaultAttribute()
+        Attribute attribute = new DefaultAttribute(null)
                 .setName("UseServerUtc")
                 .setCaption("Использовать часовой пояс сервера")
                 .setType(AttributeType.BOOLEAN);
@@ -74,7 +75,7 @@ class DefaultAttributeSerializationTest {
 
     @Test
     void floatAttributeSerializationTest() throws JsonProcessingException, JSONException {
-        Attribute attribute = new DefaultAttribute()
+        Attribute attribute = new DefaultAttribute(null)
                 .setName("Latitude")
                 .setCaption("Широта")
                 .setType(AttributeType.FLOAT);
@@ -90,7 +91,7 @@ class DefaultAttributeSerializationTest {
 
     @Test
     void timeAttributeSerializationTest() throws JsonProcessingException, JSONException {
-        Attribute attribute = new DefaultAttribute()
+        Attribute attribute = new DefaultAttribute(null)
                 .setName("AlarmTime")
                 .setCaption("Время аларма")
                 .setType(AttributeType.TIME);
@@ -106,7 +107,7 @@ class DefaultAttributeSerializationTest {
 
     @Test
     void dateAttributeSerializationTest() throws JsonProcessingException, JSONException {
-        Attribute attribute = new DefaultAttribute()
+        Attribute attribute = new DefaultAttribute(null)
                 .setName("AlarmDate")
                 .setCaption("Дата аларма")
                 .setType(AttributeType.DATE);
@@ -122,7 +123,7 @@ class DefaultAttributeSerializationTest {
 
     @Test
     void dateTimeAttributeSerializationTest() throws JsonProcessingException, JSONException {
-        Attribute attribute = new DefaultAttribute()
+        Attribute attribute = new DefaultAttribute(null)
                 .setName("AlarmDateTime")
                 .setCaption("Дата и время аларма")
                 .setType(AttributeType.DATETIME);
@@ -138,13 +139,13 @@ class DefaultAttributeSerializationTest {
 
     @Test
     void enumerationAttributeSerializationTest() throws JsonProcessingException, JSONException {
-        Attribute attribute = new DefaultAttribute()
+        Attribute attribute = new DefaultAttribute(null)
                 .setName("Baud")
                 .setCaption("Скорость порта")
                 .setType(AttributeType.ENUMERATION)
-                .addEnumSetValue(new DefaultEnumSetValue().setNumber(1).setCaption("1200"))
-                .addEnumSetValue(new DefaultEnumSetValue().setNumber(2).setCaption("2400"))
-                .addEnumSetValue(new DefaultEnumSetValue().setNumber(3).setCaption("4800"))
+                .addEnumSetValue(new DefaultEnumSetValue(null).setNumber(1).setCaption("1200"))
+                .addEnumSetValue(new DefaultEnumSetValue(null).setNumber(2).setCaption("2400"))
+                .addEnumSetValue(new DefaultEnumSetValue(null).setNumber(3).setCaption("4800"))
                 .setDefaultValue("1");
 
         String expected =
@@ -173,13 +174,13 @@ class DefaultAttributeSerializationTest {
 
     @Test
     void setAttributeSerializationTest() throws JsonProcessingException, JSONException {
-        Attribute attribute = new DefaultAttribute()
+        Attribute attribute = new DefaultAttribute(null)
                 .setName("Parity")
                 .setCaption("Четность")
                 .setType(AttributeType.SET)
-                .addEnumSetValue(new DefaultEnumSetValue().setNumber(1).setCaption("None"))
-                .addEnumSetValue(new DefaultEnumSetValue().setNumber(2).setCaption("Even"))
-                .addEnumSetValue(new DefaultEnumSetValue().setNumber(3).setCaption("Odd"));
+                .addEnumSetValue(new DefaultEnumSetValue(null).setNumber(1).setCaption("None"))
+                .addEnumSetValue(new DefaultEnumSetValue(null).setNumber(2).setCaption("Even"))
+                .addEnumSetValue(new DefaultEnumSetValue(null).setNumber(3).setCaption("Odd"));
 
         String expected =
                 "{" +

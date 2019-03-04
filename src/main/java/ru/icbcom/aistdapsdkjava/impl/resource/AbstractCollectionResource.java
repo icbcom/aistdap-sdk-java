@@ -8,6 +8,10 @@ import java.util.Iterator;
 
 public abstract class AbstractCollectionResource<T extends Resource> extends AbstractResource implements CollectionResource<T> {
 
+    public AbstractCollectionResource(DataStore dataStore) {
+        super(dataStore);
+    }
+
     @Override
     public int getSize() {
         return 0;

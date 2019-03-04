@@ -1,9 +1,10 @@
 package ru.icbcom.aistdapsdkjava.impl.auth;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 public class DefaultAuthenticationResponse implements AuthenticationResponse {
     private String accessToken;
     private int expiresIn;

@@ -1,11 +1,14 @@
 package ru.icbcom.aistdapsdkjava.impl.resource;
 
+import com.fasterxml.jackson.annotation.JacksonInject;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.hal.Jackson2HalModule;
 import org.springframework.util.Assert;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
+import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,8 +23,12 @@ public abstract class AbstractResource implements Resource {
     @JsonDeserialize(using = Jackson2HalModule.HalLinkListDeserializer.class)
     private final List<Link> links;
 
-    protected AbstractResource() {
+    @JsonIgnore
+    private final DataStore dataStore;
+
+    protected AbstractResource(DataStore dataStore) {
         this.links = new ArrayList<>();
+        this.dataStore = dataStore;
     }
 
     @Override
@@ -81,6 +88,10 @@ public abstract class AbstractResource implements Resource {
     public void add(Link... links) {
         Assert.notNull(links, "Given links must not be null");
         add(Arrays.asList(links));
+    }
+
+    public DataStore getDataStore() {
+        return dataStore;
     }
 
 }

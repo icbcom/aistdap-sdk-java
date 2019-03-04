@@ -16,7 +16,7 @@ class DefaultAttributeTest {
 
     @Test
     void integerAttributeFieldsInitializationShouldWorkProperly() {
-        Attribute attribute = new DefaultAttribute()
+        Attribute attribute = new DefaultAttribute(null)
                 .setName("InterbyteTimeout")
                 .setCaption("Таймаут межсимвольного интервала (мс)")
                 .setType(AttributeType.INTEGER)
@@ -38,7 +38,7 @@ class DefaultAttributeTest {
 
     @Test
     void stringAttributeFieldsInitializationShouldWorkProperly() {
-        Attribute attribute = new DefaultAttribute()
+        Attribute attribute = new DefaultAttribute(null)
                 .setName("Password")
                 .setCaption("Пароль")
                 .setType(AttributeType.STRING)
@@ -61,13 +61,13 @@ class DefaultAttributeTest {
 
     @Test
     void enumerationAttributeFieldsInitializationShouldWorkProperly() {
-        Attribute attribute = new DefaultAttribute()
+        Attribute attribute = new DefaultAttribute(null)
                 .setName("Baud")
                 .setCaption("Скорость порта")
                 .setType(AttributeType.ENUMERATION)
-                .addEnumSetValue(new DefaultEnumSetValue().setNumber(1).setCaption("1200"))
-                .addEnumSetValue(new DefaultEnumSetValue().setNumber(2).setCaption("2400"))
-                .addEnumSetValue(new DefaultEnumSetValue().setNumber(3).setCaption("4800"));
+                .addEnumSetValue(new DefaultEnumSetValue(null).setNumber(1).setCaption("1200"))
+                .addEnumSetValue(new DefaultEnumSetValue(null).setNumber(2).setCaption("2400"))
+                .addEnumSetValue(new DefaultEnumSetValue(null).setNumber(3).setCaption("4800"));
 
         assertThat(attribute, allOf(
                 hasProperty("name", is("Baud")),
@@ -102,13 +102,13 @@ class DefaultAttributeTest {
 
     @Test
     void setAttributeFieldsInitializationShouldWorkProperly() {
-        Attribute attribute = new DefaultAttribute()
+        Attribute attribute = new DefaultAttribute(null)
                 .setName("Parity")
                 .setCaption("Четность")
                 .setType(AttributeType.SET)
-                .addEnumSetValue(new DefaultEnumSetValue().setNumber(1).setCaption("None"))
-                .addEnumSetValue(new DefaultEnumSetValue().setNumber(2).setCaption("Even"))
-                .addEnumSetValue(new DefaultEnumSetValue().setNumber(3).setCaption("Odd"));
+                .addEnumSetValue(new DefaultEnumSetValue(null).setNumber(1).setCaption("None"))
+                .addEnumSetValue(new DefaultEnumSetValue(null).setNumber(2).setCaption("Even"))
+                .addEnumSetValue(new DefaultEnumSetValue(null).setNumber(3).setCaption("Odd"));
 
         assertThat(attribute, allOf(
                 hasProperty("name", is("Parity")),

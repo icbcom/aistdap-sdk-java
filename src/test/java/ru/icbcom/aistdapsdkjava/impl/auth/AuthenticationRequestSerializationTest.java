@@ -5,13 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
-import ru.icbcom.aistdapsdkjava.impl.objectmapper.ObjectMappers;
-
-import static org.junit.jupiter.api.Assertions.*;
+import ru.icbcom.aistdapsdkjava.impl.datastore.DummyDataStore;
+import ru.icbcom.aistdapsdkjava.impl.mapper.ObjectMappers;
 
 class AuthenticationRequestSerializationTest {
 
-    private ObjectMapper objectMapper = ObjectMappers.create();
+    private ObjectMapper objectMapper = ObjectMappers.create(new DummyDataStore());
 
     @Test
     void serializationShouldWorkProperly() throws JsonProcessingException, JSONException {

@@ -1,5 +1,6 @@
 package ru.icbcom.aistdapsdkjava.impl.objectType;
 
+import com.fasterxml.jackson.annotation.JacksonInject;
 import lombok.ToString;
 import ru.icbcom.aistdapsdkjava.api.objecttype.EnumSetValue;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
@@ -10,6 +11,10 @@ public class DefaultEnumSetValue extends AbstractResource implements EnumSetValu
 
     private int number;
     private String caption;
+
+    public DefaultEnumSetValue(@JacksonInject DataStore dataStore) {
+        super(dataStore);
+    }
 
     @Override
     public int getNumber() {

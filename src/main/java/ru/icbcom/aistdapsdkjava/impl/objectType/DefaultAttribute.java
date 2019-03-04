@@ -1,5 +1,6 @@
 package ru.icbcom.aistdapsdkjava.impl.objectType;
 
+import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.ToString;
 import ru.icbcom.aistdapsdkjava.api.objecttype.Attribute;
@@ -25,6 +26,10 @@ public class DefaultAttribute extends AbstractResource implements Attribute {
     private Collection<EnumSetValue> enumSetValues = new ArrayList<>();
     private String defaultValue;
     private String comment;
+
+    public DefaultAttribute(@JacksonInject DataStore dataStore) {
+        super(dataStore);
+    }
 
     @Override
     public String getName() {

@@ -4,17 +4,24 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import ru.icbcom.aistdapsdkjava.api.objecttype.AttributeType;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
-import ru.icbcom.aistdapsdkjava.impl.objectmapper.ObjectMappers;
+import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
+import ru.icbcom.aistdapsdkjava.impl.datastore.DummyDataStore;
+import ru.icbcom.aistdapsdkjava.impl.mapper.ObjectMappers;
 
 import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class DefaultObjectTypeDeserializationTest {
 
-    private ObjectMapper objectMapper = ObjectMappers.create();
+    private DataStore dataStore;
+    private ObjectMapper objectMapper;
+
+    public DefaultObjectTypeDeserializationTest() {
+        this.dataStore = new DummyDataStore();
+        this.objectMapper = ObjectMappers.create(dataStore);
+    }
 
     @Test
     void deserializationShouldWorkProperly() throws IOException {
@@ -89,7 +96,8 @@ class DefaultObjectTypeDeserializationTest {
                         )
                 )),
                 hasProperty("enabled", is(true)),
-                hasProperty("links", is(empty()))
+                hasProperty("links", is(empty())),
+                hasProperty("dataStore", sameInstance(dataStore))
         ));
     }
 

@@ -1,5 +1,6 @@
 package ru.icbcom.aistdapsdkjava.impl.objectType;
 
+import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.ToString;
@@ -28,6 +29,10 @@ public class DefaultObjectType extends AbstractResource implements ObjectType {
     private boolean device;
     private Collection<Section> sections = new ArrayList<>();
     private boolean enabled;
+
+    public DefaultObjectType(@JacksonInject DataStore dataStore) {
+        super(dataStore);
+    }
 
     @Override
     public Long getId() {

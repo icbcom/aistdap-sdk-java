@@ -16,11 +16,11 @@ class DefaultSectionTest {
 
     @Test
     void fieldsInitializationShouldWorkProperly() {
-        Section section = new DefaultSection()
+        Section section = new DefaultSection(null)
                 .setName("SectionName")
                 .setCaption("Заголовок секции")
                 .addAttribute(
-                        new DefaultAttribute()
+                        new DefaultAttribute(null)
                                 .setName("InterbyteTimeout")
                                 .setCaption("Таймаут межсимвольного интервала (мс)")
                                 .setType(AttributeType.INTEGER)
@@ -28,7 +28,7 @@ class DefaultSectionTest {
                                 .setMax("500")
                 )
                 .addAttribute(
-                        new DefaultAttribute()
+                        new DefaultAttribute(null)
                                 .setName("Password")
                                 .setCaption("Пароль")
                                 .setType(AttributeType.STRING)

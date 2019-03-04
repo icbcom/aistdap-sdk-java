@@ -15,7 +15,7 @@ import ru.icbcom.aistdapsdkjava.impl.auth.AuthenticationRequest;
 import ru.icbcom.aistdapsdkjava.impl.auth.AuthenticationResponse;
 import ru.icbcom.aistdapsdkjava.impl.auth.DefaultAuthenticationRequest;
 import ru.icbcom.aistdapsdkjava.impl.auth.DefaultAuthenticationResponse;
-import ru.icbcom.aistdapsdkjava.impl.objectmapper.ObjectMappers;
+import ru.icbcom.aistdapsdkjava.impl.mapper.ObjectMappers;
 import ru.icbcom.aistdapsdkjava.impl.resource.DefaultResourceFactory;
 import ru.icbcom.aistdapsdkjava.impl.resource.DefaultVoidResource;
 
@@ -36,13 +36,13 @@ public class DefaultClient implements Client {
         this.login = login;
         this.password = password;
         this.restTemplate = newRestTemplateInstance();
-        this.resourceFactory = new DefaultResourceFactory();
+        this.resourceFactory = new DefaultResourceFactory(null);
     }
 
     private RestTemplate newRestTemplateInstance() {
         MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
         messageConverter.setPrettyPrint(true);
-        messageConverter.setObjectMapper(ObjectMappers.create());
+        messageConverter.setObjectMapper(ObjectMappers.create(null));
 
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().removeIf(m -> m.getClass().getName().equals(MappingJackson2HttpMessageConverter.class.getName()));
