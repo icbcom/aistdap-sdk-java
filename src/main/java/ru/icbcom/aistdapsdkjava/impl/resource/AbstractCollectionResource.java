@@ -1,5 +1,7 @@
 package ru.icbcom.aistdapsdkjava.impl.resource;
 
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
+import org.springframework.hateoas.PagedResources;
 import ru.icbcom.aistdapsdkjava.api.resource.CollectionResource;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
@@ -8,33 +10,37 @@ import java.util.Iterator;
 
 public abstract class AbstractCollectionResource<T extends Resource> extends AbstractResource implements CollectionResource<T> {
 
+    @JsonUnwrapped
+    private PagedResources<T> pagedResources;
+
     public AbstractCollectionResource(DataStore dataStore) {
         super(dataStore);
     }
 
     @Override
-    public int getSize() {
-        return 0;
+    public long getSize() {
+        return pagedResources.getMetadata().getSize();
     }
 
     @Override
     public long getTotalElements() {
-        return 0;
+        return pagedResources.getMetadata().getTotalElements();
     }
 
     @Override
     public long getTotalPages() {
-        return 0;
+        return pagedResources.getMetadata().getTotalPages();
     }
 
     @Override
-    public int getNumber() {
-        return 0;
+    public long getNumber() {
+        return pagedResources.getMetadata().getNumber();
     }
 
     @Override
     public Iterator<T> iterator() {
-        return null;
+        // TODO: Сделать специиальный итератор.
+        return pagedResources.iterator();
     }
 
 }

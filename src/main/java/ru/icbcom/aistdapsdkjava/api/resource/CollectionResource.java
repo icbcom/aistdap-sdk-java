@@ -8,7 +8,7 @@ public interface CollectionResource<T extends Resource> extends Resource, Iterab
     /**
      * Возвращает количество элементов в текущей странцице.
      */
-    int getSize();
+    long getSize();
 
     /**
      * Возвращает общее количество доступных элементов во всей коллекции.
@@ -23,6 +23,6 @@ public interface CollectionResource<T extends Resource> extends Resource, Iterab
     /**
      * Возвращает номер текущей страницы.
      */
-    int getNumber();
+    long getNumber();
 
 }

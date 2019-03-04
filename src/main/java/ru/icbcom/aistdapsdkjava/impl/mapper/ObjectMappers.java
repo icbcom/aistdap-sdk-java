@@ -9,10 +9,12 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.springframework.hateoas.hal.Jackson2HalModule;
 import ru.icbcom.aistdapsdkjava.api.objecttype.Attribute;
 import ru.icbcom.aistdapsdkjava.api.objecttype.EnumSetValue;
+import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
 import ru.icbcom.aistdapsdkjava.api.objecttype.Section;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultAttribute;
 import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultEnumSetValue;
+import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultObjectType;
 import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultSection;
 
 public class ObjectMappers {
@@ -42,6 +44,7 @@ public class ObjectMappers {
         resolver.addMapping(EnumSetValue.class, DefaultEnumSetValue.class);
         resolver.addMapping(Attribute.class, DefaultAttribute.class);
         resolver.addMapping(Section.class, DefaultSection.class);
+        resolver.addMapping(ObjectType.class, DefaultObjectType.class);
         module.setAbstractTypes(resolver);
         objectMapper.registerModule(module);
     }

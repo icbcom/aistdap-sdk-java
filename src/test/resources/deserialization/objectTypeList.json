@@ -1,0 +1,343 @@
+{
+  "_embedded": {
+    "dap:objectTypes": [
+      {
+        "id": 1,
+        "name": "Mercury230/233",
+        "caption": "Счетчик э/э Меркурий 230/233",
+        "device": true,
+        "sections": [
+          {
+            "name": "Settings",
+            "caption": "Настройки",
+            "attributes": [
+              {
+                "name": "Address",
+                "caption": "Сетевой адрес",
+                "type": "Integer"
+              },
+              {
+                "name": "Password",
+                "caption": "Пароль",
+                "type": "String",
+                "mask": "\\d{6}"
+              },
+              {
+                "name": "AccessLevel",
+                "caption": "Уровень доступа",
+                "type": "Enumeration",
+                "enumSetValues": [
+                  {
+                    "number": 1,
+                    "caption": "Чтение (01h)"
+                  },
+                  {
+                    "number": 2,
+                    "caption": "Запись (02h)"
+                  }
+                ]
+              },
+              {
+                "name": "Serial",
+                "caption": "Серийный номер",
+                "type": "String",
+                "mask": "\\d{8}"
+              }
+            ]
+          }
+        ],
+        "enabled": false,
+        "_links": {
+          "self": {
+            "href": "http://127.0.0.1:8080/objectTypes/1"
+          },
+          "dap:objectType": {
+            "href": "http://127.0.0.1:8080/objectTypes/1"
+          },
+          "dap:dataSources": {
+            "href": "http://127.0.0.1:8080/objectTypes/1/dataSources{?page,size,sort}",
+            "templated": true
+          },
+          "dap:dataSourceGroups": {
+            "href": "http://127.0.0.1:8080/objectTypes/1/dataSourceGroups{?page,size,sort}",
+            "templated": true
+          }
+        }
+      },
+      {
+        "id": 3,
+        "name": "Puma",
+        "caption": "УСПД \"Пума\"",
+        "device": false,
+        "sections": [
+          {
+            "name": "MainSettings",
+            "caption": "Основные настройки",
+            "attributes": [
+              {
+                "name": "Identifier",
+                "caption": "Идентификатор",
+                "type": "Integer",
+                "min": "0",
+                "max": "99999999"
+              },
+              {
+                "name": "Log",
+                "caption": "Период опроса устройств",
+                "type": "Integer"
+              },
+              {
+                "name": "CtrlPoll",
+                "caption": "Период запроса \"$GET_COMMAND\"",
+                "type": "Integer"
+              }
+            ]
+          },
+          {
+            "name": "UtcSettings",
+            "caption": "Настройки часового пояса",
+            "attributes": [
+              {
+                "name": "UseServerUtc",
+                "caption": "Использовать часовой пояс сервера",
+                "type": "Boolean"
+              },
+              {
+                "name": "Utc",
+                "caption": "Номер часового пояса (UTC+X)",
+                "type": "Integer",
+                "min": "0",
+                "max": "12"
+              }
+            ]
+          },
+          {
+            "name": "SecondaryCommandServer",
+            "caption": "Вторичный сервер комманд",
+            "attributes": [
+              {
+                "name": "UseSecondaryCommandServer",
+                "caption": "Использовать вторичный сервер комманд",
+                "type": "Boolean"
+              },
+              {
+                "name": "SecondaryCommandServer",
+                "caption": "Вторичный сервер комманд",
+                "type": "String",
+                "mask": "(\\d{1,3}\\.){3}\\d{1,3}:\\d{1,4}"
+              }
+            ]
+          },
+          {
+            "name": "TransitServer",
+            "caption": "Транзитный сервер",
+            "attributes": [
+              {
+                "name": "LoadTransitServer",
+                "caption": "Устанавливать транзитный сервер",
+                "type": "Boolean"
+              },
+              {
+                "name": "TransitServer",
+                "caption": "Транзитный сервер",
+                "type": "String",
+                "mask": "(\\d{1,3}\\.){3}\\d{1,3}:\\d{1,4}"
+              }
+            ]
+          }
+        ],
+        "enabled": true,
+        "_links": {
+          "self": {
+            "href": "http://127.0.0.1:8080/objectTypes/3"
+          },
+          "dap:objectType": {
+            "href": "http://127.0.0.1:8080/objectTypes/3"
+          },
+          "dap:dataSources": {
+            "href": "http://127.0.0.1:8080/objectTypes/3/dataSources{?page,size,sort}",
+            "templated": true
+          },
+          "dap:dataSourceGroups": {
+            "href": "http://127.0.0.1:8080/objectTypes/3/dataSourceGroups{?page,size,sort}",
+            "templated": true
+          }
+        }
+      },
+      {
+        "id": 4,
+        "name": "Puma-Can",
+        "caption": "CAN",
+        "device": false,
+        "sections": [
+          {
+            "name": "InterfaceSettings",
+            "caption": "Настройки интерфейса",
+            "attributes": [
+              {
+                "name": "Baud",
+                "caption": "Скорость порта",
+                "type": "Enumeration",
+                "enumSetValues": [
+                  {
+                    "number": 1,
+                    "caption": "600"
+                  },
+                  {
+                    "number": 2,
+                    "caption": "1200"
+                  },
+                  {
+                    "number": 3,
+                    "caption": "2400"
+                  },
+                  {
+                    "number": 4,
+                    "caption": "4800"
+                  },
+                  {
+                    "number": 5,
+                    "caption": "9600"
+                  },
+                  {
+                    "number": 6,
+                    "caption": "14400"
+                  },
+                  {
+                    "number": 7,
+                    "caption": "19200"
+                  },
+                  {
+                    "number": 8,
+                    "caption": "38400"
+                  },
+                  {
+                    "number": 9,
+                    "caption": "57600"
+                  },
+                  {
+                    "number": 10,
+                    "caption": "115200"
+                  }
+                ]
+              },
+              {
+                "name": "DataSize",
+                "caption": "Биты данных",
+                "type": "Enumeration",
+                "enumSetValues": [
+                  {
+                    "number": 1,
+                    "caption": "7"
+                  },
+                  {
+                    "number": 2,
+                    "caption": "8"
+                  }
+                ]
+              },
+              {
+                "name": "Parity",
+                "caption": "Четность",
+                "type": "Enumeration",
+                "enumSetValues": [
+                  {
+                    "number": 1,
+                    "caption": "None"
+                  },
+                  {
+                    "number": 2,
+                    "caption": "Even"
+                  },
+                  {
+                    "number": 3,
+                    "caption": "Odd"
+                  },
+                  {
+                    "number": 4,
+                    "caption": "Mark (1)"
+                  },
+                  {
+                    "number": 5,
+                    "caption": "Space (0)"
+                  }
+                ]
+              },
+              {
+                "name": "StopBits",
+                "caption": "Стоповые биты",
+                "type": "Enumeration",
+                "enumSetValues": [
+                  {
+                    "number": 1,
+                    "caption": "1"
+                  },
+                  {
+                    "number": 2,
+                    "caption": "1,5"
+                  },
+                  {
+                    "number": 3,
+                    "caption": "2"
+                  }
+                ]
+              },
+              {
+                "name": "Timeout",
+                "caption": "Таймаут межсимвольного интервала (мс)",
+                "type": "Integer"
+              }
+            ]
+          }
+        ],
+        "enabled": true,
+        "_links": {
+          "self": {
+            "href": "http://127.0.0.1:8080/objectTypes/4"
+          },
+          "dap:objectType": {
+            "href": "http://127.0.0.1:8080/objectTypes/4"
+          },
+          "dap:dataSources": {
+            "href": "http://127.0.0.1:8080/objectTypes/4/dataSources{?page,size,sort}",
+            "templated": true
+          },
+          "dap:dataSourceGroups": {
+            "href": "http://127.0.0.1:8080/objectTypes/4/dataSourceGroups{?page,size,sort}",
+            "templated": true
+          }
+        }
+      }
+    ]
+  },
+  "_links": {
+    "first": {
+      "href": "http://127.0.0.1:8080/objectTypes?page=0&size=3"
+    },
+    "self": {
+      "href": "http://127.0.0.1:8080/objectTypes?page=0&size=3"
+    },
+    "next": {
+      "href": "http://127.0.0.1:8080/objectTypes?page=1&size=3"
+    },
+    "last": {
+      "href": "http://127.0.0.1:8080/objectTypes?page=11&size=3"
+    },
+    "search": {
+      "href": "http://127.0.0.1:8080/objectTypes/search"
+    },
+    "curies": [
+      {
+        "href": "http://127.0.0.1:8080/documentation/{rel}.html",
+        "name": "dap",
+        "templated": true
+      }
+    ]
+  },
+  "page": {
+    "size": 3,
+    "totalElements": 34,
+    "totalPages": 12,
+    "number": 0
+  }
+}

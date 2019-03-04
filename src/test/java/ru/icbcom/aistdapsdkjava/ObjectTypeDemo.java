@@ -1,12 +1,12 @@
 package ru.icbcom.aistdapsdkjava;
 
 import org.junit.jupiter.api.Test;
-import org.springframework.hateoas.Link;
 import ru.icbcom.aistdapsdkjava.api.client.Client;
 import ru.icbcom.aistdapsdkjava.api.client.Clients;
-import ru.icbcom.aistdapsdkjava.api.objecttype.*;
-
-import java.util.List;
+import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
+import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypeCriteria;
+import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypeList;
+import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypes;
 
 public class ObjectTypeDemo {
 
@@ -22,11 +22,8 @@ public class ObjectTypeDemo {
                 .orderByCaption().descending()
                 .pageSize(100);
         ObjectTypeList objectTypeList = client.getObjectTypes(criteria);
-
-        if (objectTypeList != null) {
-            for (ObjectType objectType : objectTypeList) {
-                System.out.println(objectType);
-            }
+        for (ObjectType objectType : objectTypeList) {
+            System.out.println(objectType);
         }
     }
 
