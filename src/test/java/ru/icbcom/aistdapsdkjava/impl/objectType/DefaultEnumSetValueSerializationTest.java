@@ -20,6 +20,7 @@ public class DefaultEnumSetValueSerializationTest {
                 .setCaption("Some Caption");
 
         String json = objectMapper.writeValueAsString(enumSetValue);
+        System.out.println(json);
         JSONAssert.assertEquals("{\"number\":10,\"caption\":\"Some Caption\"}", json, true);
     }
 
