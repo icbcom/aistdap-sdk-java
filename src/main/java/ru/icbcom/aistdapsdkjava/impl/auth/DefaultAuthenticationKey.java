@@ -5,7 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class DefaultAuthentication implements Authentication {
+public class DefaultAuthenticationKey implements AuthenticationKey {
     private final String login;
     private final String password;
 }

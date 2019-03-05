@@ -1,10 +1,7 @@
-package ru.icbcom.aistdapsdkjava.impl.auth;
+package ru.icbcom.aistdapsdkjava.impl.auth.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
-import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
-import ru.icbcom.aistdapsdkjava.impl.resource.AbstractResource;
 
 @AllArgsConstructor
 @Getter

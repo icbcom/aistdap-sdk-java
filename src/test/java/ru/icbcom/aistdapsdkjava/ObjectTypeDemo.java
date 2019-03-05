@@ -21,9 +21,11 @@ public class ObjectTypeDemo {
                 .build();
 
         ObjectTypeCriteria criteria = ObjectTypes.criteria()
-                .orderByCaption().descending()
-                .pageSize(100);
+                .orderByName().ascending()
+                .pageSize(200);
         ObjectTypeList objectTypeList = client.getObjectTypes(criteria);
+
+//        ObjectTypeList objectTypeList = client.getObjectTypes();
         for (ObjectType objectType : objectTypeList) {
             log.info(objectType.toString());
         }

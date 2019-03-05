@@ -6,10 +6,11 @@ import org.springframework.hateoas.Link;
 import ru.icbcom.aistdapsdkjava.api.client.Client;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypeCriteria;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypeList;
+import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypes;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
 import ru.icbcom.aistdapsdkjava.api.resource.ResourceFactory;
 import ru.icbcom.aistdapsdkjava.api.resource.VoidResource;
-import ru.icbcom.aistdapsdkjava.impl.auth.*;
+import ru.icbcom.aistdapsdkjava.impl.auth.DefaultAuthenticationKey;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DefaultDataStore;
 import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultObjectTypeList;
@@ -25,7 +26,7 @@ public class DefaultClient implements Client {
 
     public DefaultClient(String baseUrl, String login, String password) {
         this.baseUrl = baseUrl;
-        this.dataStore = new DefaultDataStore(baseUrl, new DefaultAuthentication(login, password));
+        this.dataStore = new DefaultDataStore(baseUrl, new DefaultAuthenticationKey(login, password));
         this.resourceFactory = new DefaultResourceFactory(this.dataStore);
     }
 
@@ -36,19 +37,20 @@ public class DefaultClient implements Client {
 
     @Override
     public ObjectTypeList getObjectTypes() {
-        return null;
+        return getObjectTypes(ObjectTypes.criteria());
     }
+
+    // TODO: Рефакториинг и тестирование.
 
     @Override
     @SneakyThrows
     public ObjectTypeList getObjectTypes(ObjectTypeCriteria criteria) {
         // Получение корневой страницы.
-        VoidResource rootResource = dataStore.getResource(baseUrl, DefaultVoidResource.class);
+        VoidResource rootResource = dataStore.getResource(new Link(baseUrl), DefaultVoidResource.class);
         Link objectTypesLink = rootResource.getLink("dap:objectTypes").orElseThrow();
 
         // Получение списка типов объектов.
-        ObjectTypeList objectTypes = dataStore.getResource(objectTypesLink.expand().getHref(), DefaultObjectTypeList.class);
-        return objectTypes;
+        return dataStore.getResource(objectTypesLink, DefaultObjectTypeList.class, criteria);
     }
 
 }

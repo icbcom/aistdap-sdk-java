@@ -58,4 +58,33 @@ public class DefaultCriteria<T extends Criteria<T>> implements Criteria<T> {
         return Math.max(0, pageNumber);
     }
 
+    @Override
+    public boolean isEmpty() {
+        return order == null && pageSize == null && pageNumber == null;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public Integer getPageSize() {
+        return pageSize;
+    }
+
+    public Integer getPageNumber() {
+        return pageNumber;
+    }
+
+    public boolean hasOrder() {
+        return order != null;
+    }
+
+    public boolean hasPageSize() {
+        return pageSize != null;
+    }
+
+    public boolean hasPageNumber() {
+        return pageNumber != null;
+    }
+
 }

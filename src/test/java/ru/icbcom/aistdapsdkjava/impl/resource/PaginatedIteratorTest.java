@@ -68,7 +68,7 @@ class PaginatedIteratorTest {
         TestCollectionResource testResources2 = new TestCollectionResource(dataStore);
         testResources2.setPagedResources(pagedResources2);
 
-        when(dataStore.getResource("http://next-page-link", TestCollectionResource.class)).thenReturn(testResources2);
+        when(dataStore.getResource(new Link("http://next-page-link", "next"), TestCollectionResource.class)).thenReturn(testResources2);
 
         PaginatedIterator<TestResource> iterator = new PaginatedIterator<>(testResources1);
 
@@ -87,7 +87,7 @@ class PaginatedIteratorTest {
         assertFalse(iterator.hasNext());
         assertThrows(NoSuchElementException.class, iterator::next);
 
-        verify(dataStore).getResource("http://next-page-link", TestCollectionResource.class);
+        verify(dataStore).getResource(new Link("http://next-page-link", "next"), TestCollectionResource.class);
         verifyNoMoreInteractions(dataStore);
     }
 

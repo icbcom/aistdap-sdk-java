@@ -2,6 +2,8 @@ package ru.icbcom.aistdapsdkjava.impl.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import ru.icbcom.aistdapsdkjava.impl.auth.response.AuthenticationResponse;
+import ru.icbcom.aistdapsdkjava.impl.auth.response.DefaultAuthenticationResponse;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DummyDataStore;
 import ru.icbcom.aistdapsdkjava.impl.mapper.ObjectMappers;
 

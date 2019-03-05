@@ -22,8 +22,7 @@ class PaginatedIterator<T extends Resource> implements Iterator<T> {
         if (!hasNext) {
             if (resource.hasLink("next")) {
                 Link nextLink = resource.getLink("next").orElseThrow();
-
-                AbstractCollectionResource nextResource = resource.getDataStore().getResource(nextLink.expand().getHref(), this.resource.getClass());
+                AbstractCollectionResource nextResource = resource.getDataStore().getResource(nextLink, this.resource.getClass());
                 Iterator<T> nextIterator = nextResource.getPagedResources().iterator();
                 if (nextIterator.hasNext()) {
                     hasNext = true;

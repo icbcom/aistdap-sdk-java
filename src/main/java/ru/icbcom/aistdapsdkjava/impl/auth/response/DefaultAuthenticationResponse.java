@@ -1,4 +1,4 @@
-package ru.icbcom.aistdapsdkjava.impl.auth;
+package ru.icbcom.aistdapsdkjava.impl.auth.response;
 
 import lombok.Getter;
 import lombok.Setter;

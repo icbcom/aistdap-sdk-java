@@ -1,6 +1,6 @@
 package ru.icbcom.aistdapsdkjava.impl.auth;
 
-public interface Authentication {
+public interface AuthenticationKey {
     String getLogin();
     String getPassword();
 }

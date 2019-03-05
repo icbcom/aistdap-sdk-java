@@ -1,4 +1,4 @@
-package ru.icbcom.aistdapsdkjava.impl.auth;
+package ru.icbcom.aistdapsdkjava.impl.auth.request;
 
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
 
