@@ -17,12 +17,12 @@ public class ObjectTypeDemo {
         Client client = Clients.builder()
                 .setBaseUrl("http://127.0.0.1:8080/")
                 .setLogin("Admin")
-                .setPassword("newPassword")
+                .setPassword("newPassword2")
                 .build();
 
         ObjectTypeCriteria criteria = ObjectTypes.criteria()
                 .orderByName().ascending()
-                .pageSize(200);
+                .pageSize(1);
         ObjectTypeList objectTypeList = client.getObjectTypes(criteria);
 
 //        ObjectTypeList objectTypeList = client.getObjectTypes();

@@ -20,6 +20,7 @@ import java.util.Map;
 
 public class DefaultResourceFactory implements ResourceFactory {
 
+    // TODO: Вынести в отдельное место, вроде Classes.
     private final static Map<Class<? extends Resource>, Class<? extends Resource>> implementationMap = Map.of(
             EnumSetValue.class, DefaultEnumSetValue.class,
             Attribute.class, DefaultAttribute.class,
