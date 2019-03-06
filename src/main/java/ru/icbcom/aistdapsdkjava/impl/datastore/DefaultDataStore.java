@@ -1,19 +1,30 @@
 package ru.icbcom.aistdapsdkjava.impl.datastore;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.springframework.hateoas.Link;
+import org.springframework.http.client.BufferingClientHttpRequestFactory;
+import org.springframework.http.client.ClientHttpRequestFactory;
+import org.springframework.http.client.ClientHttpResponse;
+import org.springframework.http.client.SimpleClientHttpRequestFactory;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.util.Assert;
+import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 import ru.icbcom.aistdapsdkjava.api.query.Criteria;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
-import ru.icbcom.aistdapsdkjava.impl.auth.*;
+import ru.icbcom.aistdapsdkjava.impl.auth.AuthenticationKey;
 import ru.icbcom.aistdapsdkjava.impl.auth.controller.AuthenticationController;
 import ru.icbcom.aistdapsdkjava.impl.auth.controller.DefaultAuthenticationController;
 import ru.icbcom.aistdapsdkjava.impl.mapper.ObjectMappers;
 import ru.icbcom.aistdapsdkjava.impl.query.DefaultCriteria;
 import ru.icbcom.aistdapsdkjava.impl.query.EmptyCriteria;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,28 +44,18 @@ public class DefaultDataStore implements DataStore {
     public DefaultDataStore(String baseUrl, AuthenticationKey authenticationKey) {
         this.baseUrl = baseUrl;
         this.authentication = authenticationKey;
-        this.restTemplate = createRestTemplate();
+        this.restTemplate = RestTemplateFactory.create(this);
         this.authenticationController = new DefaultAuthenticationController(baseUrl, authenticationKey, restTemplate);
+//        registerRestTemplateAuthorizationInterceptor();
     }
 
-    // TODO: Вынести в отдельную фабрику.
-    private RestTemplate createRestTemplate() {
-        MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
-        messageConverter.setPrettyPrint(true);
-        messageConverter.setObjectMapper(ObjectMappers.create(this));
-
-        RestTemplate restTemplate = new RestTemplate();
-        restTemplate.getMessageConverters().removeIf(m -> m.getClass().getName().equals(MappingJackson2HttpMessageConverter.class.getName()));
-        restTemplate.getMessageConverters().add(messageConverter);
-
+    private void registerRestTemplateAuthorizationInterceptor() {
         restTemplate.getInterceptors().add((request, body, execution) -> {
             if (authenticationController.isAuthenticated()) {
                 request.getHeaders().add("Authorization", "Bearer " + authenticationController.getTokens().getAccessToken());
             }
             return execution.execute(request, body);
         });
-
-        return restTemplate;
     }
 
     @Override
@@ -87,6 +88,56 @@ public class DefaultDataStore implements DataStore {
             arguments.put("sort", propertyName + "," + order);
         }
         return arguments;
+    }
+
+    private static class RestTemplateFactory {
+        public static RestTemplate create(DataStore dataStore) {
+            ObjectMapper objectMapper = ObjectMappers.create(dataStore);
+
+            MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
+            messageConverter.setPrettyPrint(true);
+            messageConverter.setObjectMapper(objectMapper);
+
+            ClientHttpRequestFactory factory = new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory());
+
+//            RestTemplate restTemplate = new RestTemplate(factory);
+            RestTemplate restTemplate = new RestTemplate();
+            restTemplate.getMessageConverters().removeIf(m -> m.getClass().getName().equals(MappingJackson2HttpMessageConverter.class.getName()));
+            restTemplate.getMessageConverters().add(messageConverter);
+
+            restTemplate.setErrorHandler(new RestTemplateResponseErrorHandler(objectMapper));
+
+//            restTemplate.getInterceptors().add((request, body, execution) -> {
+//                ClientHttpResponse response = execution.execute(request, body);
+//                String s = IOUtils.toString(response.getBody(), StandardCharsets.UTF_8);
+//                System.out.println("Response!");
+//                System.out.println(s);
+//
+//                return response;
+//            });
+
+            return restTemplate;
+        }
+    }
+
+    @RequiredArgsConstructor
+    private static class RestTemplateResponseErrorHandler extends DefaultResponseErrorHandler {
+
+        private final ObjectMapper objectMapper;
+
+        @Override
+        public void handleError(ClientHttpResponse response) throws IOException {
+            InputStream bodyInputStream = response.getBody();
+            String s = IOUtils.toString(bodyInputStream, StandardCharsets.UTF_8);
+            System.out.println("Response!");
+            System.out.println(s);
+
+
+//            System.out.println(s);
+            throw new RuntimeException();
+//            ru.icbcom.aistdapsdkjava.api.error.Error error = objectMapper.readValue(response.getBody(), DefaultError.class);
+//            throw new AistDapException(error);
+        }
     }
 
 }

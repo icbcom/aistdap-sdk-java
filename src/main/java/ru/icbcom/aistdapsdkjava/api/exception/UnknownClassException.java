@@ -1,5 +1,8 @@
-package ru.icbcom.aistdapsdkjava.api.lang;
+package ru.icbcom.aistdapsdkjava.api.exception;
 
+/**
+ *
+ */
 public class UnknownClassException extends RuntimeException {
     public UnknownClassException(String message) {
         super(message);

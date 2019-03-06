@@ -1,6 +1,5 @@
 package ru.icbcom.aistdapsdkjava.impl.error;
 
-import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;

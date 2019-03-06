@@ -1,7 +1,7 @@
 package ru.icbcom.aistdapsdkjava.impl.resource;
 
-import ru.icbcom.aistdapsdkjava.api.lang.InstantiationException;
-import ru.icbcom.aistdapsdkjava.api.lang.UnknownClassException;
+import ru.icbcom.aistdapsdkjava.api.exception.InstantiationException;
+import ru.icbcom.aistdapsdkjava.api.exception.UnknownClassException;
 import ru.icbcom.aistdapsdkjava.api.objecttype.Attribute;
 import ru.icbcom.aistdapsdkjava.api.objecttype.EnumSetValue;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
