@@ -1,4 +1,4 @@
-package ru.icbcom.aistdapsdkjava.impl.datastore.auth.controller;
+package ru.icbcom.aistdapsdkjava.impl.datastore.auth.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.hateoas.Link;
@@ -6,7 +6,8 @@ import org.springframework.web.client.RestTemplate;
 import ru.icbcom.aistdapsdkjava.api.exception.BackendException;
 import ru.icbcom.aistdapsdkjava.api.resource.VoidResource;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.AuthenticationKey;
-import ru.icbcom.aistdapsdkjava.impl.datastore.auth.Tokens;
+import ru.icbcom.aistdapsdkjava.impl.datastore.auth.tokens.DefaultTokens;
+import ru.icbcom.aistdapsdkjava.impl.datastore.auth.tokens.Tokens;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.request.AuthenticationRequest;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.request.DefaultAuthenticationRequest;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.request.DefaultRefreshTokenRequest;
@@ -48,19 +49,19 @@ public class DefaultAuthenticationService implements AuthenticationService {
         if (!isAuthenticated()) {
             login();
         } else {
-            if (tokens.secondsToExpiration() <= REFRESH_TOKEN_EXPIRATION_MARGIN) {
-                refreshTokenOrReloginIfFailed();
+            if (tokens.getSecondsToExpiration() <= REFRESH_TOKEN_EXPIRATION_MARGIN) {
+                refreshTokenOrReloginIfRefreshFailed();
             }
         }
     }
 
-    private void refreshTokenOrReloginIfFailed() {
+    private void refreshTokenOrReloginIfRefreshFailed() {
         try {
             refreshToken();
         } catch (BackendException e) {
             boolean refreshTokenExpired = e.getStatus() == 401 && e.getDetail().equals("Refresh token expired");
             if (refreshTokenExpired) {
-                log.info("Cannot refresh token due to refresh token expiration. Trying to re-login instead.");
+                log.info("Cannot refresh access token due to refresh token expiration. Trying to re-login instead.");
                 login();
             }
             throw e;
@@ -93,7 +94,7 @@ public class DefaultAuthenticationService implements AuthenticationService {
     }
 
     private Tokens createTokensFor(AuthenticationResponse authenticationResponse) {
-        return Tokens.builder()
+        return DefaultTokens.builder()
                 .accessToken(authenticationResponse.getAccessToken())
                 .expiresIn(authenticationResponse.getExpiresIn())
                 .refreshToken(authenticationResponse.getRefreshToken())

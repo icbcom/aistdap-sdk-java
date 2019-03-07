@@ -5,7 +5,7 @@ import org.springframework.http.HttpRequest;
 import org.springframework.http.client.ClientHttpRequestExecution;
 import org.springframework.http.client.ClientHttpRequestInterceptor;
 import org.springframework.http.client.ClientHttpResponse;
-import ru.icbcom.aistdapsdkjava.impl.datastore.auth.controller.AuthenticationService;
+import ru.icbcom.aistdapsdkjava.impl.datastore.auth.service.AuthenticationService;
 
 import java.io.IOException;
 

@@ -1,6 +1,6 @@
-package ru.icbcom.aistdapsdkjava.impl.datastore.auth.controller;
+package ru.icbcom.aistdapsdkjava.impl.datastore.auth.service;
 
-import ru.icbcom.aistdapsdkjava.impl.datastore.auth.Tokens;
+import ru.icbcom.aistdapsdkjava.impl.datastore.auth.tokens.Tokens;
 
 /**
  * Сервис аутентификации в платформе AistDap.
