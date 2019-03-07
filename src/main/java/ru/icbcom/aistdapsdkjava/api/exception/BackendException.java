@@ -7,23 +7,23 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * Исключение, используемое при получении каких-либо ошибок от платформы AistDap.
+ * Исключение, используемое при получении каких-либо ошибок полученных от сервера платформы AistDap.
  */
-public class AistDapException extends RuntimeException implements Error {
+public class BackendException extends AistDapSdkException implements Error {
 
     private final Error error;
 
     private static String buildExceptionMessage(Error error) {
         Assert.notNull(error, "Error argument cannot be null");
         StringBuilder sb = new StringBuilder();
-        sb.append("HTTP ").append(error.getStatus())
-                .append(", Title ").append(error.getTitle())
-                .append(", Detail ").append(error.getDetail())
-                .append(" (").append(error.getMoreInfo()).append(")");
+        sb.append("HTTP: ").append(error.getStatus())
+                .append(", Title: '").append(error.getTitle()).append("'")
+                .append(", Detail: '").append(error.getDetail()).append("'")
+                .append(", More info: '").append(error.getMoreInfo()).append("'");
         return sb.toString();
     }
 
-    public AistDapException(Error error) {
+    public BackendException(Error error) {
         super(buildExceptionMessage(error));
         this.error = error;
     }

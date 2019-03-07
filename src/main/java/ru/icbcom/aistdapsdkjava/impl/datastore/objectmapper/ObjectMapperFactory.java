@@ -1,4 +1,4 @@
-package ru.icbcom.aistdapsdkjava.impl.mapper;
+package ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper;
 
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.InjectableValues;
@@ -17,7 +17,7 @@ import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultEnumSetValue;
 import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultObjectType;
 import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultSection;
 
-public class ObjectMappers {
+public class ObjectMapperFactory {
 
     public static ObjectMapper create(DataStore dataStore) {
         ObjectMapper objectMapper = new ObjectMapper();

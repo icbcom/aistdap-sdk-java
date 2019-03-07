@@ -1,32 +1,23 @@
 package ru.icbcom.aistdapsdkjava.impl.datastore;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.io.IOUtils;
 import org.springframework.hateoas.Link;
-import org.springframework.http.client.BufferingClientHttpRequestFactory;
-import org.springframework.http.client.ClientHttpRequestFactory;
-import org.springframework.http.client.ClientHttpResponse;
-import org.springframework.http.client.SimpleClientHttpRequestFactory;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.util.Assert;
-import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
+import ru.icbcom.aistdapsdkjava.api.exception.AistDapSdkException;
 import ru.icbcom.aistdapsdkjava.api.query.Criteria;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
-import ru.icbcom.aistdapsdkjava.impl.auth.AuthenticationKey;
-import ru.icbcom.aistdapsdkjava.impl.auth.controller.AuthenticationController;
-import ru.icbcom.aistdapsdkjava.impl.auth.controller.DefaultAuthenticationController;
-import ru.icbcom.aistdapsdkjava.impl.mapper.ObjectMappers;
+import ru.icbcom.aistdapsdkjava.impl.datastore.auth.AuthenticationKey;
+import ru.icbcom.aistdapsdkjava.impl.datastore.auth.DefaultAuthenticationKey;
+import ru.icbcom.aistdapsdkjava.impl.datastore.auth.controller.AuthenticationService;
+import ru.icbcom.aistdapsdkjava.impl.datastore.auth.controller.DefaultAuthenticationService;
+import ru.icbcom.aistdapsdkjava.impl.datastore.linkexpander.DefaultCriteriaLinkExpander;
+import ru.icbcom.aistdapsdkjava.impl.datastore.resttemplate.AuthorizationClientHttpRequestInterceptor;
+import ru.icbcom.aistdapsdkjava.impl.datastore.resttemplate.RestTemplateFactory;
+import ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper.ObjectMapperFactory;
 import ru.icbcom.aistdapsdkjava.impl.query.DefaultCriteria;
 import ru.icbcom.aistdapsdkjava.impl.query.EmptyCriteria;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.Map;
 
 // TODO: Протестиировать данный класс.
 
@@ -36,26 +27,25 @@ public class DefaultDataStore implements DataStore {
     private static final String DEFAULT_CRITERIA_MSG = "The " + DefaultDataStore.class.getName()
             + " implementation only functions with " + DefaultCriteria.class.getName() + " instances.";
 
-    private final String baseUrl;
-    private final AuthenticationKey authentication;
+    private final DefaultCriteriaLinkExpander linkExpander;
+    private final AuthenticationService authenticationService;
     private final RestTemplate restTemplate;
-    private final AuthenticationController authenticationController;
 
-    public DefaultDataStore(String baseUrl, AuthenticationKey authenticationKey) {
-        this.baseUrl = baseUrl;
-        this.authentication = authenticationKey;
-        this.restTemplate = RestTemplateFactory.create(this);
-        this.authenticationController = new DefaultAuthenticationController(baseUrl, authenticationKey, restTemplate);
-//        registerRestTemplateAuthorizationInterceptor();
+    public DefaultDataStore(String baseUrl, String login, String password) {
+        this.linkExpander = new DefaultCriteriaLinkExpander();
+        this.authenticationService = createAuthenticationController(baseUrl, new DefaultAuthenticationKey(login, password));
+        this.restTemplate = RestTemplateFactory.create(ObjectMapperFactory.create(this));
+        registerRestTemplateAuthorizationInterceptor();
+    }
+
+    private DefaultAuthenticationService createAuthenticationController(String baseUrl, AuthenticationKey authenticationKey) {
+        ObjectMapper objectMapper = ObjectMapperFactory.create(this);
+        RestTemplate restTemplate = RestTemplateFactory.create(objectMapper);
+        return new DefaultAuthenticationService(baseUrl, authenticationKey, restTemplate);
     }
 
     private void registerRestTemplateAuthorizationInterceptor() {
-        restTemplate.getInterceptors().add((request, body, execution) -> {
-            if (authenticationController.isAuthenticated()) {
-                request.getHeaders().add("Authorization", "Bearer " + authenticationController.getTokens().getAccessToken());
-            }
-            return execution.execute(request, body);
-        });
+        restTemplate.getInterceptors().add(new AuthorizationClientHttpRequestInterceptor(authenticationService));
     }
 
     @Override
@@ -65,79 +55,17 @@ public class DefaultDataStore implements DataStore {
 
     @Override
     public <T extends Resource, C extends Criteria> T getResource(Link link, Class<T> clazz, C criteria) {
+        Assert.notNull(link, "link argument cannot be null");
+        Assert.notNull(link, "criteria argument cannot be null");
         Assert.isInstanceOf(DefaultCriteria.class, criteria, DEFAULT_CRITERIA_MSG);
 
-        authenticationController.ensureAuthentication();
-
-        Map<String, String> arguments = prepareCriteriaArguments((DefaultCriteria) criteria);
-        String expandedHref = link.expand(arguments).getHref();
-        return restTemplate.getForObject(expandedHref, clazz);
-    }
-
-    private Map<String, String> prepareCriteriaArguments(DefaultCriteria defaultCriteria) {
-        Map<String, String> arguments = new HashMap<>();
-        if (defaultCriteria.hasPageNumber()) {
-            arguments.put("page", defaultCriteria.getPageNumber().toString());
+        authenticationService.ensureAuthentication();
+        String expandedHref = linkExpander.expand(link, (DefaultCriteria) criteria);
+        T resource = restTemplate.getForObject(expandedHref, clazz);
+        if (resource == null) {
+            throw new AistDapSdkException(String.format("Server returned null for requested resource '%s'", expandedHref));
         }
-        if (defaultCriteria.hasPageSize()) {
-            arguments.put("size", defaultCriteria.getPageSize().toString());
-        }
-        if (defaultCriteria.hasOrder()) {
-            String propertyName = defaultCriteria.getOrder().getPropertyName();
-            String order = defaultCriteria.getOrder().isAscending() ? "asc" : "desc";
-            arguments.put("sort", propertyName + "," + order);
-        }
-        return arguments;
-    }
-
-    private static class RestTemplateFactory {
-        public static RestTemplate create(DataStore dataStore) {
-            ObjectMapper objectMapper = ObjectMappers.create(dataStore);
-
-            MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
-            messageConverter.setPrettyPrint(true);
-            messageConverter.setObjectMapper(objectMapper);
-
-            ClientHttpRequestFactory factory = new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory());
-
-//            RestTemplate restTemplate = new RestTemplate(factory);
-            RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getMessageConverters().removeIf(m -> m.getClass().getName().equals(MappingJackson2HttpMessageConverter.class.getName()));
-            restTemplate.getMessageConverters().add(messageConverter);
-
-            restTemplate.setErrorHandler(new RestTemplateResponseErrorHandler(objectMapper));
-
-//            restTemplate.getInterceptors().add((request, body, execution) -> {
-//                ClientHttpResponse response = execution.execute(request, body);
-//                String s = IOUtils.toString(response.getBody(), StandardCharsets.UTF_8);
-//                System.out.println("Response!");
-//                System.out.println(s);
-//
-//                return response;
-//            });
-
-            return restTemplate;
-        }
-    }
-
-    @RequiredArgsConstructor
-    private static class RestTemplateResponseErrorHandler extends DefaultResponseErrorHandler {
-
-        private final ObjectMapper objectMapper;
-
-        @Override
-        public void handleError(ClientHttpResponse response) throws IOException {
-            InputStream bodyInputStream = response.getBody();
-            String s = IOUtils.toString(bodyInputStream, StandardCharsets.UTF_8);
-            System.out.println("Response!");
-            System.out.println(s);
-
-
-//            System.out.println(s);
-            throw new RuntimeException();
-//            ru.icbcom.aistdapsdkjava.api.error.Error error = objectMapper.readValue(response.getBody(), DefaultError.class);
-//            throw new AistDapException(error);
-        }
+        return resource;
     }
 
 }

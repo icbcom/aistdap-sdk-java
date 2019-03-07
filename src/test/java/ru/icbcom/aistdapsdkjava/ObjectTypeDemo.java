@@ -13,19 +13,17 @@ import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypes;
 public class ObjectTypeDemo {
 
     @Test
-    void demo() {
+    void demo() throws InterruptedException {
         Client client = Clients.builder()
                 .setBaseUrl("http://127.0.0.1:8080/")
                 .setLogin("Admin")
-                .setPassword("newPassword2")
+                .setPassword("newPassword")
                 .build();
 
         ObjectTypeCriteria criteria = ObjectTypes.criteria()
-                .orderByName().ascending()
-                .pageSize(1);
+                .orderById().ascending()
+                .pageSize(100);
         ObjectTypeList objectTypeList = client.getObjectTypes(criteria);
-
-//        ObjectTypeList objectTypeList = client.getObjectTypes();
         for (ObjectType objectType : objectTypeList) {
             log.info(objectType.toString());
         }

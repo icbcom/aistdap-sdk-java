@@ -1,6 +1,5 @@
 package ru.icbcom.aistdapsdkjava.impl.client;
 
-import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.hateoas.Link;
 import ru.icbcom.aistdapsdkjava.api.client.Client;
@@ -10,12 +9,15 @@ import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypes;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
 import ru.icbcom.aistdapsdkjava.api.resource.ResourceFactory;
 import ru.icbcom.aistdapsdkjava.api.resource.VoidResource;
-import ru.icbcom.aistdapsdkjava.impl.auth.DefaultAuthenticationKey;
+import ru.icbcom.aistdapsdkjava.impl.datastore.auth.DefaultAuthenticationKey;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DefaultDataStore;
 import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultObjectTypeList;
 import ru.icbcom.aistdapsdkjava.impl.resource.DefaultResourceFactory;
 import ru.icbcom.aistdapsdkjava.impl.resource.DefaultVoidResource;
+import ru.icbcom.aistdapsdkjava.impl.utils.Utils;
+
+// TODO: Рефакториинг и тестирование.
 
 @Slf4j
 public class DefaultClient implements Client {
@@ -24,9 +26,9 @@ public class DefaultClient implements Client {
     private final DataStore dataStore;
     private final ResourceFactory resourceFactory;
 
-    public DefaultClient(String baseUrl, String login, String password) {
+    DefaultClient(String baseUrl, String login, String password) {
         this.baseUrl = baseUrl;
-        this.dataStore = new DefaultDataStore(baseUrl, new DefaultAuthenticationKey(login, password));
+        this.dataStore = new DefaultDataStore(baseUrl, login, password);
         this.resourceFactory = new DefaultResourceFactory(this.dataStore);
     }
 
@@ -40,16 +42,10 @@ public class DefaultClient implements Client {
         return getObjectTypes(ObjectTypes.criteria());
     }
 
-    // TODO: Рефакториинг и тестирование.
-
     @Override
-    @SneakyThrows
     public ObjectTypeList getObjectTypes(ObjectTypeCriteria criteria) {
-        // Получение корневой страницы.
         VoidResource rootResource = dataStore.getResource(new Link(baseUrl), DefaultVoidResource.class);
         Link objectTypesLink = rootResource.getLink("dap:objectTypes").orElseThrow();
-
-        // Получение списка типов объектов.
         return dataStore.getResource(objectTypesLink, DefaultObjectTypeList.class, criteria);
     }
 

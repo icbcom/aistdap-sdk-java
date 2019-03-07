@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DummyDataStore;
-import ru.icbcom.aistdapsdkjava.impl.mapper.ObjectMappers;
+import ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper.ObjectMapperFactory;
 
 import java.io.IOException;
 
@@ -19,7 +19,7 @@ class DefaultErrorDeserializationTest {
 
     DefaultErrorDeserializationTest() {
         dataStore = new DummyDataStore();
-        objectMapper = ObjectMappers.create(dataStore);
+        objectMapper = ObjectMapperFactory.create(dataStore);
     }
 
 

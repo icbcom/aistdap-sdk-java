@@ -1,27 +1,30 @@
-package ru.icbcom.aistdapsdkjava.impl.auth.controller;
+package ru.icbcom.aistdapsdkjava.impl.datastore.auth.controller;
 
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.hateoas.Link;
 import org.springframework.web.client.RestTemplate;
+import ru.icbcom.aistdapsdkjava.api.exception.BackendException;
 import ru.icbcom.aistdapsdkjava.api.resource.VoidResource;
-import ru.icbcom.aistdapsdkjava.impl.auth.*;
-import ru.icbcom.aistdapsdkjava.impl.auth.request.AuthenticationRequest;
-import ru.icbcom.aistdapsdkjava.impl.auth.request.DefaultAuthenticationRequest;
-import ru.icbcom.aistdapsdkjava.impl.auth.request.DefaultRefreshTokenRequest;
-import ru.icbcom.aistdapsdkjava.impl.auth.request.RefreshTokenRequest;
-import ru.icbcom.aistdapsdkjava.impl.auth.response.AuthenticationResponse;
-import ru.icbcom.aistdapsdkjava.impl.auth.response.DefaultAuthenticationResponse;
+import ru.icbcom.aistdapsdkjava.impl.datastore.auth.AuthenticationKey;
+import ru.icbcom.aistdapsdkjava.impl.datastore.auth.Tokens;
+import ru.icbcom.aistdapsdkjava.impl.datastore.auth.request.AuthenticationRequest;
+import ru.icbcom.aistdapsdkjava.impl.datastore.auth.request.DefaultAuthenticationRequest;
+import ru.icbcom.aistdapsdkjava.impl.datastore.auth.request.DefaultRefreshTokenRequest;
+import ru.icbcom.aistdapsdkjava.impl.datastore.auth.request.RefreshTokenRequest;
+import ru.icbcom.aistdapsdkjava.impl.datastore.auth.response.AuthenticationResponse;
+import ru.icbcom.aistdapsdkjava.impl.datastore.auth.response.DefaultAuthenticationResponse;
 import ru.icbcom.aistdapsdkjava.impl.exception.LinkNotFoundException;
 import ru.icbcom.aistdapsdkjava.impl.resource.DefaultVoidResource;
+import ru.icbcom.aistdapsdkjava.impl.utils.Utils;
 
 import java.time.Instant;
 
 // TODO: Протестировать данный класс.
 
-@RequiredArgsConstructor
 @Slf4j
-public class DefaultAuthenticationController implements AuthenticationController {
+public class DefaultAuthenticationService implements AuthenticationService {
+
+    private static final int REFRESH_TOKEN_EXPIRATION_MARGIN = 60;
 
     private final String baseUrl;
     private final AuthenticationKey authentication;
@@ -31,7 +34,11 @@ public class DefaultAuthenticationController implements AuthenticationController
     private Link loginLink;
     private Link refreshTokenLink;
 
-    // Можно запустить поток, который будет периодически выполнять обновления токена. Надо это сделать!
+    public DefaultAuthenticationService(String baseUrl, AuthenticationKey authentication, RestTemplate restTemplate) {
+        this.baseUrl = baseUrl;
+        this.authentication = authentication;
+        this.restTemplate = restTemplate;
+    }
 
     @Override
     public void ensureAuthentication() {
@@ -39,32 +46,48 @@ public class DefaultAuthenticationController implements AuthenticationController
             requestAndSaveTokenRelatedLinks();
         }
         if (!isAuthenticated()) {
-            log.info("Not authenticated. Trying to authenticate...");
             login();
         } else {
-            if (tokens.secondsToExpiration() <= 60) {
-                log.info("Refreshing tokens...");
-                refreshToken();
-                log.info("Tokens refreshed");
+            if (tokens.secondsToExpiration() <= REFRESH_TOKEN_EXPIRATION_MARGIN) {
+                refreshTokenOrReloginIfFailed();
             }
-            log.debug("Already authenticated. No authentication required.");
+        }
+    }
+
+    private void refreshTokenOrReloginIfFailed() {
+        try {
+            refreshToken();
+        } catch (BackendException e) {
+            boolean refreshTokenExpired = e.getStatus() == 401 && e.getDetail().equals("Refresh token expired");
+            if (refreshTokenExpired) {
+                log.info("Cannot refresh token due to refresh token expiration. Trying to re-login instead.");
+                login();
+            }
+            throw e;
         }
     }
 
     private void refreshToken() {
+        log.info("Refreshing tokens...");
         RefreshTokenRequest refreshTokenRequest = new DefaultRefreshTokenRequest(tokens.getRefreshToken());
         AuthenticationResponse authenticationResponse = restTemplate.postForObject(refreshTokenLink.getHref(), refreshTokenRequest, DefaultAuthenticationResponse.class);
+        Utils.assertResourceNotNull(authenticationResponse, "Received authentication response was null");
         tokens = createTokensFor(authenticationResponse);
+        log.info("Successfully refreshed tokens.");
     }
 
     private void login() {
+        log.info("Trying to login...");
         AuthenticationRequest authenticationRequest = new DefaultAuthenticationRequest(authentication.getLogin(), authentication.getPassword());
         AuthenticationResponse authenticationResponse = restTemplate.postForObject(loginLink.getHref(), authenticationRequest, DefaultAuthenticationResponse.class);
+        Utils.assertResourceNotNull(authenticationResponse, "Received authentication response was null");
         tokens = createTokensFor(authenticationResponse);
+        log.info("Successfully logged in.");
     }
 
     private void requestAndSaveTokenRelatedLinks() {
         VoidResource rootResource = restTemplate.getForObject(baseUrl, DefaultVoidResource.class);
+        Utils.assertResourceNotNull(rootResource, "Received root resource was null");
         loginLink = rootResource.getLink("dap:login").orElseThrow(() -> new LinkNotFoundException(baseUrl, "dap:login"));
         refreshTokenLink = rootResource.getLink("dap:refreshToken").orElseThrow(() -> new LinkNotFoundException(baseUrl, "dap:refreshToken"));
     }

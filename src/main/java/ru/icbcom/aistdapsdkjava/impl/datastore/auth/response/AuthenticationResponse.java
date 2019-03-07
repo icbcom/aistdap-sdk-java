@@ -1,6 +1,4 @@
-package ru.icbcom.aistdapsdkjava.impl.auth.response;
-
-import ru.icbcom.aistdapsdkjava.api.resource.Resource;
+package ru.icbcom.aistdapsdkjava.impl.datastore.auth.response;
 
 public interface AuthenticationResponse {
     String getAccessToken();

@@ -5,13 +5,12 @@ import org.junit.jupiter.api.Test;
 import ru.icbcom.aistdapsdkjava.api.resource.VoidResource;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DummyDataStore;
-import ru.icbcom.aistdapsdkjava.impl.mapper.ObjectMappers;
+import ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper.ObjectMapperFactory;
 
 import java.io.IOException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class DefaultVoidResourceDeserializationTest {
 
@@ -20,7 +19,7 @@ class DefaultVoidResourceDeserializationTest {
 
     public DefaultVoidResourceDeserializationTest() {
         this.dataStore = new DummyDataStore();
-        this.objectMapper = ObjectMappers.create(dataStore);
+        this.objectMapper = ObjectMapperFactory.create(dataStore);
     }
 
     @Test

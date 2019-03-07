@@ -8,11 +8,11 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import ru.icbcom.aistdapsdkjava.api.objecttype.AttributeType;
 import ru.icbcom.aistdapsdkjava.api.objecttype.Section;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DummyDataStore;
-import ru.icbcom.aistdapsdkjava.impl.mapper.ObjectMappers;
+import ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper.ObjectMapperFactory;
 
 class DefaultSectionSerializationTest {
 
-    private ObjectMapper objectMapper = ObjectMappers.create(new DummyDataStore());
+    private ObjectMapper objectMapper = ObjectMapperFactory.create(new DummyDataStore());
 
     @Test
     void serializationShouldWorkProperly() throws JsonProcessingException, JSONException {

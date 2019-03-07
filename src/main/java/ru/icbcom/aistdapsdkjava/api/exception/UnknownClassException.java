@@ -3,7 +3,7 @@ package ru.icbcom.aistdapsdkjava.api.exception;
 /**
  *
  */
-public class UnknownClassException extends RuntimeException {
+public class UnknownClassException extends AistDapSdkException {
     public UnknownClassException(String message) {
         super(message);
     }

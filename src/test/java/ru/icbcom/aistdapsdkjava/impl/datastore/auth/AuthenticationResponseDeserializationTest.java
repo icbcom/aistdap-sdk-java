@@ -1,11 +1,11 @@
-package ru.icbcom.aistdapsdkjava.impl.auth;
+package ru.icbcom.aistdapsdkjava.impl.datastore.auth;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import ru.icbcom.aistdapsdkjava.impl.auth.response.AuthenticationResponse;
-import ru.icbcom.aistdapsdkjava.impl.auth.response.DefaultAuthenticationResponse;
+import ru.icbcom.aistdapsdkjava.impl.datastore.auth.response.AuthenticationResponse;
+import ru.icbcom.aistdapsdkjava.impl.datastore.auth.response.DefaultAuthenticationResponse;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DummyDataStore;
-import ru.icbcom.aistdapsdkjava.impl.mapper.ObjectMappers;
+import ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper.ObjectMapperFactory;
 
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.*;
 
 class AuthenticationResponseDeserializationTest {
 
-    private ObjectMapper objectMapper = ObjectMappers.create(new DummyDataStore());
+    private ObjectMapper objectMapper = ObjectMapperFactory.create(new DummyDataStore());
 
     @Test
     void deserializationShouldWorkProperly() throws IOException {

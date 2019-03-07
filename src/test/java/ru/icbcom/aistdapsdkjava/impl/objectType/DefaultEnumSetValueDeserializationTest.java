@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import ru.icbcom.aistdapsdkjava.api.objecttype.EnumSetValue;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DummyDataStore;
-import ru.icbcom.aistdapsdkjava.impl.mapper.ObjectMappers;
+import ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper.ObjectMapperFactory;
 
 import java.io.IOException;
 
@@ -19,7 +19,7 @@ public class DefaultEnumSetValueDeserializationTest {
 
     DefaultEnumSetValueDeserializationTest() {
         dataStore = new DummyDataStore();
-        objectMapper = ObjectMappers.create(dataStore);
+        objectMapper = ObjectMapperFactory.create(dataStore);
     }
 
     @Test

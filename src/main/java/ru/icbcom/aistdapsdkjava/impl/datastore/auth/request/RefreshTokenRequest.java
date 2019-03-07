@@ -1,4 +1,4 @@
-package ru.icbcom.aistdapsdkjava.impl.auth.request;
+package ru.icbcom.aistdapsdkjava.impl.datastore.auth.request;
 
 public interface RefreshTokenRequest {
     String getRefreshToken();
