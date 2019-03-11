@@ -16,7 +16,7 @@ test {
 
 dependencies {
 	api 'org.springframework.hateoas:spring-hateoas:0.25.1.RELEASE'
-	implementation 'org.springframework:spring-web:5.1.5.RELEASE'
+	api 'org.springframework:spring-web:5.1.5.RELEASE'
 	implementation 'commons-validator:commons-validator:1.4.0'
 	implementation 'commons-io:commons-io:2.6'
 	implementation 'ch.qos.logback:logback-classic:1.2.3'

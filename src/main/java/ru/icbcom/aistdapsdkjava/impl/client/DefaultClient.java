@@ -9,18 +9,26 @@ import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypes;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
 import ru.icbcom.aistdapsdkjava.api.resource.ResourceFactory;
 import ru.icbcom.aistdapsdkjava.api.resource.VoidResource;
-import ru.icbcom.aistdapsdkjava.impl.datastore.auth.DefaultAuthenticationKey;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DefaultDataStore;
+import ru.icbcom.aistdapsdkjava.impl.datastore.auth.AuthenticationServiceFactory;
+import ru.icbcom.aistdapsdkjava.impl.datastore.auth.DefaultAuthenticationServiceFactory;
+import ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper.DefaultObjectMapperFactory;
+import ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper.ObjectMapperFactory;
+import ru.icbcom.aistdapsdkjava.impl.datastore.resttemplate.DefaultRestTemplateFactory;
+import ru.icbcom.aistdapsdkjava.impl.datastore.resttemplate.RestTemplateFactory;
 import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultObjectTypeList;
 import ru.icbcom.aistdapsdkjava.impl.resource.DefaultResourceFactory;
 import ru.icbcom.aistdapsdkjava.impl.resource.DefaultVoidResource;
-import ru.icbcom.aistdapsdkjava.impl.utils.Utils;
 
 // TODO: Рефакториинг и тестирование.
 
 @Slf4j
 public class DefaultClient implements Client {
+
+    private final static ObjectMapperFactory objectMapperFactory = new DefaultObjectMapperFactory();
+    private final static AuthenticationServiceFactory authenticationServiceFactory = new DefaultAuthenticationServiceFactory();
+    private final static RestTemplateFactory restTemplateFactory = new DefaultRestTemplateFactory();
 
     private final String baseUrl;
     private final DataStore dataStore;
@@ -28,7 +36,7 @@ public class DefaultClient implements Client {
 
     DefaultClient(String baseUrl, String login, String password) {
         this.baseUrl = baseUrl;
-        this.dataStore = new DefaultDataStore(baseUrl, login, password);
+        this.dataStore = new DefaultDataStore(baseUrl, login, password, objectMapperFactory, authenticationServiceFactory, restTemplateFactory);
         this.resourceFactory = new DefaultResourceFactory(this.dataStore);
     }
 

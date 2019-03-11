@@ -1,9 +1,10 @@
-package ru.icbcom.aistdapsdkjava.impl.exception;
+package ru.icbcom.aistdapsdkjava.api.exception;
 
 import lombok.Getter;
+import ru.icbcom.aistdapsdkjava.api.exception.AistDapSdkException;
 
 @Getter
-public class LinkNotFoundException extends RuntimeException {
+public class LinkNotFoundException extends AistDapSdkException {
 
     private final String resourceHref;
     private final String rel;

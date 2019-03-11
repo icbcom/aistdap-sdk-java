@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.response.AuthenticationResponse;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.response.DefaultAuthenticationResponse;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DummyDataStore;
-import ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper.ObjectMapperFactory;
+import ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper.DefaultObjectMapperFactory;
 
 import java.io.IOException;
 
@@ -15,7 +15,7 @@ import static org.hamcrest.Matchers.*;
 
 class AuthenticationResponseDeserializationTest {
 
-    private ObjectMapper objectMapper = ObjectMapperFactory.create(new DummyDataStore());
+    private ObjectMapper objectMapper = new DefaultObjectMapperFactory().create(new DummyDataStore());
 
     @Test
     void deserializationShouldWorkProperly() throws IOException {

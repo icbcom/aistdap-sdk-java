@@ -8,11 +8,11 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.request.DefaultRefreshTokenRequest;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.request.RefreshTokenRequest;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DummyDataStore;
-import ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper.ObjectMapperFactory;
+import ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper.DefaultObjectMapperFactory;
 
 class DefaultRefreshTokenRequestSerializationTest {
 
-    private ObjectMapper objectMapper = ObjectMapperFactory.create(new DummyDataStore());
+    private ObjectMapper objectMapper = new DefaultObjectMapperFactory().create(new DummyDataStore());
 
     @Test
     void serializationShouldWorkProperly() throws JsonProcessingException, JSONException {

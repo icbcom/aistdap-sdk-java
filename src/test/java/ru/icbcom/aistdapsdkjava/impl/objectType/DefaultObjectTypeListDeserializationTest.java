@@ -7,7 +7,7 @@ import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypeList;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DummyDataStore;
-import ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper.ObjectMapperFactory;
+import ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper.DefaultObjectMapperFactory;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -25,7 +25,7 @@ class DefaultObjectTypeListDeserializationTest {
 
     public DefaultObjectTypeListDeserializationTest() {
         this.dataStore = new DummyDataStore();
-        this.objectMapper = ObjectMapperFactory.create(dataStore);
+        this.objectMapper = new DefaultObjectMapperFactory().create(dataStore);
     }
 
     @Test

@@ -8,11 +8,11 @@ import org.skyscreamer.jsonassert.JSONAssert;
 import ru.icbcom.aistdapsdkjava.api.objecttype.AttributeType;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DummyDataStore;
-import ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper.ObjectMapperFactory;
+import ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper.DefaultObjectMapperFactory;
 
 class DefaultObjectTypeSerializationTest {
 
-    private ObjectMapper objectMapper = ObjectMapperFactory.create(new DummyDataStore());
+    private ObjectMapper objectMapper = new DefaultObjectMapperFactory().create(new DummyDataStore());
 
     @Test
     void serializationShouldWorkProperly() throws JsonProcessingException, JSONException {

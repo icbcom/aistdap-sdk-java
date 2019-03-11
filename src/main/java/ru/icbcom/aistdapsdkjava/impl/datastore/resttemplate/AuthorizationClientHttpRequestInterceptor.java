@@ -9,8 +9,6 @@ import ru.icbcom.aistdapsdkjava.impl.datastore.auth.service.AuthenticationServic
 
 import java.io.IOException;
 
-// TODO: Протестировать данный класс.
-
 @RequiredArgsConstructor
 public class AuthorizationClientHttpRequestInterceptor implements ClientHttpRequestInterceptor {
     private final AuthenticationService authenticationService;

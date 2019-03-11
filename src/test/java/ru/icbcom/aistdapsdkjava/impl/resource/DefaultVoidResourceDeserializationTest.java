@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import ru.icbcom.aistdapsdkjava.api.resource.VoidResource;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DummyDataStore;
-import ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper.ObjectMapperFactory;
+import ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper.DefaultObjectMapperFactory;
 
 import java.io.IOException;
 
@@ -19,7 +19,7 @@ class DefaultVoidResourceDeserializationTest {
 
     public DefaultVoidResourceDeserializationTest() {
         this.dataStore = new DummyDataStore();
-        this.objectMapper = ObjectMapperFactory.create(dataStore);
+        this.objectMapper = new DefaultObjectMapperFactory().create(dataStore);
     }
 
     @Test

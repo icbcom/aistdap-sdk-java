@@ -5,7 +5,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.web.client.RestTemplate;
 import ru.icbcom.aistdapsdkjava.api.exception.BackendException;
 import ru.icbcom.aistdapsdkjava.api.resource.VoidResource;
-import ru.icbcom.aistdapsdkjava.impl.datastore.auth.AuthenticationKey;
+import ru.icbcom.aistdapsdkjava.impl.datastore.auth.key.AuthenticationKey;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.tokens.DefaultTokens;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.tokens.Tokens;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.request.AuthenticationRequest;
@@ -14,13 +14,11 @@ import ru.icbcom.aistdapsdkjava.impl.datastore.auth.request.DefaultRefreshTokenR
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.request.RefreshTokenRequest;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.response.AuthenticationResponse;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.response.DefaultAuthenticationResponse;
-import ru.icbcom.aistdapsdkjava.impl.exception.LinkNotFoundException;
+import ru.icbcom.aistdapsdkjava.api.exception.LinkNotFoundException;
 import ru.icbcom.aistdapsdkjava.impl.resource.DefaultVoidResource;
 import ru.icbcom.aistdapsdkjava.impl.utils.Utils;
 
 import java.time.Instant;
-
-// TODO: Протестировать данный класс.
 
 @Slf4j
 public class DefaultAuthenticationService implements AuthenticationService {
@@ -63,8 +61,9 @@ public class DefaultAuthenticationService implements AuthenticationService {
             if (refreshTokenExpired) {
                 log.info("Cannot refresh access token due to refresh token expiration. Trying to re-login instead.");
                 login();
+            } else {
+                throw e;
             }
-            throw e;
         }
     }
 

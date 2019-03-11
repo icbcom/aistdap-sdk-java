@@ -22,7 +22,7 @@ public class ObjectTypeDemo {
 
         ObjectTypeCriteria criteria = ObjectTypes.criteria()
                 .orderById().ascending()
-                .pageSize(100);
+                .pageSize(200);
         ObjectTypeList objectTypeList = client.getObjectTypes(criteria);
         for (ObjectType objectType : objectTypeList) {
             log.info(objectType.toString());

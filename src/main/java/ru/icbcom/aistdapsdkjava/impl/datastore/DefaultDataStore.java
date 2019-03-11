@@ -1,6 +1,5 @@
 package ru.icbcom.aistdapsdkjava.impl.datastore;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.hateoas.Link;
 import org.springframework.util.Assert;
@@ -8,14 +7,13 @@ import org.springframework.web.client.RestTemplate;
 import ru.icbcom.aistdapsdkjava.api.exception.AistDapSdkException;
 import ru.icbcom.aistdapsdkjava.api.query.Criteria;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
-import ru.icbcom.aistdapsdkjava.impl.datastore.auth.AuthenticationKey;
-import ru.icbcom.aistdapsdkjava.impl.datastore.auth.DefaultAuthenticationKey;
+import ru.icbcom.aistdapsdkjava.impl.datastore.auth.AuthenticationServiceFactory;
+import ru.icbcom.aistdapsdkjava.impl.datastore.auth.key.DefaultAuthenticationKey;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.service.AuthenticationService;
-import ru.icbcom.aistdapsdkjava.impl.datastore.auth.service.DefaultAuthenticationService;
 import ru.icbcom.aistdapsdkjava.impl.datastore.linkexpander.DefaultCriteriaLinkExpander;
+import ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper.ObjectMapperFactory;
 import ru.icbcom.aistdapsdkjava.impl.datastore.resttemplate.AuthorizationClientHttpRequestInterceptor;
 import ru.icbcom.aistdapsdkjava.impl.datastore.resttemplate.RestTemplateFactory;
-import ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper.ObjectMapperFactory;
 import ru.icbcom.aistdapsdkjava.impl.query.DefaultCriteria;
 import ru.icbcom.aistdapsdkjava.impl.query.EmptyCriteria;
 
@@ -31,20 +29,16 @@ public class DefaultDataStore implements DataStore {
     private final AuthenticationService authenticationService;
     private final RestTemplate restTemplate;
 
-    public DefaultDataStore(String baseUrl, String login, String password) {
+    public DefaultDataStore(String baseUrl, String login, String password, ObjectMapperFactory objectMapperFactory,
+                            AuthenticationServiceFactory authenticationServiceFactory, RestTemplateFactory restTemplateFactory) {
         this.linkExpander = new DefaultCriteriaLinkExpander();
-        this.authenticationService = createAuthenticationController(baseUrl, new DefaultAuthenticationKey(login, password));
-        this.restTemplate = RestTemplateFactory.create(ObjectMapperFactory.create(this));
-        registerRestTemplateAuthorizationInterceptor();
+        this.restTemplate = restTemplateFactory.create(objectMapperFactory.create(this));
+        this.authenticationService = authenticationServiceFactory.create(baseUrl, new DefaultAuthenticationKey(login, password), this.restTemplate);
+
+        registerRestTemplateAuthorizationInterceptor(this.restTemplate, this.authenticationService);
     }
 
-    private DefaultAuthenticationService createAuthenticationController(String baseUrl, AuthenticationKey authenticationKey) {
-        ObjectMapper objectMapper = ObjectMapperFactory.create(this);
-        RestTemplate restTemplate = RestTemplateFactory.create(objectMapper);
-        return new DefaultAuthenticationService(baseUrl, authenticationKey, restTemplate);
-    }
-
-    private void registerRestTemplateAuthorizationInterceptor() {
+    private void registerRestTemplateAuthorizationInterceptor(RestTemplate restTemplate, AuthenticationService authenticationService) {
         restTemplate.getInterceptors().add(new AuthorizationClientHttpRequestInterceptor(authenticationService));
     }
 

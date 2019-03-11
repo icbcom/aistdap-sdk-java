@@ -7,11 +7,11 @@ import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
 import ru.icbcom.aistdapsdkjava.api.objecttype.EnumSetValue;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DummyDataStore;
-import ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper.ObjectMapperFactory;
+import ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper.DefaultObjectMapperFactory;
 
 public class DefaultEnumSetValueSerializationTest {
 
-    private ObjectMapper objectMapper = ObjectMapperFactory.create(new DummyDataStore());
+    private ObjectMapper objectMapper = new DefaultObjectMapperFactory().create(new DummyDataStore());
 
     @Test
     void serializationShouldWorkProperly() throws JsonProcessingException, JSONException {

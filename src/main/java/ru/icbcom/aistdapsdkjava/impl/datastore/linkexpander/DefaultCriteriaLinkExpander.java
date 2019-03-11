@@ -6,8 +6,6 @@ import ru.icbcom.aistdapsdkjava.impl.query.DefaultCriteria;
 import java.util.HashMap;
 import java.util.Map;
 
-// TODO: Протестировать данный класс.
-
 public class DefaultCriteriaLinkExpander {
     public String expand(Link link, DefaultCriteria criteria) {
         Map<String, String> arguments = prepareCriteriaArguments(criteria);
