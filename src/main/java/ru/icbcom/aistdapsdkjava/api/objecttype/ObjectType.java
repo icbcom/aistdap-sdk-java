@@ -1,6 +1,8 @@
 package ru.icbcom.aistdapsdkjava.api.objecttype;
 
+import ru.icbcom.aistdapsdkjava.api.resource.Deletable;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
+import ru.icbcom.aistdapsdkjava.api.resource.Savable;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -8,7 +10,7 @@ import java.util.Optional;
 /**
  * Тип объекта.
  */
-public interface ObjectType extends Resource {
+public interface ObjectType extends Resource, Savable, Deletable {
 
     /**
      * Возвращает идентификатор данного типа объекта.

@@ -2,7 +2,10 @@ package ru.icbcom.aistdapsdkjava.impl.client;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.hateoas.Link;
+import org.springframework.util.Assert;
 import ru.icbcom.aistdapsdkjava.api.client.Client;
+import ru.icbcom.aistdapsdkjava.api.exception.LinkNotFoundException;
+import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypeCriteria;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypeList;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypes;
@@ -52,9 +55,19 @@ public class DefaultClient implements Client {
 
     @Override
     public ObjectTypeList getObjectTypes(ObjectTypeCriteria criteria) {
-        VoidResource rootResource = dataStore.getResource(new Link(baseUrl), DefaultVoidResource.class);
-        Link objectTypesLink = rootResource.getLink("dap:objectTypes").orElseThrow();
+        Link objectTypesLink = getRootResourceLink("dap:objectTypes");
         return dataStore.getResource(objectTypesLink, DefaultObjectTypeList.class, criteria);
+    }
+
+    @Override
+    public ObjectType createObjectType(ObjectType objectType) {
+        Link objectTypesLink = getRootResourceLink("dap:objectTypes");
+        return dataStore.create(objectTypesLink, objectType);
+    }
+
+    private Link getRootResourceLink(String rel) {
+        VoidResource rootResource = dataStore.getResource(new Link(baseUrl), DefaultVoidResource.class);
+        return rootResource.getLink(rel).orElseThrow(() -> new LinkNotFoundException(rel, baseUrl));
     }
 
 }

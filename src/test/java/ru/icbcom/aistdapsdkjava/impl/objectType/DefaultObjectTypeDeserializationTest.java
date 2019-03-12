@@ -193,4 +193,29 @@ class DefaultObjectTypeDeserializationTest {
         ));
     }
 
+    @Test
+    void deserializationOfObjectTypeWithEmptySectionShouldWorkProperly() throws IOException {
+        String json =
+                "{\n" +
+                        "\t\"id\":1,\n" +
+                        "\t\"name\": \"ObjectTypeName\",\n" +
+                        "\t\"caption\": \"Заголовок типа объекта\",\n" +
+                        "\t\"device\": false,\n" +
+                        "\t\"sections\": [],\n" +
+                        "\t\"enabled\": true \n" +
+                        "}";
+
+        ObjectType objectType = objectMapper.readValue(json, DefaultObjectType.class);
+        assertThat(objectType, allOf(
+                hasProperty("id", is(1L)),
+                hasProperty("name", is("ObjectTypeName")),
+                hasProperty("caption", is("Заголовок типа объекта")),
+                hasProperty("device", is(false)),
+                hasProperty("sections", is(empty())),
+                hasProperty("enabled", is(true)),
+                hasProperty("links", is(empty())),
+                hasProperty("dataStore", sameInstance(dataStore))
+        ));
+    }
+
 }

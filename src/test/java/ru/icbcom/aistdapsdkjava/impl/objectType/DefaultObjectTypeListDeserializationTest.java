@@ -17,6 +17,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class DefaultObjectTypeListDeserializationTest {
 
@@ -109,6 +110,64 @@ class DefaultObjectTypeListDeserializationTest {
                 )
         ));
 
+    }
+
+    @Test
+    void emptyListDeserializationShouldWorkProperly() throws IOException {
+        String json =
+                "{\n" +
+                "  \"_embedded\": {\n" +
+                "    \"dap:objectTypes\": [ ]\n" +
+                "  },\n" +
+                "  \"_links\": {\n" +
+                "     \"self\": {\n" +
+                "      \"href\": \"http://127.0.0.1:8080/objectTypes?page=0&size=3\"\n" +
+                "    },\n" +
+                "    \"search\": {\n" +
+                "      \"href\": \"http://127.0.0.1:8080/objectTypes/search\"\n" +
+                "    },\n" +
+                "    \"curies\": [\n" +
+                "      {\n" +
+                "        \"href\": \"http://127.0.0.1:8080/documentation/{rel}.html\",\n" +
+                "        \"name\": \"dap\",\n" +
+                "        \"templated\": true\n" +
+                "      }\n" +
+                "    ]\n" +
+                "  },\n" +
+                "  \"page\": {\n" +
+                "    \"size\": 0,\n" +
+                "    \"totalElements\": 0,\n" +
+                "    \"totalPages\": 1,\n" +
+                "    \"number\": 0\n" +
+                "  }\n" +
+                "}";
+
+        ObjectTypeList objectTypes = objectMapper.readValue(json, DefaultObjectTypeList.class);
+        assertThat(objectTypes, allOf(
+                hasProperty("size", is(0L)),
+                hasProperty("totalElements", is(0L)),
+                hasProperty("totalPages", is(1L)),
+                hasProperty("number", is(0L)),
+                hasProperty("links", contains(
+                        allOf(
+                                hasProperty("rel", is("self")),
+                                hasProperty("href", is("http://127.0.0.1:8080/objectTypes?page=0&size=3")),
+                                hasProperty("templated", is(false))
+                        ),
+                        allOf(
+                                hasProperty("rel", is("search")),
+                                hasProperty("href", is("http://127.0.0.1:8080/objectTypes/search")),
+                                hasProperty("templated", is(false))
+                        ),
+                        allOf(
+                                hasProperty("rel", is("curies")),
+                                hasProperty("href", is("http://127.0.0.1:8080/documentation/{rel}.html")),
+                                hasProperty("templated", is(true))
+                        )
+                )),
+                hasProperty("dataStore", sameInstance(dataStore))
+        ));
+        assertFalse(objectTypes.iterator().hasNext());
     }
 
 }

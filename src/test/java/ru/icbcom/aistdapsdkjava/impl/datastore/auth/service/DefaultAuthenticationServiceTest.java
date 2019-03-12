@@ -10,7 +10,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.hateoas.Link;
 import org.springframework.web.client.RestTemplate;
 import ru.icbcom.aistdapsdkjava.api.exception.AistDapSdkException;
-import ru.icbcom.aistdapsdkjava.api.exception.BackendException;
+import ru.icbcom.aistdapsdkjava.api.exception.AistDapBackendException;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.key.AuthenticationKey;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.key.DefaultAuthenticationKey;
@@ -239,7 +239,7 @@ class DefaultAuthenticationServiceTest {
         defaultError.setTitle("Unauthorized");
         defaultError.setStatus(401);
         defaultError.setDetail("Refresh token expired");
-        BackendException backendException = new BackendException(defaultError);
+        AistDapBackendException backendException = new AistDapBackendException(defaultError);
 
         when(restTemplate.postForObject(eq("http://127.0.0.1/auth/token"), any(RefreshTokenRequest.class), eq(DefaultAuthenticationResponse.class))).thenThrow(backendException);
         doReturn(authenticationResponse).when(restTemplate).postForObject(eq("http://127.0.0.1/auth/login"), any(AuthenticationRequest.class), eq(DefaultAuthenticationResponse.class));

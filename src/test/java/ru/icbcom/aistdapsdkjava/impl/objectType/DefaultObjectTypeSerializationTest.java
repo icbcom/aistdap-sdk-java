@@ -81,4 +81,25 @@ class DefaultObjectTypeSerializationTest {
         JSONAssert.assertEquals(expected, objectMapper.writeValueAsString(objectType), true);
     }
 
+    @Test
+    void serializationOfObjectTypeWithEmptySectionsShouldWorkProperly() throws JsonProcessingException, JSONException {
+        ObjectType objectType = new DefaultObjectType(null)
+                .setId(1L)
+                .setName("ObjectTypeName")
+                .setCaption("Заголовок типа объекта")
+                .setDevice(false)
+                .setEnabled(true);
+
+        String expected =
+                "{\n" +
+                        "\t\"id\":1,\n" +
+                        "\t\"name\": \"ObjectTypeName\",\n" +
+                        "\t\"caption\": \"Заголовок типа объекта\",\n" +
+                        "\t\"device\": false,\n" +
+                        "\t\"sections\": [],\n" +
+                        "\t\"enabled\": true \n" +
+                        "}";
+        JSONAssert.assertEquals(expected, objectMapper.writeValueAsString(objectType), true);
+    }
+
 }

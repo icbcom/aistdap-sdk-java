@@ -86,7 +86,6 @@ class DefaultErrorDeserializationTest {
                         "}";
 
         DefaultError error = objectMapper.readValue(json, DefaultError.class);
-        System.out.println(error);
         assertThat(error, allOf(
                 hasProperty("title", is("Constraint Violation")),
                 hasProperty("status", is(400)),

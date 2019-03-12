@@ -3,7 +3,7 @@ package ru.icbcom.aistdapsdkjava.impl.datastore.auth.service;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.hateoas.Link;
 import org.springframework.web.client.RestTemplate;
-import ru.icbcom.aistdapsdkjava.api.exception.BackendException;
+import ru.icbcom.aistdapsdkjava.api.exception.AistDapBackendException;
 import ru.icbcom.aistdapsdkjava.api.resource.VoidResource;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.key.AuthenticationKey;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.tokens.DefaultTokens;
@@ -56,7 +56,7 @@ public class DefaultAuthenticationService implements AuthenticationService {
     private void refreshTokenOrReloginIfRefreshFailed() {
         try {
             refreshToken();
-        } catch (BackendException e) {
+        } catch (AistDapBackendException e) {
             boolean refreshTokenExpired = e.getStatus() == 401 && e.getDetail().equals("Refresh token expired");
             if (refreshTokenExpired) {
                 log.info("Cannot refresh access token due to refresh token expiration. Trying to re-login instead.");

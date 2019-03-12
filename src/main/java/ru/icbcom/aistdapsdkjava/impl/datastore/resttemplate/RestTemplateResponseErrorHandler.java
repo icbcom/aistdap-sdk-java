@@ -6,7 +6,7 @@ import org.apache.commons.io.IOUtils;
 import org.springframework.http.client.ClientHttpResponse;
 import org.springframework.web.client.DefaultResponseErrorHandler;
 import ru.icbcom.aistdapsdkjava.api.exception.AistDapSdkException;
-import ru.icbcom.aistdapsdkjava.api.exception.BackendException;
+import ru.icbcom.aistdapsdkjava.api.exception.AistDapBackendException;
 import ru.icbcom.aistdapsdkjava.impl.error.DefaultError;
 
 import java.io.IOException;
@@ -26,7 +26,7 @@ public class RestTemplateResponseErrorHandler extends DefaultResponseErrorHandle
     public void handleError(ClientHttpResponse response) {
         String errorResponseBody = readResponseBody(response);
         DefaultError error = deserializeError(errorResponseBody);
-        throw new BackendException(error);
+        throw new AistDapBackendException(error);
     }
 
     private DefaultError deserializeError(String errorResponseBody) {

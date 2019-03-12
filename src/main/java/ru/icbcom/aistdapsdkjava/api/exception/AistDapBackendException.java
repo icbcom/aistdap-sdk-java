@@ -9,7 +9,7 @@ import java.util.Optional;
 /**
  * Исключение, используемое при получении каких-либо ошибок полученных от сервера платформы AistDap.
  */
-public class BackendException extends AistDapSdkException implements Error {
+public class AistDapBackendException extends AistDapSdkException implements Error {
 
     private final Error error;
 
@@ -23,7 +23,7 @@ public class BackendException extends AistDapSdkException implements Error {
         return sb.toString();
     }
 
-    public BackendException(Error error) {
+    public AistDapBackendException(Error error) {
         super(buildExceptionMessage(error));
         this.error = error;
     }

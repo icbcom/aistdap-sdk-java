@@ -1,7 +1,6 @@
 package ru.icbcom.aistdapsdkjava.impl.datastore.resttemplate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.hamcrest.collection.IsMapContaining;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,8 +9,7 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.client.ClientHttpResponse;
-import ru.icbcom.aistdapsdkjava.api.exception.BackendException;
-import ru.icbcom.aistdapsdkjava.impl.datastore.auth.request.AuthenticationRequest;
+import ru.icbcom.aistdapsdkjava.api.exception.AistDapBackendException;
 import ru.icbcom.aistdapsdkjava.impl.error.DefaultError;
 
 import java.io.ByteArrayInputStream;
@@ -61,7 +59,7 @@ class RestTemplateResponseErrorHandlerTest {
         when(response.getBody()).thenReturn(inputStream);
         when(objectMapper.readValue(any(String.class), eq(DefaultError.class))).thenReturn(defaultError);
 
-        BackendException exception = assertThrows(BackendException.class, () -> restTemplateResponseErrorHandler.handleError(response));
+        AistDapBackendException exception = assertThrows(AistDapBackendException.class, () -> restTemplateResponseErrorHandler.handleError(response));
         assertThat(exception, allOf(
             hasProperty("title", is("Unauthorized")),
             hasProperty("status", is(401)),

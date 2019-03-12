@@ -9,6 +9,7 @@ import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
 import ru.icbcom.aistdapsdkjava.api.objecttype.Section;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 import ru.icbcom.aistdapsdkjava.impl.resource.AbstractResource;
+import ru.icbcom.aistdapsdkjava.impl.resource.AbstractSavableResource;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -16,8 +17,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @ToString
-@JsonInclude(JsonInclude.Include.NON_EMPTY)
-public class DefaultObjectType extends AbstractResource implements ObjectType {
+public class DefaultObjectType extends AbstractSavableResource implements ObjectType {
 
     static final String ID_PROPERTY = "id";
     static final String NAME_PROPERTY = "name";
@@ -130,6 +130,11 @@ public class DefaultObjectType extends AbstractResource implements ObjectType {
     public ObjectType addSection(Section section) {
         sections.add(section);
         return this;
+    }
+
+    @Override
+    public void delete() {
+        getDataStore().delete(this);
     }
 
 }
