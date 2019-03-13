@@ -32,7 +32,7 @@ public class ObjectTypeDemo {
         ObjectTypeCriteria criteria = ObjectTypes.criteria()
                 .orderById().ascending()
                 .pageSize(200);
-        ObjectTypeList objectTypeList = client.getObjectTypes(criteria);
+        ObjectTypeList objectTypeList = client.objectTypes().getAll(criteria);
         for (ObjectType objectType : objectTypeList) {
             log.info(objectType.toString());
         }
@@ -40,11 +40,10 @@ public class ObjectTypeDemo {
 
     @Test
     void updateObjectType() {
-        ObjectTypeList objectTypeList = client.getObjectTypes();
+        ObjectTypeList objectTypeList = client.objectTypes().getAll();
 
         Iterable<ObjectType> iterable = objectTypeList::iterator;
         Stream<ObjectType> objectTypeStream = StreamSupport.stream(iterable.spliterator(), false);
-
         ObjectType mercuryObjectType = objectTypeStream.filter(objectType -> objectType.getId() == 1).findAny().orElseThrow();
 
         // Добавление нового атрибута.
@@ -104,7 +103,7 @@ public class ObjectTypeDemo {
                                         )
                         );
 
-        ObjectType createdObjectType = client.createObjectType(objectType);
+        ObjectType createdObjectType = client.objectTypes().create(objectType);
         log.info(createdObjectType.toString());
     }
 
@@ -117,9 +116,46 @@ public class ObjectTypeDemo {
                         .setDevice(false)
                         .setEnabled(true);
 
-        ObjectType createdObjectType = client.createObjectType(objectType);
+        ObjectType createdObjectType = client.objectTypes().create(objectType);
 
         createdObjectType.delete();
     }
+
+    @Test
+    void getAllEnabledDevices() {
+        ObjectTypeList objectTypeList = client.objectTypes().getAllEnabledDevices(
+                ObjectTypes.criteria()
+                        .orderByName().ascending()
+                        .pageSize(100)
+        );
+        for (ObjectType objectType : objectTypeList) {
+            log.info(objectType.toString());
+        }
+    }
+
+    @Test
+    void getAllDevices() {
+        ObjectTypeList objectTypeList = client.objectTypes().getAllDevices(
+                ObjectTypes.criteria()
+                        .orderByName().ascending()
+                        .pageSize(100)
+        );
+        for (ObjectType objectType : objectTypeList) {
+            log.info(objectType.toString());
+        }
+    }
+
+    @Test
+    void getAllEnabled() {
+        ObjectTypeList objectTypeList = client.objectTypes().getAllEnabled(
+                ObjectTypes.criteria()
+                        .orderByName().ascending()
+                        .pageSize(100)
+        );
+        for (ObjectType objectType : objectTypeList) {
+            log.info(objectType.toString());
+        }
+    }
+
 
 }
