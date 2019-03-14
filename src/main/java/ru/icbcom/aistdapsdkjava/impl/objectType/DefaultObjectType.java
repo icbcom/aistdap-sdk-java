@@ -147,8 +147,6 @@ public class DefaultObjectType extends AbstractSavableResource implements Object
         getDataStore().delete(this);
     }
 
-    // TODO: Протестировать новые методы.
-
     @Override
     @JsonIgnore
     public DataSourceList getDataSources() {
