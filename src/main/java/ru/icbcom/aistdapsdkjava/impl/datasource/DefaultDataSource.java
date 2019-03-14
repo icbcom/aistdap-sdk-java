@@ -1,6 +1,7 @@
 package ru.icbcom.aistdapsdkjava.impl.datasource;
 
 import com.fasterxml.jackson.annotation.JacksonInject;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.ToString;
 import org.springframework.hateoas.Link;
 import ru.icbcom.aistdapsdkjava.api.datasource.DataSource;
@@ -93,6 +94,7 @@ public class DefaultDataSource extends AbstractSavableResource implements DataSo
     // TODO: Протестировать данный метод: getObjectType()
 
     @Override
+    @JsonIgnore
     public ObjectType getObjectType() {
         Link objectTypeLink = getObjectTypeLink();
         return getDataStore().getResource(objectTypeLink, DefaultObjectType.class);

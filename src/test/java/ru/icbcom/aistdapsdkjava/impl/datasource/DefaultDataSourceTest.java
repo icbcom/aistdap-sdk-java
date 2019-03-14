@@ -38,7 +38,7 @@ class DefaultDataSourceTest {
                 hasProperty("caption", is("Название источника данных")),
                 hasProperty("measureItem", is("Единица измерения")),
                 hasProperty("dataSourceGroupId", is(1000L)),
-                hasProperty("dataStore", is(nullValue()))
+                hasProperty("dataStore", is(sameInstance(dataStore)))
         ));
     }
 
