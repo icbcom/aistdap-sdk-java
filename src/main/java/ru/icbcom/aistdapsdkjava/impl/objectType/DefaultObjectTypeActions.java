@@ -30,7 +30,7 @@ public class DefaultObjectTypeActions implements ObjectTypeActions {
     }
 
     @Override
-    public ObjectType create(ObjectType objectType) {
+    public ObjectType createObjectType(ObjectType objectType) {
         Link objectTypesLink = getRootResourceLink("dap:objectTypes");
         return dataStore.create(objectTypesLink, objectType);
     }

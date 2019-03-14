@@ -1,5 +1,6 @@
 package ru.icbcom.aistdapsdkjava.api.datasource;
 
+import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
 import ru.icbcom.aistdapsdkjava.api.resource.Deletable;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
 import ru.icbcom.aistdapsdkjava.api.resource.Savable;
@@ -58,5 +59,10 @@ public interface DataSource extends Resource, Savable, Deletable {
      * Устанавливает идентификатор группы источников данных, которой принадлежит данный источник.
      */
     DataSource setDataSourceGroupId(Long dataSourceGroupId);
+
+    /**
+     * Получение типа объекта, которому принадлежит данный источник данных.
+     */
+    ObjectType getObjectType();
 
 }

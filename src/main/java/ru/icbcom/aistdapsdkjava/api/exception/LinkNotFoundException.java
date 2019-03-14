@@ -10,16 +10,18 @@ public class LinkNotFoundException extends AistDapSdkException {
     private final String resourceHref;
     private final String rel;
 
-    public LinkNotFoundException(String rel) {
-        super(String.format("Link with relation '%s' was not found", rel));
-        this.resourceHref = null;
+    public LinkNotFoundException(String message, String resourceHref, String rel) {
+        super(message);
+        this.resourceHref = resourceHref;
         this.rel = rel;
     }
 
+    public LinkNotFoundException(String rel) {
+        this(String.format("Link with relation '%s' was not found", rel), null, rel);
+    }
+
     public LinkNotFoundException(String resourceHref, String rel) {
-        super(String.format("Link with relation '%s' was not found in resource with href '%s'", rel, resourceHref));
-        this.resourceHref = resourceHref;
-        this.rel = rel;
+        this(String.format("Link with relation '%s' was not found in resource with href '%s'", rel, resourceHref), resourceHref, rel);
     }
 
     public LinkNotFoundException(Link link, String rel) {

@@ -1,5 +1,6 @@
 package ru.icbcom.aistdapsdkjava.impl.resource;
 
+import ru.icbcom.aistdapsdkjava.api.datasource.DataSource;
 import ru.icbcom.aistdapsdkjava.api.exception.InstantiationException;
 import ru.icbcom.aistdapsdkjava.api.exception.UnknownClassException;
 import ru.icbcom.aistdapsdkjava.api.objecttype.Attribute;
@@ -9,6 +10,7 @@ import ru.icbcom.aistdapsdkjava.api.objecttype.Section;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
 import ru.icbcom.aistdapsdkjava.api.resource.ResourceFactory;
 import ru.icbcom.aistdapsdkjava.api.resource.VoidResource;
+import ru.icbcom.aistdapsdkjava.impl.datasource.DefaultDataSource;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultAttribute;
 import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultEnumSetValue;
@@ -26,7 +28,8 @@ public class DefaultResourceFactory implements ResourceFactory {
             Attribute.class, DefaultAttribute.class,
             Section.class, DefaultSection.class,
             ObjectType.class, DefaultObjectType.class,
-            VoidResource.class, DefaultVoidResource.class
+            VoidResource.class, DefaultVoidResource.class,
+            DataSource.class, DefaultDataSource.class
     );
 
     private final DataStore dataStore;

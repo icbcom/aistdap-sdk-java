@@ -2,6 +2,7 @@ package ru.icbcom.aistdapsdkjava.impl.resource;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ru.icbcom.aistdapsdkjava.api.datasource.DataSource;
 import ru.icbcom.aistdapsdkjava.api.exception.UnknownClassException;
 import ru.icbcom.aistdapsdkjava.api.objecttype.Attribute;
 import ru.icbcom.aistdapsdkjava.api.objecttype.EnumSetValue;
@@ -10,6 +11,7 @@ import ru.icbcom.aistdapsdkjava.api.objecttype.Section;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
 import ru.icbcom.aistdapsdkjava.api.resource.ResourceFactory;
 import ru.icbcom.aistdapsdkjava.api.resource.VoidResource;
+import ru.icbcom.aistdapsdkjava.impl.datasource.DefaultDataSource;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DummyDataStore;
 import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultAttribute;
@@ -77,6 +79,13 @@ class DefaultResourceFactoryTest {
     @Test
     void instantiationShouldWorkWhenConcreteClassPassedAsArgument() {
         assertEquals(DefaultObjectType.class, resourceFactory.instantiate(DefaultObjectType.class).getClass());
+    }
+
+    @Test
+    void dataSourceInstantiationShouldWorkProperly() {
+        DataSource object = resourceFactory.instantiate(DataSource.class);
+        assertEquals(DefaultDataSource.class, object.getClass());
+        assertThat(object, hasProperty("dataStore", sameInstance(dataStore)));
     }
 
     private interface UnknownResource extends Resource {

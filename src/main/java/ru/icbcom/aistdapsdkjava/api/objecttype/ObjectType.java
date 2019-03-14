@@ -1,5 +1,8 @@
 package ru.icbcom.aistdapsdkjava.api.objecttype;
 
+import ru.icbcom.aistdapsdkjava.api.datasource.DataSource;
+import ru.icbcom.aistdapsdkjava.api.datasource.DataSourceCriteria;
+import ru.icbcom.aistdapsdkjava.api.datasource.DataSourceList;
 import ru.icbcom.aistdapsdkjava.api.resource.Deletable;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
 import ru.icbcom.aistdapsdkjava.api.resource.Savable;
@@ -102,5 +105,25 @@ public interface ObjectType extends Resource, Savable, Deletable {
      * Добавляет секцию к данному типу объектов.
      */
     ObjectType addSection(Section section);
+
+    /**
+     * Получение списка источников {@link DataSource} данных принадлежащих данному типу объекта.
+     */
+    DataSourceList getDataSources();
+
+    /**
+     * Получение списка источников {@link DataSource} данных принадлежащих данному типу объекта.
+     */
+    DataSourceList getDataSources(DataSourceCriteria criteria);
+
+    /**
+     * Создание нового источника данных для данного типа объекта.
+     */
+    DataSource createDataSource(DataSource dataSource);
+
+    /**
+     * Получение источника данных для данного типа объекта по идентификатору источника данных.
+     */
+    Optional<DataSource> getDataSourceById(Long dataSourceId);
 
 }

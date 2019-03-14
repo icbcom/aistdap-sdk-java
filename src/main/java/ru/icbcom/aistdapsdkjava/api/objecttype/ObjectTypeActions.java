@@ -8,7 +8,7 @@ public interface ObjectTypeActions {
     /**
      * Создание нового типа объекта в системе.
      */
-    ObjectType create(ObjectType objectType);
+    ObjectType createObjectType(ObjectType objectType);
 
     /**
      * Получение списка всех типов объектов зарегистрированных в системе.
