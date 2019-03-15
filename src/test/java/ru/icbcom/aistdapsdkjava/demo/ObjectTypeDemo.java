@@ -1,4 +1,4 @@
-package ru.icbcom.aistdapsdkjava;
+package ru.icbcom.aistdapsdkjava.demo;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
@@ -6,6 +6,10 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import ru.icbcom.aistdapsdkjava.api.client.Client;
 import ru.icbcom.aistdapsdkjava.api.client.Clients;
+import ru.icbcom.aistdapsdkjava.api.datasource.DataSource;
+import ru.icbcom.aistdapsdkjava.api.datasource.DataSourceList;
+import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroup;
+import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroupList;
 import ru.icbcom.aistdapsdkjava.api.objecttype.*;
 
 import java.util.Optional;
@@ -157,5 +161,20 @@ public class ObjectTypeDemo {
         }
     }
 
+    @Test
+    void getById() {
+        ObjectType objectType = client.objectTypes().getById(23L).orElseThrow();
+        log.info(objectType.toString());
+
+        DataSourceList dataSources = objectType.getDataSources();
+        for (DataSource dataSource : dataSources) {
+            log.info(dataSource.toString());
+        }
+
+        DataSourceGroupList dataSourceGroups = objectType.getDataSourceGroups();
+        for (DataSourceGroup dataSourceGroup : dataSourceGroups) {
+            log.info(dataSourceGroup.toString());
+        }
+    }
 
 }

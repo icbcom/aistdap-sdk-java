@@ -1,5 +1,7 @@
 package ru.icbcom.aistdapsdkjava.api.objecttype;
 
+import java.util.Optional;
+
 /**
  * Интерфейс {@link ObjectTypeActions} содержит все основные функции для работы с типами объектов.
  */
@@ -50,6 +52,9 @@ public interface ObjectTypeActions {
      */
     ObjectTypeList getAllEnabled(ObjectTypeCriteria criteria);
 
-    // TODO: добавить метод поиска типа объекта по его идентификатору.
+    /**
+     * Получение типа объекта по его идентификатору.
+     */
+    Optional<ObjectType> getById(Long objectTypeId);
 
 }

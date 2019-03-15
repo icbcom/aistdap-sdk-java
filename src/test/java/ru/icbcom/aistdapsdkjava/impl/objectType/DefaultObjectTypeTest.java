@@ -10,6 +10,10 @@ import ru.icbcom.aistdapsdkjava.api.datasource.DataSource;
 import ru.icbcom.aistdapsdkjava.api.datasource.DataSourceCriteria;
 import ru.icbcom.aistdapsdkjava.api.datasource.DataSourceList;
 import ru.icbcom.aistdapsdkjava.api.datasource.DataSources;
+import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroup;
+import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroupCriteria;
+import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroupList;
+import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroups;
 import ru.icbcom.aistdapsdkjava.api.exception.AistDapBackendException;
 import ru.icbcom.aistdapsdkjava.api.exception.LinkNotFoundException;
 import ru.icbcom.aistdapsdkjava.api.objecttype.Attribute;
@@ -18,6 +22,8 @@ import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
 import ru.icbcom.aistdapsdkjava.api.objecttype.Section;
 import ru.icbcom.aistdapsdkjava.impl.datasource.DefaultDataSource;
 import ru.icbcom.aistdapsdkjava.impl.datasource.DefaultDataSourceList;
+import ru.icbcom.aistdapsdkjava.impl.datasourcegroup.DefaultDataSourceGroup;
+import ru.icbcom.aistdapsdkjava.impl.datasourcegroup.DefaultDataSourceGroupList;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 import ru.icbcom.aistdapsdkjava.impl.error.DefaultError;
 
@@ -157,6 +163,15 @@ class DefaultObjectTypeTest {
     }
 
     @Test
+    void saveShouldWorkProperly() {
+        ObjectType objectType = new DefaultObjectType(dataStore);
+        objectType.save();
+
+        verify(dataStore).save(same(objectType));
+        verifyNoMoreInteractions(dataStore);
+    }
+
+    @Test
     void deleteShouldWorkProperly() {
         ObjectType objectType = new DefaultObjectType(dataStore);
         objectType.delete();
@@ -284,7 +299,7 @@ class DefaultObjectTypeTest {
     }
 
     @Test
-    void getDataSourceByShouldReturnEmptyOptionalWhenThereIs404Error() {
+    void getDataSourceByIdShouldReturnEmptyOptionalWhenThereIs404Error() {
         ObjectType objectType = new DefaultObjectType(dataStore);
         objectType.add(new Link("http://127.0.0.1/objectTypes/1/dataSources", "dap:dataSources"));
 
@@ -314,6 +329,141 @@ class DefaultObjectTypeTest {
         assertSame(exceptionToThrow, exception);
 
         verify(dataStore).getResource(new Link("http://127.0.0.1/objectTypes/1/dataSources/10", "dap:dataSources"), DefaultDataSource.class);
+        verifyNoMoreInteractions(dataStore);
+    }
+
+    @Test
+    void getDataSourceGroupsWithCriteriaShouldWorkProperly() {
+        ObjectType objectType = new DefaultObjectType(dataStore);
+        objectType.add(new Link("http://127.0.0.1:8080/objectTypes/3/dataSourceGroups{?page,size,sort}", "dap:dataSourceGroups"));
+
+        DataSourceGroupCriteria criteria = DataSourceGroups.criteria()
+                .orderByCaption().ascending()
+                .pageSize(100);
+
+        DefaultDataSourceGroupList dataSourceGroupList = new DefaultDataSourceGroupList(dataStore);
+        when(dataStore.getResource(eq(new Link("http://127.0.0.1:8080/objectTypes/3/dataSourceGroups{?page,size,sort}", "dap:dataSourceGroups")), eq(DefaultDataSourceGroupList.class), same(criteria)))
+                .thenReturn(dataSourceGroupList);
+
+        DataSourceGroupList dataSourceGroups = objectType.getDataSourceGroups(criteria);
+        assertSame(dataSourceGroupList, dataSourceGroups);
+
+        verify(dataStore).getResource(eq(new Link("http://127.0.0.1:8080/objectTypes/3/dataSourceGroups{?page,size,sort}", "dap:dataSourceGroups")), eq(DefaultDataSourceGroupList.class), same(criteria));
+        verifyNoMoreInteractions(dataStore);
+    }
+
+    @Test
+    void getDataSourceGroupsWithCriteriaExceptionShouldBeThrownWhenThereIsNoLink() {
+        ObjectType objectType = new DefaultObjectType(dataStore);
+
+        DataSourceGroupCriteria criteria = DataSourceGroups.criteria()
+                .orderByCaption().ascending()
+                .pageSize(100);
+
+        LinkNotFoundException exception = assertThrows(LinkNotFoundException.class, () -> objectType.getDataSourceGroups(criteria));
+        assertThat(exception, allOf(
+                hasProperty("message", is("Link 'dap:dataSourceGroups' was not found in the current ObjectType object. Some methods may only be called on ObjectType objects that have already been persisted and have an existing 'dap:dataSourceGroups' link.")),
+                hasProperty("resourceHref", is(nullValue())),
+                hasProperty("rel", is("dap:dataSourceGroups"))
+        ));
+        verifyNoMoreInteractions(dataStore);
+    }
+
+    @Test
+    void getDataSourceGroupsShouldWorkProperly() {
+        ObjectType objectType = new DefaultObjectType(dataStore);
+        objectType.add(new Link("http://127.0.0.1:8080/objectTypes/3/dataSourceGroups{?page,size,sort}", "dap:dataSourceGroups"));
+
+        DefaultDataSourceGroupList dataSourceGroupList = new DefaultDataSourceGroupList(dataStore);
+        when(dataStore.getResource(eq(new Link("http://127.0.0.1:8080/objectTypes/3/dataSourceGroups{?page,size,sort}", "dap:dataSourceGroups")), eq(DefaultDataSourceGroupList.class), any()))
+                .thenReturn(dataSourceGroupList);
+
+        DataSourceGroupList dataSourceGroups = objectType.getDataSourceGroups();
+        assertSame(dataSourceGroupList, dataSourceGroups);
+
+        verify(dataStore).getResource(eq(new Link("http://127.0.0.1:8080/objectTypes/3/dataSourceGroups{?page,size,sort}", "dap:dataSourceGroups")), eq(DefaultDataSourceGroupList.class), any());
+        verifyNoMoreInteractions(dataStore);
+    }
+
+    @Test
+    void getDataSourceGroupByIdShouldWorkProperly() {
+        ObjectType objectType = new DefaultObjectType(dataStore);
+        objectType.add(new Link("http://127.0.0.1:8080/objectTypes/3/dataSourceGroups{?page,size,sort}", "dap:dataSourceGroups"));
+
+        DefaultDataSourceGroup dataSourceGroupToReturn = new DefaultDataSourceGroup(dataStore);
+        when(dataStore.getResource(new Link("http://127.0.0.1:8080/objectTypes/3/dataSourceGroups/10", "dap:dataSourceGroups"), DefaultDataSourceGroup.class)).thenReturn(dataSourceGroupToReturn);
+
+        Optional<DataSourceGroup> dataSourceGroupOptional = objectType.getDataSourceGroupById(10L);
+        assertTrue(dataSourceGroupOptional.isPresent());
+        assertSame(dataSourceGroupToReturn, dataSourceGroupOptional.get());
+
+        verify(dataStore).getResource(new Link("http://127.0.0.1:8080/objectTypes/3/dataSourceGroups/10", "dap:dataSourceGroups"), DefaultDataSourceGroup.class);
+        verifyNoMoreInteractions(dataStore);
+    }
+
+    @Test
+    void getDataSourceGroupByIdExceptionShouldBeThrownWhenThereIsNoLink() {
+        ObjectType objectType = new DefaultObjectType(dataStore);
+
+        LinkNotFoundException exception = assertThrows(LinkNotFoundException.class, () -> objectType.getDataSourceGroupById(10L));
+        assertThat(exception, allOf(
+                hasProperty("message", is("Link 'dap:dataSourceGroups' was not found in the current ObjectType object. Some methods may only be called on ObjectType objects that have already been persisted and have an existing 'dap:dataSourceGroups' link.")),
+                hasProperty("resourceHref", is(nullValue())),
+                hasProperty("rel", is("dap:dataSourceGroups"))
+        ));
+        verifyNoMoreInteractions(dataStore);
+    }
+
+    @Test
+    void getDataSourceGroupByIdShouldReturnEmptyOptionalWhenThereIs404Error() {
+        ObjectType objectType = new DefaultObjectType(dataStore);
+        objectType.add(new Link("http://127.0.0.1:8080/objectTypes/3/dataSourceGroups{?page,size,sort}", "dap:dataSourceGroups"));
+
+        DefaultError defaultError = new DefaultError();
+        defaultError.setStatus(404);
+        AistDapBackendException exceptionToThrow = new AistDapBackendException(defaultError);
+        doThrow(exceptionToThrow).when(dataStore).getResource(new Link("http://127.0.0.1:8080/objectTypes/3/dataSourceGroups/10", "dap:dataSourceGroups"), DefaultDataSourceGroup.class);
+
+        Optional<DataSourceGroup> dataSourceGroupOptional = objectType.getDataSourceGroupById(10L);
+        assertFalse(dataSourceGroupOptional.isPresent());
+
+        verify(dataStore).getResource(new Link("http://127.0.0.1:8080/objectTypes/3/dataSourceGroups/10", "dap:dataSourceGroups"), DefaultDataSourceGroup.class);
+        verifyNoMoreInteractions(dataStore);
+    }
+
+    @Test
+    void createDataSourceGroupShouldWorkProperly() {
+        ObjectType objectType = new DefaultObjectType(dataStore);
+        objectType.setId(100L);
+        objectType.add(new Link("http://127.0.0.1:8080/objectTypes/3/dataSourceGroups{?page,size,sort}", "dap:dataSourceGroups"));
+
+        DataSourceGroup dataSourceGroupToCreate = new DefaultDataSourceGroup(dataStore);
+
+        DataSourceGroup dataSourceGroupCreationResult = new DefaultDataSourceGroup(dataStore);
+        when(dataStore.create(new Link("http://127.0.0.1:8080/objectTypes/3/dataSourceGroups{?page,size,sort}", "dap:dataSourceGroups"), dataSourceGroupToCreate)).thenReturn(dataSourceGroupCreationResult);
+
+        DataSourceGroup createdDataSourceGroup = objectType.createDataSourceGroup(dataSourceGroupToCreate);
+
+        assertSame(dataSourceGroupCreationResult, createdDataSourceGroup);
+
+        ArgumentCaptor<DataSourceGroup> dataSourceArgumentCaptor = ArgumentCaptor.forClass(DataSourceGroup.class);
+        verify(dataStore).create(eq(new Link("http://127.0.0.1:8080/objectTypes/3/dataSourceGroups{?page,size,sort}", "dap:dataSourceGroups")), dataSourceArgumentCaptor.capture());
+        assertEquals(100L, dataSourceArgumentCaptor.getValue().getObjectTypeId());
+        verifyNoMoreInteractions(dataStore);
+    }
+
+    @Test
+    void createDataSourceGroupExceptionShouldBeThrownWhenThereIsNoLink() {
+        ObjectType objectType = new DefaultObjectType(dataStore);
+
+        DataSourceGroup dataSourceGroupToCreate = new DefaultDataSourceGroup(dataStore);
+
+        LinkNotFoundException exception = assertThrows(LinkNotFoundException.class, () -> objectType.createDataSourceGroup(dataSourceGroupToCreate));
+        assertThat(exception, allOf(
+                hasProperty("message", is("Link 'dap:dataSourceGroups' was not found in the current ObjectType object. Some methods may only be called on ObjectType objects that have already been persisted and have an existing 'dap:dataSourceGroups' link.")),
+                hasProperty("resourceHref", is(nullValue())),
+                hasProperty("rel", is("dap:dataSourceGroups"))
+        ));
         verifyNoMoreInteractions(dataStore);
     }
 

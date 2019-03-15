@@ -4,10 +4,10 @@ import com.fasterxml.jackson.annotation.JacksonInject;
 import lombok.ToString;
 import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroup;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
-import ru.icbcom.aistdapsdkjava.impl.resource.AbstractSavableResource;
+import ru.icbcom.aistdapsdkjava.impl.resource.AbstractInstanceResource;
 
 @ToString
-public class DefaultDataSourceGroup extends AbstractSavableResource implements DataSourceGroup {
+public class DefaultDataSourceGroup extends AbstractInstanceResource implements DataSourceGroup {
 
     static final String CAPTION_PROPERTY = "caption";
     static final String OBJECT_TYPE_ID_PROPERTY = "objectTypeId";
@@ -51,11 +51,6 @@ public class DefaultDataSourceGroup extends AbstractSavableResource implements D
     public DataSourceGroup setCaption(String caption) {
         this.caption = caption;
         return this;
-    }
-
-    @Override
-    public void delete() {
-        throw new IllegalStateException("Not implemented yet");
     }
 
 }

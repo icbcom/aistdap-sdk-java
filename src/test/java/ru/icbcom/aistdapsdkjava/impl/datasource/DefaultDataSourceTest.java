@@ -122,4 +122,36 @@ class DefaultDataSourceTest {
         verifyNoMoreInteractions(dataStore);
     }
 
+    @Test
+    void saveShouldWorkProperly() {
+        DataSource dataSource = new DefaultDataSource(dataStore)
+                .setDataSourceId(100L)
+                .setObjectTypeId(1L)
+                .setCaption("Название источника данных")
+                .setMeasureItem("Единица измерения")
+                .setDataSourceGroupId(1000L);
+        dataSource.add(new Link("http://127.0.0.1:8080/objectTypes/1/dataSource/100", "self"));
+
+        dataSource.save();
+
+        verify(dataStore).save(same(dataSource));
+        verifyNoMoreInteractions(dataStore);
+    }
+
+    @Test
+    void deleteShouldWorkProperly() {
+        DataSource dataSource = new DefaultDataSource(dataStore)
+                .setDataSourceId(100L)
+                .setObjectTypeId(1L)
+                .setCaption("Название источника данных")
+                .setMeasureItem("Единица измерения")
+                .setDataSourceGroupId(1000L);
+        dataSource.add(new Link("http://127.0.0.1:8080/objectTypes/1/dataSource/100", "self"));
+
+        dataSource.delete();
+
+        verify(dataStore).delete(same(dataSource));
+        verifyNoMoreInteractions(dataStore);
+    }
+
 }

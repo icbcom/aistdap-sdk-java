@@ -1,4 +1,4 @@
-package ru.icbcom.aistdapsdkjava;
+package ru.icbcom.aistdapsdkjava.demo;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -148,7 +148,7 @@ public class DataSourceDemo {
         ObjectType objectType = objectTypeStream.filter(ot -> ot.getId() == 1).findAny().orElseThrow();
         log.info(objectType.toString());
 
-        DataSource dataSource = objectType.getDataSourceById(40L).orElseThrow();
+        DataSource dataSource = objectType.getDataSourceById(2L).orElseThrow();
         log.info(dataSource.toString());
 
         DataSourceGroup dataSourceGroup = dataSource.getDataSourceGroup();

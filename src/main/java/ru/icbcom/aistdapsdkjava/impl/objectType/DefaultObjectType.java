@@ -4,12 +4,15 @@ import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.ToString;
 import org.springframework.hateoas.Link;
-import org.springframework.hateoas.UriTemplate;
 import org.springframework.util.Assert;
 import ru.icbcom.aistdapsdkjava.api.datasource.DataSource;
 import ru.icbcom.aistdapsdkjava.api.datasource.DataSourceCriteria;
 import ru.icbcom.aistdapsdkjava.api.datasource.DataSourceList;
 import ru.icbcom.aistdapsdkjava.api.datasource.DataSources;
+import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroup;
+import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroupCriteria;
+import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroupList;
+import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroups;
 import ru.icbcom.aistdapsdkjava.api.exception.AistDapBackendException;
 import ru.icbcom.aistdapsdkjava.api.exception.LinkNotFoundException;
 import ru.icbcom.aistdapsdkjava.api.objecttype.Attribute;
@@ -17,8 +20,10 @@ import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
 import ru.icbcom.aistdapsdkjava.api.objecttype.Section;
 import ru.icbcom.aistdapsdkjava.impl.datasource.DefaultDataSource;
 import ru.icbcom.aistdapsdkjava.impl.datasource.DefaultDataSourceList;
+import ru.icbcom.aistdapsdkjava.impl.datasourcegroup.DefaultDataSourceGroup;
+import ru.icbcom.aistdapsdkjava.impl.datasourcegroup.DefaultDataSourceGroupList;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
-import ru.icbcom.aistdapsdkjava.impl.resource.AbstractSavableResource;
+import ru.icbcom.aistdapsdkjava.impl.resource.AbstractInstanceResource;
 import ru.icbcom.aistdapsdkjava.impl.utils.LinkUtils;
 
 import java.util.ArrayList;
@@ -27,7 +32,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @ToString
-public class DefaultObjectType extends AbstractSavableResource implements ObjectType {
+public class DefaultObjectType extends AbstractInstanceResource implements ObjectType {
 
     static final String ID_PROPERTY = "id";
     static final String NAME_PROPERTY = "name";
@@ -143,11 +148,6 @@ public class DefaultObjectType extends AbstractSavableResource implements Object
     }
 
     @Override
-    public void delete() {
-        getDataStore().delete(this);
-    }
-
-    @Override
     @JsonIgnore
     public DataSourceList getDataSources() {
         return getDataSources(DataSources.criteria());
@@ -181,6 +181,7 @@ public class DefaultObjectType extends AbstractSavableResource implements Object
         return getSingleDataSource(singleDataSourceLink);
     }
 
+    // TODO: Код такого вида будет часто появляться. Нужно устранить дублирование.
     private Optional<DataSource> getSingleDataSource(Link singleDataSourceLink) {
         try {
             DefaultDataSource dataSource = getDataStore().getResource(singleDataSourceLink, DefaultDataSource.class);
@@ -192,6 +193,53 @@ public class DefaultObjectType extends AbstractSavableResource implements Object
                 throw e;
             }
         }
+    }
+
+    @Override
+    @JsonIgnore
+    public DataSourceGroupList getDataSourceGroups() {
+        return getDataSourceGroups(DataSourceGroups.criteria());
+    }
+
+    @Override
+    @JsonIgnore
+    public DataSourceGroupList getDataSourceGroups(DataSourceGroupCriteria criteria) {
+        Link dataSourceGroupsLink = getDataSourceGroupsLink();
+        return getDataStore().getResource(dataSourceGroupsLink, DefaultDataSourceGroupList.class, criteria);
+    }
+
+    private Link getDataSourceGroupsLink() {
+        return getLink("dap:dataSourceGroups").orElseThrow(
+                () -> new LinkNotFoundException("Link 'dap:dataSourceGroups' was not found in the current ObjectType object. Some methods " +
+                        "may only be called on ObjectType objects that have already been persisted and have an existing 'dap:dataSourceGroups' link.", null, "dap:dataSourceGroups"));
+    }
+
+    @Override
+    public Optional<DataSourceGroup> getDataSourceGroupById(Long dataSourceGroupId) {
+        Assert.notNull(dataSourceGroupId, "dataSourceId cannot be null");
+        Link dataSourceGroupsLink = getDataSourceGroupsLink();
+        Link singleDataSourceGroupLink = LinkUtils.appendLongIdToLink(dataSourceGroupsLink, dataSourceGroupId);
+        return getSingleDataSourceGroup(singleDataSourceGroupLink);
+    }
+
+    private Optional<DataSourceGroup> getSingleDataSourceGroup(Link singleDataSourceGroupLink) {
+        try {
+            DataSourceGroup dataSourceGroup = getDataStore().getResource(singleDataSourceGroupLink, DefaultDataSourceGroup.class);
+            return Optional.ofNullable(dataSourceGroup);
+        } catch (AistDapBackendException e) {
+            if (e.getStatus() == 404) {
+                return Optional.empty();
+            } else {
+                throw e;
+            }
+        }
+    }
+
+    @Override
+    public DataSourceGroup createDataSourceGroup(DataSourceGroup dataSourceGroup) {
+        Link dataSourceGroupsLink = getDataSourceGroupsLink();
+        dataSourceGroup.setObjectTypeId(getId());
+        return getDataStore().create(dataSourceGroupsLink, dataSourceGroup);
     }
 
 }

@@ -11,10 +11,10 @@ import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
 import ru.icbcom.aistdapsdkjava.impl.datasourcegroup.DefaultDataSourceGroup;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultObjectType;
-import ru.icbcom.aistdapsdkjava.impl.resource.AbstractSavableResource;
+import ru.icbcom.aistdapsdkjava.impl.resource.AbstractInstanceResource;
 
 @ToString
-public class DefaultDataSource extends AbstractSavableResource implements DataSource {
+public class DefaultDataSource extends AbstractInstanceResource implements DataSource {
 
     static final String DATA_SOURCE_ID_PROPERTY = "dataSourceId";
     static final String OBJECT_TYPE_ID_PROPERTY = "objectTypeId";
@@ -84,11 +84,6 @@ public class DefaultDataSource extends AbstractSavableResource implements DataSo
     public DataSource setDataSourceGroupId(Long dataSourceGroupId) {
         this.dataSourceGroupId = dataSourceGroupId;
         return this;
-    }
-
-    @Override
-    public void delete() {
-        getDataStore().delete(this);
     }
 
     @Override
