@@ -1,0 +1,93 @@
+{
+  "_embedded": {
+    "dap:dataSourceGroups": [
+      {
+        "dataSourceGroupId": 1,
+        "objectTypeId": 1,
+        "caption": "Параметры электроэнергии A+",
+        "_links": {
+          "self": {
+            "href": "http://127.0.0.1:8080/objectTypes/1/dataSourceGroups/1"
+          },
+          "dap:dataSourceGroup": {
+            "href": "http://127.0.0.1:8080/objectTypes/1/dataSourceGroups/1"
+          },
+          "dap:objectType": {
+            "href": "http://127.0.0.1:8080/objectTypes/1"
+          },
+          "dap:dataSourcesInGroup": {
+            "href": "http://127.0.0.1:8080/objectTypes/1/dataSourceGroups/1/dataSources{?page,size,sort}",
+            "templated": true
+          }
+        }
+      },
+      {
+        "dataSourceGroupId": 2,
+        "objectTypeId": 1,
+        "caption": "Параметры электроэнергии A-",
+        "_links": {
+          "self": {
+            "href": "http://127.0.0.1:8080/objectTypes/1/dataSourceGroups/2"
+          },
+          "dap:dataSourceGroup": {
+            "href": "http://127.0.0.1:8080/objectTypes/1/dataSourceGroups/2"
+          },
+          "dap:objectType": {
+            "href": "http://127.0.0.1:8080/objectTypes/1"
+          },
+          "dap:dataSourcesInGroup": {
+            "href": "http://127.0.0.1:8080/objectTypes/1/dataSourceGroups/2/dataSources{?page,size,sort}",
+            "templated": true
+          }
+        }
+      },
+      {
+        "dataSourceGroupId": 3,
+        "objectTypeId": 1,
+        "caption": "Параметры электроэнергии R+",
+        "_links": {
+          "self": {
+            "href": "http://127.0.0.1:8080/objectTypes/1/dataSourceGroups/3"
+          },
+          "dap:dataSourceGroup": {
+            "href": "http://127.0.0.1:8080/objectTypes/1/dataSourceGroups/3"
+          },
+          "dap:objectType": {
+            "href": "http://127.0.0.1:8080/objectTypes/1"
+          },
+          "dap:dataSourcesInGroup": {
+            "href": "http://127.0.0.1:8080/objectTypes/1/dataSourceGroups/3/dataSources{?page,size,sort}",
+            "templated": true
+          }
+        }
+      }
+    ]
+  },
+  "_links": {
+    "first": {
+      "href": "http://127.0.0.1:8080/objectTypes/1/dataSourceGroups?page=0&size=3"
+    },
+    "self": {
+      "href": "http://127.0.0.1:8080/objectTypes/1/dataSourceGroups?page=0&size=3"
+    },
+    "next": {
+      "href": "http://127.0.0.1:8080/objectTypes/1/dataSourceGroups?page=1&size=3"
+    },
+    "last": {
+      "href": "http://127.0.0.1:8080/objectTypes/1/dataSourceGroups?page=1&size=3"
+    },
+    "curies": [
+      {
+        "href": "http://127.0.0.1:8080/documentation/{rel}.html",
+        "name": "dap",
+        "templated": true
+      }
+    ]
+  },
+  "page": {
+    "size": 3,
+    "totalElements": 6,
+    "totalPages": 2,
+    "number": 0
+  }
+}

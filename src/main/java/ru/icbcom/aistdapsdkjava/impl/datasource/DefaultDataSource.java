@@ -5,13 +5,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.ToString;
 import org.springframework.hateoas.Link;
 import ru.icbcom.aistdapsdkjava.api.datasource.DataSource;
+import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroup;
 import ru.icbcom.aistdapsdkjava.api.exception.LinkNotFoundException;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
+import ru.icbcom.aistdapsdkjava.impl.datasourcegroup.DefaultDataSourceGroup;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultObjectType;
 import ru.icbcom.aistdapsdkjava.impl.resource.AbstractSavableResource;
-
-// TODO: Протестировать данный класс.
 
 @ToString
 public class DefaultDataSource extends AbstractSavableResource implements DataSource {
@@ -91,8 +91,6 @@ public class DefaultDataSource extends AbstractSavableResource implements DataSo
         getDataStore().delete(this);
     }
 
-    // TODO: Протестировать данный метод: getObjectType()
-
     @Override
     @JsonIgnore
     public ObjectType getObjectType() {
@@ -105,4 +103,18 @@ public class DefaultDataSource extends AbstractSavableResource implements DataSo
                 () -> new LinkNotFoundException("Link 'dap:objectType' was not found in the current DataSource object. Method 'getObjectType()' " +
                         "may only be called on DataSource objects that have already been persisted and have an existing 'dap:objectType' link.", null, "dap:objectType"));
     }
+
+    @Override
+    @JsonIgnore
+    public DataSourceGroup getDataSourceGroup() {
+        Link dataSourceGroupLink = getDataSourceGroupLink();
+        return getDataStore().getResource(dataSourceGroupLink, DefaultDataSourceGroup.class);
+    }
+
+    private Link getDataSourceGroupLink() {
+        return getLink("dap:dataSourceGroup").orElseThrow(
+                () -> new LinkNotFoundException("Link 'dap:dataSourceGroup' was not found in the current DataSource object. Method 'getDataSourceGroup()' " +
+                        "may only be called on DataSource objects that have already been persisted and have an existing 'dap:dataSourceGroup' link.", null, "dap:dataSourceGroup"));
+    }
+
 }

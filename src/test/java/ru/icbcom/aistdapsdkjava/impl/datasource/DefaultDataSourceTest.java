@@ -6,8 +6,10 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.hateoas.Link;
 import ru.icbcom.aistdapsdkjava.api.datasource.DataSource;
+import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroup;
 import ru.icbcom.aistdapsdkjava.api.exception.LinkNotFoundException;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
+import ru.icbcom.aistdapsdkjava.impl.datasourcegroup.DefaultDataSourceGroup;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultObjectType;
 
@@ -77,6 +79,45 @@ class DefaultDataSourceTest {
                         "may only be called on DataSource objects that have already been persisted and have an existing 'dap:objectType' link.")),
                 hasProperty("resourceHref", is(nullValue())),
                 hasProperty("rel", is("dap:objectType"))
+        ));
+        verifyNoMoreInteractions(dataStore);
+    }
+
+    @Test
+    void getDataSourceGroupShouldWorkProperly() {
+        DataSource dataSource = new DefaultDataSource(dataStore)
+                .setDataSourceId(100L)
+                .setObjectTypeId(1L)
+                .setCaption("Название источника данных")
+                .setMeasureItem("Единица измерения")
+                .setDataSourceGroupId(1000L);
+        dataSource.add(new Link("http://127.0.0.1:8080/objectTypes/1/dataSourceGroups/100", "dap:dataSourceGroup"));
+
+        DefaultDataSourceGroup defaultDataSourceGroupToReturn = new DefaultDataSourceGroup(dataStore);
+        when(dataStore.getResource(new Link("http://127.0.0.1:8080/objectTypes/1/dataSourceGroups/100", "dap:dataSourceGroup"), DefaultDataSourceGroup.class)).thenReturn(defaultDataSourceGroupToReturn);
+
+        DataSourceGroup dataSourceGroup = dataSource.getDataSourceGroup();
+        assertSame(defaultDataSourceGroupToReturn, dataSourceGroup);
+
+        verify(dataStore).getResource(new Link("http://127.0.0.1:8080/objectTypes/1/dataSourceGroups/100", "dap:dataSourceGroup"), DefaultDataSourceGroup.class);
+        verifyNoMoreInteractions(dataStore);
+    }
+
+    @Test
+    void getDataSourceGroupExceptionShouldBeThrownWhenThereIsNoLink() {
+        DataSource dataSource = new DefaultDataSource(dataStore)
+                .setDataSourceId(100L)
+                .setObjectTypeId(1L)
+                .setCaption("Название источника данных")
+                .setMeasureItem("Единица измерения")
+                .setDataSourceGroupId(1000L);
+
+        LinkNotFoundException exception = assertThrows(LinkNotFoundException.class, dataSource::getDataSourceGroup);
+        assertThat(exception, allOf(
+                hasProperty("message", is("Link 'dap:dataSourceGroup' was not found in the current DataSource object. Method 'getDataSourceGroup()' " +
+                        "may only be called on DataSource objects that have already been persisted and have an existing 'dap:dataSourceGroup' link.")),
+                hasProperty("resourceHref", is(nullValue())),
+                hasProperty("rel", is("dap:dataSourceGroup"))
         ));
         verifyNoMoreInteractions(dataStore);
     }

@@ -50,4 +50,6 @@ public interface ObjectTypeActions {
      */
     ObjectTypeList getAllEnabled(ObjectTypeCriteria criteria);
 
+    // TODO: добавить метод поиска типа объекта по его идентификатору.
+
 }

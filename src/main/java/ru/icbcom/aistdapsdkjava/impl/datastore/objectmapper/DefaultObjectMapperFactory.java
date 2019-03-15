@@ -8,11 +8,13 @@ import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import org.springframework.hateoas.hal.Jackson2HalModule;
 import ru.icbcom.aistdapsdkjava.api.datasource.DataSource;
+import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroup;
 import ru.icbcom.aistdapsdkjava.api.objecttype.Attribute;
 import ru.icbcom.aistdapsdkjava.api.objecttype.EnumSetValue;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
 import ru.icbcom.aistdapsdkjava.api.objecttype.Section;
 import ru.icbcom.aistdapsdkjava.impl.datasource.DefaultDataSource;
+import ru.icbcom.aistdapsdkjava.impl.datasourcegroup.DefaultDataSourceGroup;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultAttribute;
 import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultEnumSetValue;
@@ -50,6 +52,7 @@ public class DefaultObjectMapperFactory implements ObjectMapperFactory {
         resolver.addMapping(Section.class, DefaultSection.class);
         resolver.addMapping(ObjectType.class, DefaultObjectType.class);
         resolver.addMapping(DataSource.class, DefaultDataSource.class);
+        resolver.addMapping(DataSourceGroup.class, DefaultDataSourceGroup.class);
 
         module.setAbstractTypes(resolver);
         objectMapper.registerModule(module);

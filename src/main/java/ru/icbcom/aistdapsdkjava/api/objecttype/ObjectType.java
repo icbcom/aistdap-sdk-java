@@ -3,6 +3,7 @@ package ru.icbcom.aistdapsdkjava.api.objecttype;
 import ru.icbcom.aistdapsdkjava.api.datasource.DataSource;
 import ru.icbcom.aistdapsdkjava.api.datasource.DataSourceCriteria;
 import ru.icbcom.aistdapsdkjava.api.datasource.DataSourceList;
+import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroupList;
 import ru.icbcom.aistdapsdkjava.api.resource.Deletable;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
 import ru.icbcom.aistdapsdkjava.api.resource.Savable;
@@ -125,5 +126,9 @@ public interface ObjectType extends Resource, Savable, Deletable {
      * Получение источника данных для данного типа объекта по идентификатору источника данных.
      */
     Optional<DataSource> getDataSourceById(Long dataSourceId);
+
+    // TODO: Добавить методы для работы с группами источников данных и протестировать код.
+
+    DataSourceGroupList
 
 }

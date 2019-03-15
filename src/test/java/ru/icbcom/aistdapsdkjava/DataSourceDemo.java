@@ -12,6 +12,7 @@ import ru.icbcom.aistdapsdkjava.api.datasource.DataSource;
 import ru.icbcom.aistdapsdkjava.api.datasource.DataSourceCriteria;
 import ru.icbcom.aistdapsdkjava.api.datasource.DataSourceList;
 import ru.icbcom.aistdapsdkjava.api.datasource.DataSources;
+import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroup;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypeList;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypes;
@@ -22,6 +23,7 @@ import java.util.stream.StreamSupport;
 @Slf4j
 @Disabled
 public class DataSourceDemo {
+
     private Client client;
 
     @BeforeEach
@@ -137,6 +139,20 @@ public class DataSourceDemo {
 
         ObjectType parentObjectType = dataSource.getObjectType();
         log.info(parentObjectType.toString());
+    }
+
+    @Test
+    void getDataSourceGroupShouldWorkProperly() {
+        ObjectTypeList objectTypeList = client.objectTypes().getAll();
+        Stream<ObjectType> objectTypeStream = StreamSupport.stream(objectTypeList.spliterator(), false);
+        ObjectType objectType = objectTypeStream.filter(ot -> ot.getId() == 1).findAny().orElseThrow();
+        log.info(objectType.toString());
+
+        DataSource dataSource = objectType.getDataSourceById(40L).orElseThrow();
+        log.info(dataSource.toString());
+
+        DataSourceGroup dataSourceGroup = dataSource.getDataSourceGroup();
+        log.info(dataSourceGroup.toString());
     }
 
 }
