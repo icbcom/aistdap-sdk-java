@@ -1,10 +1,12 @@
 package ru.icbcom.aistdapsdkjava.impl.query;
 
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.springframework.util.Assert;
 import ru.icbcom.aistdapsdkjava.api.query.Criteria;
 
 @ToString
+@EqualsAndHashCode
 public class DefaultCriteria<T extends Criteria<T>> implements Criteria<T> {
 
     private Order order;

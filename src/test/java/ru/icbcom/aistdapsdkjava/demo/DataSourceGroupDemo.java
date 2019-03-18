@@ -119,4 +119,29 @@ public class DataSourceGroupDemo {
         dataSourceGroup.delete();
     }
 
+    @Test
+    void getObjectType() {
+        ObjectTypeList objectTypeList = client.objectTypes().getAll();
+        Stream<ObjectType> objectTypeStream = StreamSupport.stream(objectTypeList.spliterator(), false);
+        ObjectType objectType = objectTypeStream.filter(ot -> ot.getId() == 1).findAny().orElseThrow();
+        log.info(objectType.toString());
+
+        DataSourceGroup dataSourceGroup = objectType.getDataSourceGroupById(1L).orElseThrow();
+        log.info(dataSourceGroup.getObjectType().toString());
+    }
+
+    @Test
+    void getDataSources() {
+        ObjectTypeList objectTypeList = client.objectTypes().getAll();
+        Stream<ObjectType> objectTypeStream = StreamSupport.stream(objectTypeList.spliterator(), false);
+        ObjectType objectType = objectTypeStream.filter(ot -> ot.getId() == 1).findAny().orElseThrow();
+        log.info(objectType.toString());
+
+        DataSourceGroup dataSourceGroup = objectType.getDataSourceGroupById(3L).orElseThrow();
+        DataSourceList dataSources = dataSourceGroup.getDataSources(DataSources.criteria().orderByCaption().descending().pageSize(100));
+        for (DataSource dataSource : dataSources) {
+            log.info(dataSource.toString());
+        }
+    }
+
 }

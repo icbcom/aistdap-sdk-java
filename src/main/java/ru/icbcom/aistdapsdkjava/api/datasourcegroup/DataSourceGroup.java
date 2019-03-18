@@ -1,5 +1,8 @@
 package ru.icbcom.aistdapsdkjava.api.datasourcegroup;
 
+import ru.icbcom.aistdapsdkjava.api.datasource.DataSourceCriteria;
+import ru.icbcom.aistdapsdkjava.api.datasource.DataSourceList;
+import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
 import ru.icbcom.aistdapsdkjava.api.resource.Deletable;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
 import ru.icbcom.aistdapsdkjava.api.resource.Savable;
@@ -38,5 +41,20 @@ public interface DataSourceGroup extends Resource, Savable, Deletable {
      * Устанавливает название данной группы источников данных.
      */
     DataSourceGroup setCaption(String caption);
+
+    /**
+     * Получение типа объекта, которому принадлежит данная группа источников данных.
+     */
+    ObjectType getObjectType();
+
+    /**
+     * Получение источников данных принадлежащих данной группе.
+     */
+    DataSourceList getDataSources();
+
+    /**
+     * Получение источников данных принадлежащих данной группе.
+     */
+    DataSourceList getDataSources(DataSourceCriteria criteria);
 
 }

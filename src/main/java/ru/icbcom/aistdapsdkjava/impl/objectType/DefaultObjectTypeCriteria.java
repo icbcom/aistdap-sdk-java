@@ -1,5 +1,6 @@
 package ru.icbcom.aistdapsdkjava.impl.objectType;
 
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypeCriteria;
 import ru.icbcom.aistdapsdkjava.impl.query.DefaultCriteria;
@@ -7,6 +8,7 @@ import ru.icbcom.aistdapsdkjava.impl.query.DefaultCriteria;
 import static ru.icbcom.aistdapsdkjava.impl.objectType.DefaultObjectType.*;
 
 @ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 public class DefaultObjectTypeCriteria extends DefaultCriteria<ObjectTypeCriteria> implements ObjectTypeCriteria {
     @Override
     public ObjectTypeCriteria orderById() {
