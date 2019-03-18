@@ -10,7 +10,7 @@ import ru.icbcom.aistdapsdkjava.api.datasource.DataSource;
 import ru.icbcom.aistdapsdkjava.api.datasource.DataSourceList;
 import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroup;
 import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroupList;
-import ru.icbcom.aistdapsdkjava.api.objecttype.*;
+import ru.icbcom.aistdapsdkjava.integrationtest.objecttype.*;
 
 import java.util.Optional;
 import java.util.stream.Stream;

@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONException;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.JSONAssert;
-import ru.icbcom.aistdapsdkjava.api.objecttype.Attribute;
-import ru.icbcom.aistdapsdkjava.api.objecttype.AttributeType;
+import ru.icbcom.aistdapsdkjava.integrationtest.objecttype.Attribute;
+import ru.icbcom.aistdapsdkjava.integrationtest.objecttype.AttributeType;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DummyDataStore;
 import ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper.DefaultObjectMapperFactory;
 

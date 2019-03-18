@@ -1,4 +1,4 @@
-package ru.icbcom.aistdapsdkjava.api.objecttype;
+package ru.icbcom.aistdapsdkjava.integrationtest.objecttype;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;

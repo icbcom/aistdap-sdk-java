@@ -1,9 +1,9 @@
 package ru.icbcom.aistdapsdkjava.impl.objectType;
 
 import org.junit.jupiter.api.Test;
-import ru.icbcom.aistdapsdkjava.api.objecttype.Attribute;
-import ru.icbcom.aistdapsdkjava.api.objecttype.AttributeType;
-import ru.icbcom.aistdapsdkjava.api.objecttype.Section;
+import ru.icbcom.aistdapsdkjava.integrationtest.objecttype.Attribute;
+import ru.icbcom.aistdapsdkjava.integrationtest.objecttype.AttributeType;
+import ru.icbcom.aistdapsdkjava.integrationtest.objecttype.Section;
 
 import java.util.Optional;
 

@@ -2,13 +2,10 @@ package ru.icbcom.aistdapsdkjava.impl.client;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.hateoas.Link;
-import org.springframework.util.Assert;
 import ru.icbcom.aistdapsdkjava.api.client.Client;
-import ru.icbcom.aistdapsdkjava.api.exception.LinkNotFoundException;
-import ru.icbcom.aistdapsdkjava.api.objecttype.*;
+import ru.icbcom.aistdapsdkjava.integrationtest.objecttype.*;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
-import ru.icbcom.aistdapsdkjava.api.resource.ResourceFactory;
-import ru.icbcom.aistdapsdkjava.api.resource.VoidResource;
+import ru.icbcom.aistdapsdkjava.impl.resource.ResourceFactory;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DefaultDataStore;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.AuthenticationServiceFactory;
@@ -18,12 +15,7 @@ import ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper.ObjectMapperFactory;
 import ru.icbcom.aistdapsdkjava.impl.datastore.resttemplate.DefaultRestTemplateFactory;
 import ru.icbcom.aistdapsdkjava.impl.datastore.resttemplate.RestTemplateFactory;
 import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultObjectTypeActions;
-import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultObjectTypeList;
 import ru.icbcom.aistdapsdkjava.impl.resource.DefaultResourceFactory;
-import ru.icbcom.aistdapsdkjava.impl.resource.DefaultVoidResource;
-
-import java.util.Map;
-import java.util.Optional;
 
 // TODO: Рефакториинг и тестирование.
 

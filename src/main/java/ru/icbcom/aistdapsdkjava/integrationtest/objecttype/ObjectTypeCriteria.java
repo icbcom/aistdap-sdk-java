@@ -1,4 +1,4 @@
-package ru.icbcom.aistdapsdkjava.api.objecttype;
+package ru.icbcom.aistdapsdkjava.integrationtest.objecttype;
 
 import ru.icbcom.aistdapsdkjava.api.query.Criteria;
 
