@@ -1,0 +1,205 @@
+{
+  "_embedded": {
+    "dap:objectTypes": [
+      {
+        "id": 1,
+        "name": "Mercury230/233",
+        "caption": "Счетчик э/э Меркурий 230/233",
+        "device": true,
+        "sections": [
+          {
+            "name": "Settings",
+            "caption": "Настройки",
+            "attributes": [
+              {
+                "name": "Address",
+                "caption": "Сетевой адрес",
+                "type": "Integer"
+              },
+              {
+                "name": "Password",
+                "caption": "Пароль",
+                "type": "String",
+                "mask": "\\d{6}"
+              },
+              {
+                "name": "AccessLevel",
+                "caption": "Уровень доступа",
+                "type": "Enumeration",
+                "enumSetValues": [
+                  {
+                    "number": 1,
+                    "caption": "Чтение (01h)"
+                  },
+                  {
+                    "number": 2,
+                    "caption": "Запись (02h)"
+                  }
+                ]
+              },
+              {
+                "name": "Serial",
+                "caption": "Серийный номер",
+                "type": "String",
+                "mask": "\\d{8}"
+              },
+              {
+                "name": "Counter",
+                "caption": "Тестовый атрибут - счетчик",
+                "type": "Integer",
+                "defaultValue": "31"
+              }
+            ]
+          }
+        ],
+        "enabled": true,
+        "_links": {
+          "self": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/1"
+          },
+          "dap:objectType": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/1"
+          },
+          "dap:dataSources": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/1/dataSources{?page,size,sort}",
+            "templated": true
+          },
+          "dap:dataSourceGroups": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/1/dataSourceGroups{?page,size,sort}",
+            "templated": true
+          }
+        }
+      },
+      {
+        "id": 3,
+        "name": "Puma",
+        "caption": "УСПД \"Пума\"",
+        "device": false,
+        "sections": [
+          {
+            "name": "MainSettings",
+            "caption": "Основные настройки",
+            "attributes": [
+              {
+                "name": "Identifier",
+                "caption": "Идентификатор",
+                "type": "Integer",
+                "min": "0",
+                "max": "99999999"
+              },
+              {
+                "name": "Log",
+                "caption": "Период опроса устройств",
+                "type": "Integer"
+              },
+              {
+                "name": "CtrlPoll",
+                "caption": "Период запроса \"$GET_COMMAND\"",
+                "type": "Integer"
+              }
+            ]
+          },
+          {
+            "name": "UtcSettings",
+            "caption": "Настройки часового пояса",
+            "attributes": [
+              {
+                "name": "UseServerUtc",
+                "caption": "Использовать часовой пояс сервера",
+                "type": "Boolean"
+              },
+              {
+                "name": "Utc",
+                "caption": "Номер часового пояса (UTC+X)",
+                "type": "Integer",
+                "min": "0",
+                "max": "12"
+              }
+            ]
+          },
+          {
+            "name": "SecondaryCommandServer",
+            "caption": "Вторичный сервер комманд",
+            "attributes": [
+              {
+                "name": "UseSecondaryCommandServer",
+                "caption": "Использовать вторичный сервер комманд",
+                "type": "Boolean"
+              },
+              {
+                "name": "SecondaryCommandServer",
+                "caption": "Вторичный сервер комманд",
+                "type": "String",
+                "mask": "(\\d{1,3}\\.){3}\\d{1,3}:\\d{1,4}"
+              }
+            ]
+          },
+          {
+            "name": "TransitServer",
+            "caption": "Транзитный сервер",
+            "attributes": [
+              {
+                "name": "LoadTransitServer",
+                "caption": "Устанавливать транзитный сервер",
+                "type": "Boolean"
+              },
+              {
+                "name": "TransitServer",
+                "caption": "Транзитный сервер",
+                "type": "String",
+                "mask": "(\\d{1,3}\\.){3}\\d{1,3}:\\d{1,4}"
+              }
+            ]
+          }
+        ],
+        "enabled": true,
+        "_links": {
+          "self": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/3"
+          },
+          "dap:objectType": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/3"
+          },
+          "dap:dataSources": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/3/dataSources{?page,size,sort}",
+            "templated": true
+          },
+          "dap:dataSourceGroups": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/3/dataSourceGroups{?page,size,sort}",
+            "templated": true
+          }
+        }
+      }
+    ]
+  },
+  "_links": {
+    "first": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes?page=0&size=2"
+    },
+    "self": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes?page=0&size=2"
+    },
+    "next": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes?page=1&size=2"
+    },
+    "last": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes?page=1&size=2"
+    },
+    "search": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/search"
+    },
+    "curies": [
+      {
+        "href": "http://127.0.0.1:{{serverPort}}/documentation/{rel}.html",
+        "name": "dap",
+        "templated": true
+      }
+    ]
+  },
+  "page": {
+    "size": 2,
+    "totalElements": 4,
+    "totalPages": 2,
+    "number": 0
+  }
+}

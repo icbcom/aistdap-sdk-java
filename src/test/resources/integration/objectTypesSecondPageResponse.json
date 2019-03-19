@@ -1,0 +1,324 @@
+{
+  "_embedded": {
+    "dap:objectTypes": [
+      {
+        "id": 4,
+        "name": "Puma-Can",
+        "caption": "CAN",
+        "device": false,
+        "sections": [
+          {
+            "name": "InterfaceSettings",
+            "caption": "Настройки интерфейса",
+            "attributes": [
+              {
+                "name": "Baud",
+                "caption": "Скорость порта",
+                "type": "Enumeration",
+                "enumSetValues": [
+                  {
+                    "number": 1,
+                    "caption": "600"
+                  },
+                  {
+                    "number": 2,
+                    "caption": "1200"
+                  },
+                  {
+                    "number": 3,
+                    "caption": "2400"
+                  },
+                  {
+                    "number": 4,
+                    "caption": "4800"
+                  },
+                  {
+                    "number": 5,
+                    "caption": "9600"
+                  },
+                  {
+                    "number": 6,
+                    "caption": "14400"
+                  },
+                  {
+                    "number": 7,
+                    "caption": "19200"
+                  },
+                  {
+                    "number": 8,
+                    "caption": "38400"
+                  },
+                  {
+                    "number": 9,
+                    "caption": "57600"
+                  },
+                  {
+                    "number": 10,
+                    "caption": "115200"
+                  }
+                ]
+              },
+              {
+                "name": "DataSize",
+                "caption": "Биты данных",
+                "type": "Enumeration",
+                "enumSetValues": [
+                  {
+                    "number": 1,
+                    "caption": "7"
+                  },
+                  {
+                    "number": 2,
+                    "caption": "8"
+                  }
+                ]
+              },
+              {
+                "name": "Parity",
+                "caption": "Четность",
+                "type": "Enumeration",
+                "enumSetValues": [
+                  {
+                    "number": 1,
+                    "caption": "None"
+                  },
+                  {
+                    "number": 2,
+                    "caption": "Even"
+                  },
+                  {
+                    "number": 3,
+                    "caption": "Odd"
+                  },
+                  {
+                    "number": 4,
+                    "caption": "Mark (1)"
+                  },
+                  {
+                    "number": 5,
+                    "caption": "Space (0)"
+                  }
+                ]
+              },
+              {
+                "name": "StopBits",
+                "caption": "Стоповые биты",
+                "type": "Enumeration",
+                "enumSetValues": [
+                  {
+                    "number": 1,
+                    "caption": "1"
+                  },
+                  {
+                    "number": 2,
+                    "caption": "1,5"
+                  },
+                  {
+                    "number": 3,
+                    "caption": "2"
+                  }
+                ]
+              },
+              {
+                "name": "Timeout",
+                "caption": "Таймаут межсимвольного интервала (мс)",
+                "type": "Integer"
+              }
+            ]
+          }
+        ],
+        "enabled": true,
+        "_links": {
+          "self": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/4"
+          },
+          "dap:objectType": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/4"
+          },
+          "dap:dataSources": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/4/dataSources{?page,size,sort}",
+            "templated": true
+          },
+          "dap:dataSourceGroups": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/4/dataSourceGroups{?page,size,sort}",
+            "templated": true
+          }
+        }
+      },
+      {
+        "id": 5,
+        "name": "Puma-485",
+        "caption": "RS485",
+        "device": false,
+        "sections": [
+          {
+            "name": "InterfaceSettings",
+            "caption": "Настройки интерфейса",
+            "attributes": [
+              {
+                "name": "Baud",
+                "caption": "Скорость порта",
+                "type": "Enumeration",
+                "enumSetValues": [
+                  {
+                    "number": 1,
+                    "caption": "600"
+                  },
+                  {
+                    "number": 2,
+                    "caption": "1200"
+                  },
+                  {
+                    "number": 3,
+                    "caption": "2400"
+                  },
+                  {
+                    "number": 4,
+                    "caption": "4800"
+                  },
+                  {
+                    "number": 5,
+                    "caption": "9600"
+                  },
+                  {
+                    "number": 6,
+                    "caption": "14400"
+                  },
+                  {
+                    "number": 7,
+                    "caption": "19200"
+                  },
+                  {
+                    "number": 8,
+                    "caption": "38400"
+                  },
+                  {
+                    "number": 9,
+                    "caption": "57600"
+                  },
+                  {
+                    "number": 10,
+                    "caption": "115200"
+                  }
+                ]
+              },
+              {
+                "name": "DataSize",
+                "caption": "Биты данных",
+                "type": "Enumeration",
+                "enumSetValues": [
+                  {
+                    "number": 1,
+                    "caption": "7"
+                  },
+                  {
+                    "number": 2,
+                    "caption": "8"
+                  }
+                ]
+              },
+              {
+                "name": "Parity",
+                "caption": "Четность",
+                "type": "Enumeration",
+                "enumSetValues": [
+                  {
+                    "number": 1,
+                    "caption": "None"
+                  },
+                  {
+                    "number": 2,
+                    "caption": "Even"
+                  },
+                  {
+                    "number": 3,
+                    "caption": "Odd"
+                  },
+                  {
+                    "number": 4,
+                    "caption": "Mark (1)"
+                  },
+                  {
+                    "number": 5,
+                    "caption": "Space (0)"
+                  }
+                ]
+              },
+              {
+                "name": "StopBits",
+                "caption": "Стоповые биты",
+                "type": "Enumeration",
+                "enumSetValues": [
+                  {
+                    "number": 1,
+                    "caption": "1"
+                  },
+                  {
+                    "number": 2,
+                    "caption": "1,5"
+                  },
+                  {
+                    "number": 3,
+                    "caption": "2"
+                  }
+                ]
+              },
+              {
+                "name": "Timeout",
+                "caption": "Таймаут межсимвольного интервала (мс)",
+                "type": "Integer"
+              }
+            ]
+          }
+        ],
+        "enabled": true,
+        "_links": {
+          "self": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/5"
+          },
+          "dap:objectType": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/5"
+          },
+          "dap:dataSources": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/5/dataSources{?page,size,sort}",
+            "templated": true
+          },
+          "dap:dataSourceGroups": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/5/dataSourceGroups{?page,size,sort}",
+            "templated": true
+          }
+        }
+      }
+    ]
+  },
+  "_links": {
+    "first": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes?page=0&size=2"
+    },
+    "prev": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes?page=0&size=2"
+    },
+    "self": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes?page=1&size=2"
+    },
+    "last": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes?page=1&size=2"
+    },
+    "search": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/search"
+    },
+    "curies": [
+      {
+        "href": "http://127.0.0.1:{{serverPort}}/documentation/{rel}.html",
+        "name": "dap",
+        "templated": true
+      }
+    ]
+  },
+  "page": {
+    "size": 2,
+    "totalElements": 4,
+    "totalPages": 2,
+    "number": 1
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "_links": {
+    "self": {
+      "href": "http://127.0.0.1:{{serverPort}}/"
+    },
+    "dap:login": {
+      "href": "http://127.0.0.1:{{serverPort}}/auth/login"
+    },
+    "dap:refreshToken": {
+      "href": "http://127.0.0.1:{{serverPort}}/auth/token"
+    },
+    "curies": [
+      {
+        "href": "http://127.0.0.1:{{serverPort}}/documentation/{rel}.html",
+        "name": "dap",
+        "templated": true
+      }
+    ]
+  }
+}

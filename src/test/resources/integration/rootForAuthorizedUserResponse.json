@@ -1,0 +1,49 @@
+{
+  "_links": {
+    "self": {
+      "href": "http://127.0.0.1:{{serverPort}}/"
+    },
+    "dap:login": {
+      "href": "http://127.0.0.1:{{serverPort}}/auth/login"
+    },
+    "dap:refreshToken": {
+      "href": "http://127.0.0.1:{{serverPort}}/auth/token"
+    },
+    "dap:objectTypes": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes{?page,size,sort}",
+      "templated": true
+    },
+    "dap:devices": {
+      "href": "http://127.0.0.1:{{serverPort}}/devices{?page,size,sort}",
+      "templated": true
+    },
+    "dap:physicalStructure": {
+      "href": "http://127.0.0.1:{{serverPort}}/physicalStructure{?page,size,sort}",
+      "templated": true
+    },
+    "dap:linkRules": {
+      "href": "http://127.0.0.1:{{serverPort}}/linkRules{?page,size,sort}",
+      "templated": true
+    },
+    "dap:measuredData": {
+      "href": "http://127.0.0.1:{{serverPort}}/measuredData"
+    },
+    "dap:users": {
+      "href": "http://127.0.0.1:{{serverPort}}/users{?page,size,sort}",
+      "templated": true
+    },
+    "dap:currentUser": {
+      "href": "http://127.0.0.1:{{serverPort}}/users/current"
+    },
+    "dap:keys": {
+      "href": "http://127.0.0.1:{{serverPort}}/keys"
+    },
+    "curies": [
+      {
+        "href": "http://127.0.0.1:{{serverPort}}/documentation/{rel}.html",
+        "name": "dap",
+        "templated": true
+      }
+    ]
+  }
+}

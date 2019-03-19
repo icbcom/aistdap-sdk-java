@@ -1,4 +1,4 @@
-package ru.icbcom.aistdapsdkjava.integration.api.objecttype;
+package ru.icbcom.aistdapsdkjava.integration;
 
 public class IntegrationTestConstants {
 
