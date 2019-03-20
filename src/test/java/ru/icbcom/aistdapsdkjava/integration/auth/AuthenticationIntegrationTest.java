@@ -45,7 +45,10 @@ public class AuthenticationIntegrationTest {
     @BeforeEach
     void setup() {
         mockServer.reset();
+        initializeBaseExpectations();
+    }
 
+    private void initializeBaseExpectations() {
         // Запрос корневой страницы без заголовока "Authorization".
         mockServer.when(request()
                         .withMethod("GET")
@@ -95,7 +98,6 @@ public class AuthenticationIntegrationTest {
                 .respond(response()
                         .withHeader("Content-Type", "application/json;charset=UTF-8")
                         .withBody(loadTemplatedResource("integration/objectTypeWithIdEqualTo1Response.json", Map.of("serverPort", mockServer.getLocalPort()))));
-
     }
 
     @Test
@@ -128,7 +130,6 @@ public class AuthenticationIntegrationTest {
                 .setLogin("SomeLogin")
                 .setPassword("incorrectPassword")
                 .build();
-
         AistDapBackendException exception = assertThrows(AistDapBackendException.class, () -> client.objectTypes().getById(1L));
 
         assertThat(exception, allOf(
@@ -147,9 +148,7 @@ public class AuthenticationIntegrationTest {
 
     @Test
     void tokenRefreshShouldWorkProperly() throws InterruptedException {
-        mockServer.clear(request()
-                .withMethod("POST")
-                .withPath("/auth/login"));
+        mockServer.clear(request().withMethod("POST").withPath("/auth/login"));
         mockServer.when(request()
                 .withMethod("POST")
                 .withPath("/auth/login")
@@ -181,6 +180,7 @@ public class AuthenticationIntegrationTest {
 
         Thread.sleep(3000);
 
+        // На запрос обновления токена доступа с помощью refresh токена возвращается новый комплект токенов.
         mockServer.when(request()
                 .withMethod("POST")
                 .withPath("/auth/token")
@@ -201,6 +201,85 @@ public class AuthenticationIntegrationTest {
         mockServer.verify(request()
                         .withMethod("GET")
                         .withHeader("Authorization", "Bearer refreshed-access-token")
+                        .withHeader("Accept", "application/json, application/*+json")
+                        .withPath("/objectTypes/1"),
+                VerificationTimes.exactly(1));
+    }
+
+    @Test
+    void ifRefreshTokenExpiredLoginShouldBeAttempted() throws InterruptedException {
+        // При изначальном входе клиента в систему ему выдается токен с очень малым временем действия.
+        mockServer.clear(request().withMethod("POST").withPath("/auth/login"));
+        mockServer.when(request()
+                .withMethod("POST")
+                .withPath("/auth/login")
+                .withHeader("Accept", "application/json, application/*+json")
+                .withBody(json("{\"username\": \"SomeLogin\", \"password\": \"somePassword\"}", MatchType.STRICT)))
+                .respond(response()
+                        .withHeader("Content-Type", "application/json;charset=UTF-8")
+                        .withBody("{\"accessToken\": \"some-access-token\", \"expiresIn\": 62, \"refreshToken\": \"some-refresh-token\"}"));
+
+        Client client = Clients.builder()
+                .setBaseUrl(String.format("http://127.0.0.1:%d/", mockServer.getLocalPort()))
+                .setLogin("SomeLogin")
+                .setPassword("somePassword")
+                .build();
+        client.objectTypes().getById(1L);
+
+        mockServer.verify(request()
+                        .withMethod("POST")
+                        .withPath("/auth/login")
+                        .withHeader("Accept", "application/json, application/*+json")
+                        .withBody(json("{\"username\": \"SomeLogin\", \"password\": \"somePassword\"}", MatchType.STRICT)),
+                VerificationTimes.exactly(1));
+        mockServer.verify(request()
+                        .withMethod("GET")
+                        .withHeader("Authorization", "Bearer some-access-token")
+                        .withHeader("Accept", "application/json, application/*+json")
+                        .withPath("/objectTypes/1"),
+                VerificationTimes.exactly(1));
+
+        Thread.sleep(3000);
+
+        // При попытке обновления токена с помощью refresh токена, будет возвращена ошибка "Refresh token expired".
+        mockServer.when(request()
+                .withMethod("POST")
+                .withPath("/auth/token")
+                .withHeader("Accept", "application/json, application/*+json")
+                .withBody(json("{\"refreshToken\": \"some-refresh-token\"}", MatchType.STRICT)))
+                .respond(response()
+                        .withHeader("Content-Type", "application/problem+json")
+                        .withStatusCode(401)
+                        .withBody("{ \"title\": \"Unauthorized\", \"status\": 401, \"detail\": \"Refresh token expired\" }"));
+
+        // После получения ошибки обновления токена, клиент должен выполнить попытку входа по логину и паролю.
+        mockServer.clear(request().withMethod("POST").withPath("/auth/login"));
+        mockServer.when(request()
+                .withMethod("POST")
+                .withPath("/auth/login")
+                .withHeader("Accept", "application/json, application/*+json")
+                .withBody(json("{\"username\": \"SomeLogin\", \"password\": \"somePassword\"}", MatchType.STRICT)))
+                .respond(response()
+                        .withHeader("Content-Type", "application/json;charset=UTF-8")
+                        .withBody("{\"accessToken\": \"second-login-attempt-access-token\", \"expiresIn\": 3600, \"refreshToken\": \"second-login-attempt-refresh-token\"}"));
+
+        client.objectTypes().getById(1L);
+
+        mockServer.verify(request()
+                        .withMethod("POST")
+                        .withPath("/auth/token")
+                        .withHeader("Accept", "application/json, application/*+json")
+                        .withBody(json("{\"refreshToken\": \"some-refresh-token\"}", MatchType.STRICT)),
+                VerificationTimes.exactly(1));
+        mockServer.verify(request()
+                        .withMethod("POST")
+                        .withPath("/auth/login")
+                        .withHeader("Accept", "application/json, application/*+json")
+                        .withBody(json("{\"username\": \"SomeLogin\", \"password\": \"somePassword\"}", MatchType.STRICT)),
+                VerificationTimes.exactly(1));
+        mockServer.verify(request()
+                        .withMethod("GET")
+                        .withHeader("Authorization", "Bearer second-login-attempt-access-token")
                         .withHeader("Accept", "application/json, application/*+json")
                         .withPath("/objectTypes/1"),
                 VerificationTimes.exactly(1));
