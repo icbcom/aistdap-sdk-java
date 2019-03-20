@@ -2,18 +2,20 @@ package ru.icbcom.aistdapsdkjava.impl.datasource;
 
 import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.springframework.hateoas.Link;
 import ru.icbcom.aistdapsdkjava.api.datasource.DataSource;
 import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroup;
 import ru.icbcom.aistdapsdkjava.api.exception.LinkNotFoundException;
-import ru.icbcom.aistdapsdkjava.integrationtest.objecttype.ObjectType;
+import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
 import ru.icbcom.aistdapsdkjava.impl.datasourcegroup.DefaultDataSourceGroup;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultObjectType;
 import ru.icbcom.aistdapsdkjava.impl.resource.AbstractInstanceResource;
 
 @ToString
+@EqualsAndHashCode(callSuper = false)
 public class DefaultDataSource extends AbstractInstanceResource implements DataSource {
 
     static final String DATA_SOURCE_ID_PROPERTY = "dataSourceId";

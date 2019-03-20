@@ -1,0 +1,56 @@
+{
+  "id": 100,
+  "name": "ObjectTypeName",
+  "caption": "Название тестового типа объекта",
+  "device": false,
+  "sections": [
+    {
+      "name": "SomeSection",
+      "caption": "Тестовая секция",
+      "comment": "Комментарий к тестовой секции",
+      "attributes": [
+        {
+          "name": "SomeAttribute",
+          "caption": "Тестовый атрибут",
+          "type": "Enumeration",
+          "enumSetValues": [
+            {
+              "number": 1,
+              "caption": "Элемент перечисления 1"
+            },
+            {
+              "number": 2,
+              "caption": "Элемент перечисления 2"
+            }
+          ],
+          "defaultValue": "2",
+          "comment": "Комментарий к данному атриибуту"
+        }
+      ]
+    }
+  ],
+  "enabled": true,
+  "_links": {
+    "self": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/100"
+    },
+    "dap:objectType": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/100"
+    },
+    "dap:dataSources": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/100/dataSources{?page,size,sort}",
+      "templated": true
+    },
+    "dap:dataSourceGroups": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/100/dataSourceGroups{?page,size,sort}",
+      "templated": true
+    },
+    "curies": [
+      {
+        "href": "http://127.0.0.1:{{serverPort}}/documentation/{rel}.html",
+        "name": "dap",
+        "templated": true
+      }
+    ]
+  }
+}

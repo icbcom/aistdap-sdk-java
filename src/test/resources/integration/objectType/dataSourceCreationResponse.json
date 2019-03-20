@@ -1,0 +1,28 @@
+{
+  "dataSourceId": 12345,
+  "objectTypeId": 1,
+  "caption": "Название нового источника данных",
+  "measureItem": "единица измерения",
+  "dataSourceGroupId": 3,
+  "_links": {
+    "self": {
+      "href": "http://127.0.0.1{{serverPort}}/objectTypes/1/dataSources/12345"
+    },
+    "dap:dataSource": {
+      "href": "http://127.0.0.1{{serverPort}}/objectTypes/1/dataSources/12345"
+    },
+    "dap:objectType": {
+      "href": "http://127.0.0.1{{serverPort}}/objectTypes/1"
+    },
+    "dap:dataSourceGroup": {
+      "href": "http://127.0.0.1{{serverPort}}/objectTypes/1/dataSourceGroups/3"
+    },
+    "curies": [
+      {
+        "href": "http://127.0.0.1{{serverPort}}/documentation/{rel}.html",
+        "name": "dap",
+        "templated": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "_links": {
+    "self": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/search"
+    },
+    "dap:findAllEnabledDevices": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/search/findAllEnabledDevices{?page,size,sort}",
+      "templated": true
+    },
+    "dap:findAllDevices": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/search/findAllDevices{?page,size,sort}",
+      "templated": true
+    },
+    "dap:findAllEnabled": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/search/findAllEnabled{?page,size,sort}",
+      "templated": true
+    },
+    "curies": [
+      {
+        "href": "http://127.0.0.1:{{serverPort}}/documentation/{rel}.html",
+        "name": "dap",
+        "templated": true
+      }
+    ]
+  }
+}

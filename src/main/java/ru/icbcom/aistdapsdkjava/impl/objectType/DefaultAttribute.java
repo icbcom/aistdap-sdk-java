@@ -2,10 +2,11 @@ package ru.icbcom.aistdapsdkjava.impl.objectType;
 
 import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
-import ru.icbcom.aistdapsdkjava.integrationtest.objecttype.Attribute;
-import ru.icbcom.aistdapsdkjava.integrationtest.objecttype.AttributeType;
-import ru.icbcom.aistdapsdkjava.integrationtest.objecttype.EnumSetValue;
+import ru.icbcom.aistdapsdkjava.api.objecttype.Attribute;
+import ru.icbcom.aistdapsdkjava.api.objecttype.AttributeType;
+import ru.icbcom.aistdapsdkjava.api.objecttype.EnumSetValue;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 import ru.icbcom.aistdapsdkjava.impl.resource.AbstractResource;
 
@@ -14,6 +15,7 @@ import java.util.Collection;
 import java.util.Optional;
 
 @ToString
+@EqualsAndHashCode(callSuper = false)
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class DefaultAttribute extends AbstractResource implements Attribute {
 

@@ -1,7 +1,7 @@
 package ru.icbcom.aistdapsdkjava.api.datasource;
 
 import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroup;
-import ru.icbcom.aistdapsdkjava.integrationtest.objecttype.ObjectType;
+import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
 import ru.icbcom.aistdapsdkjava.api.resource.Deletable;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
 import ru.icbcom.aistdapsdkjava.api.resource.Savable;

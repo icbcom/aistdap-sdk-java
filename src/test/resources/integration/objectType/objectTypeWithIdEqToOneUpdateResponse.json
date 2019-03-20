@@ -1,0 +1,78 @@
+{
+  "id": 1,
+  "name": "NewObjectTypeName",
+  "caption": "Новый заголовок типа объекта",
+  "device": true,
+  "sections": [
+    {
+      "name": "New settingsSection name",
+      "caption": "Новое название секции",
+      "comment": "New settingsSection comment",
+      "attributes": [
+        {
+          "name": "NewAttributeName",
+          "caption": "Новое название атрибута",
+          "type": "Integer",
+          "comment": "Комментарий к атрибуту"
+        },
+        {
+          "name": "Password",
+          "caption": "Пароль",
+          "type": "String",
+          "mask": "\\d{6}"
+        },
+        {
+          "name": "AccessLevel",
+          "caption": "Уровень доступа",
+          "type": "Enumeration",
+          "enumSetValues": [
+            {
+              "number": 1,
+              "caption": "Чтение (01h)"
+            },
+            {
+              "number": 2,
+              "caption": "Запись (02h)"
+            }
+          ]
+        },
+        {
+          "name": "Serial",
+          "caption": "Серийный номер",
+          "type": "String",
+          "mask": "\\d{8}"
+        },
+        {
+          "name": "Counter",
+          "caption": "Тестовый атрибут - счетчик",
+          "type": "Integer",
+          "defaultValue": "31"
+        }
+      ]
+    }
+  ],
+  "enabled": false,
+  "_links": {
+    "self": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/1"
+    },
+    "dap:objectType": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/1"
+    },
+    "dap:dataSources": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/1/dataSources{?page,size,sort}",
+      "templated": true
+    },
+    "dap:dataSourceGroups": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/1/dataSourceGroups{?page,size,sort}",
+      "templated": true
+    },
+    "curies": [
+      {
+        "href": "http://127.0.0.1:{{serverPort}}/documentation/{rel}.html",
+        "name": "dap",
+        "templated": true
+      }
+    ]
+  }
+}

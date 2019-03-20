@@ -1,0 +1,105 @@
+{
+  "_embedded": {
+    "dap:objectTypes": [
+      {
+        "id": 1,
+        "name": "Mercury230/233",
+        "caption": "Счетчик э/э Меркурий 230/233",
+        "device": true,
+        "sections": [
+          {
+            "name": "Settings",
+            "caption": "Настройки",
+            "attributes": [
+              {
+                "name": "Address",
+                "caption": "Сетевой адрес",
+                "type": "Integer"
+              },
+              {
+                "name": "Password",
+                "caption": "Пароль",
+                "type": "String",
+                "mask": "\\d{6}"
+              },
+              {
+                "name": "AccessLevel",
+                "caption": "Уровень доступа",
+                "type": "Enumeration",
+                "enumSetValues": [
+                  {
+                    "number": 1,
+                    "caption": "Чтение (01h)"
+                  },
+                  {
+                    "number": 2,
+                    "caption": "Запись (02h)"
+                  }
+                ]
+              },
+              {
+                "name": "Serial",
+                "caption": "Серийный номер",
+                "type": "String",
+                "mask": "\\d{8}"
+              },
+              {
+                "name": "Counter",
+                "caption": "Тестовый атрибут - счетчик",
+                "type": "Integer",
+                "defaultValue": "31"
+              }
+            ]
+          }
+        ],
+        "enabled": true,
+        "_links": {
+          "self": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/1"
+          },
+          "dap:objectType": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/1"
+          },
+          "dap:dataSources": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/1/dataSources{?page,size,sort}",
+            "templated": true
+          },
+          "dap:dataSourceGroups": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/1/dataSourceGroups{?page,size,sort}",
+            "templated": true
+          }
+        }
+      }
+    ]
+  },
+  "_links": {
+    "first": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes?page=0&size=1"
+    },
+    "self": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes?page=0&size=1"
+    },
+    "next": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes?page=1&size=1"
+    },
+    "last": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes?page=35&size=1"
+    },
+    "search": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/search"
+    },
+    "curies": [
+      {
+        "href": "http://127.0.0.1:{{serverPort}}/documentation/{rel}.html",
+        "name": "dap",
+        "templated": true
+      }
+    ]
+  },
+  "page": {
+    "size": 1,
+    "totalElements": 36,
+    "totalPages": 36,
+    "number": 0
+  }
+}

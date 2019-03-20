@@ -1,0 +1,27 @@
+{
+  "dataSourceGroupId": 12345,
+  "objectTypeId": 1,
+  "caption": "Название группы источников данных",
+  "_links": {
+    "self": {
+      "href": "http://127.0.0.1{{serverPort}}/objectTypes/1/dataSourceGroups/12345"
+    },
+    "dap:dataSourceGroup": {
+      "href": "http://127.0.0.1{{serverPort}}/objectTypes/1/dataSourceGroups/12345"
+    },
+    "dap:objectType": {
+      "href": "http://127.0.0.1{{serverPort}}/objectTypes/1"
+    },
+    "dap:dataSourcesInGroup": {
+      "href": "http://127.0.0.1{{serverPort}}/objectTypes/1/dataSourceGroups/12345/dataSources{?page,size,sort}",
+      "templated": true
+    },
+    "curies": [
+      {
+        "href": "http://127.0.0.1{{serverPort}}/documentation/{rel}.html",
+        "name": "dap",
+        "templated": true
+      }
+    ]
+  }
+}

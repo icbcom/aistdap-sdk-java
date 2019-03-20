@@ -14,9 +14,9 @@ import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroup;
 import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroupCriteria;
 import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroupList;
 import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroups;
-import ru.icbcom.aistdapsdkjava.integrationtest.objecttype.ObjectType;
-import ru.icbcom.aistdapsdkjava.integrationtest.objecttype.ObjectTypeList;
-import ru.icbcom.aistdapsdkjava.integrationtest.objecttype.ObjectTypes;
+import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
+import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypeList;
+import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypes;
 
 import java.util.stream.Stream;
 import java.util.stream.StreamSupport;

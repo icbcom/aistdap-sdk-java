@@ -1,0 +1,7 @@
+{
+  "dataSourceId": 12345,
+  "objectTypeId": 1,
+  "caption": "Название нового источника данных",
+  "measureItem": "единица измерения",
+  "dataSourceGroupId": 3
+}

@@ -18,6 +18,8 @@ public class DefaultRestTemplateFactory implements RestTemplateFactory {
         RestTemplateResponseErrorHandler errorHandler = createResponseErrorHandler(objectMapper);
         restTemplate.setErrorHandler(errorHandler);
 
+        restTemplate.getInterceptors().add(new AcceptHeaderRequestInterceptor());
+
         return restTemplate;
     }
 

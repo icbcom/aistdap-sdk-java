@@ -1,0 +1,70 @@
+{
+  "_embedded": {
+    "dap:dataSourceGroups": [
+      {
+        "dataSourceGroupId": 5,
+        "objectTypeId": 1,
+        "caption": "Электрическая мощность",
+        "_links": {
+          "self": {
+            "href": "http://127.0.0.1{{serverPort}}/objectTypes/1/dataSourceGroups/5"
+          },
+          "dap:dataSourceGroup": {
+            "href": "http://127.0.0.1{{serverPort}}/objectTypes/1/dataSourceGroups/5"
+          },
+          "dap:objectType": {
+            "href": "http://127.0.0.1{{serverPort}}/objectTypes/1"
+          },
+          "dap:dataSourcesInGroup": {
+            "href": "http://127.0.0.1{{serverPort}}/objectTypes/1/dataSourceGroups/5/dataSources{?page,size,sort}",
+            "templated": true
+          }
+        }
+      },
+      {
+        "dataSourceGroupId": 3,
+        "objectTypeId": 1,
+        "caption": "Параметры электроэнергии R+",
+        "_links": {
+          "self": {
+            "href": "http://127.0.0.1{{serverPort}}/objectTypes/1/dataSourceGroups/3"
+          },
+          "dap:dataSourceGroup": {
+            "href": "http://127.0.0.1{{serverPort}}/objectTypes/1/dataSourceGroups/3"
+          },
+          "dap:objectType": {
+            "href": "http://127.0.0.1{{serverPort}}/objectTypes/1"
+          },
+          "dap:dataSourcesInGroup": {
+            "href": "http://127.0.0.1{{serverPort}}/objectTypes/1/dataSourceGroups/3/dataSources{?page,size,sort}",
+            "templated": true
+          }
+        }
+      }
+    ]
+  },
+  "_links": {
+    "first": {
+      "href": "http://127.0.0.1{{serverPort}}/objectTypes/1/dataSourceGroups?page=0&size=2&sort=caption,desc"
+    },
+    "self": {
+      "href": "http://127.0.0.1{{serverPort}}/objectTypes/1/dataSourceGroups?page=0&size=2&sort=caption,desc"
+    },
+    "last": {
+      "href": "http://127.0.0.1{{serverPort}}/objectTypes/1/dataSourceGroups?page=2&size=2&sort=caption,desc"
+    },
+    "curies": [
+      {
+        "href": "http://127.0.0.1{{serverPort}}/documentation/{rel}.html",
+        "name": "dap",
+        "templated": true
+      }
+    ]
+  },
+  "page": {
+    "size": 2,
+    "totalElements": 2,
+    "totalPages": 1,
+    "number": 0
+  }
+}

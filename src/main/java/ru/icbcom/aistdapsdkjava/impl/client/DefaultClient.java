@@ -3,7 +3,7 @@ package ru.icbcom.aistdapsdkjava.impl.client;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.hateoas.Link;
 import ru.icbcom.aistdapsdkjava.api.client.Client;
-import ru.icbcom.aistdapsdkjava.integrationtest.objecttype.*;
+import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypeActions;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
 import ru.icbcom.aistdapsdkjava.impl.resource.ResourceFactory;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;

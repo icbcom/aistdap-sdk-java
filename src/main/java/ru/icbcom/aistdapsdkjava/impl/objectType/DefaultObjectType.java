@@ -2,6 +2,7 @@ package ru.icbcom.aistdapsdkjava.impl.objectType;
 
 import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.springframework.hateoas.Link;
 import org.springframework.util.Assert;
@@ -15,9 +16,9 @@ import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroupList;
 import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroups;
 import ru.icbcom.aistdapsdkjava.api.exception.AistDapBackendException;
 import ru.icbcom.aistdapsdkjava.api.exception.LinkNotFoundException;
-import ru.icbcom.aistdapsdkjava.integrationtest.objecttype.Attribute;
-import ru.icbcom.aistdapsdkjava.integrationtest.objecttype.ObjectType;
-import ru.icbcom.aistdapsdkjava.integrationtest.objecttype.Section;
+import ru.icbcom.aistdapsdkjava.api.objecttype.Attribute;
+import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
+import ru.icbcom.aistdapsdkjava.api.objecttype.Section;
 import ru.icbcom.aistdapsdkjava.impl.datasource.DefaultDataSource;
 import ru.icbcom.aistdapsdkjava.impl.datasource.DefaultDataSourceList;
 import ru.icbcom.aistdapsdkjava.impl.datasourcegroup.DefaultDataSourceGroup;
@@ -32,6 +33,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @ToString
+@EqualsAndHashCode(callSuper = false)
 public class DefaultObjectType extends AbstractInstanceResource implements ObjectType {
 
     static final String ID_PROPERTY = "id";
@@ -181,7 +183,6 @@ public class DefaultObjectType extends AbstractInstanceResource implements Objec
         return getSingleDataSource(singleDataSourceLink);
     }
 
-    // TODO: Код такого вида будет часто появляться. Нужно устранить дублирование.
     private Optional<DataSource> getSingleDataSource(Link singleDataSourceLink) {
         try {
             DefaultDataSource dataSource = getDataStore().getResource(singleDataSourceLink, DefaultDataSource.class);

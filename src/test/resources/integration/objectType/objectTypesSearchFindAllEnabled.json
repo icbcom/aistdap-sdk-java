@@ -1,0 +1,131 @@
+{
+  "_embedded": {
+    "dap:objectTypes": [
+      {
+        "id": 42,
+        "name": "AskueDevice",
+        "caption": "Устройство в АСКУЭ",
+        "device": false,
+        "sections": [
+          {
+            "name": "Settings",
+            "caption": "Настройки",
+            "attributes": [
+              {
+                "name": "Bsid",
+                "caption": "Идентификатор объекта/базовой станции",
+                "type": "Integer",
+                "min": "0"
+              },
+              {
+                "name": "DeviceNumber",
+                "caption": "Номер устройства",
+                "type": "Enumeration",
+                "enumSetValues": [
+                  {
+                    "number": 1,
+                    "caption": "1"
+                  },
+                  {
+                    "number": 2,
+                    "caption": "2"
+                  },
+                  {
+                    "number": 3,
+                    "caption": "3"
+                  },
+                  {
+                    "number": 4,
+                    "caption": "4"
+                  }
+                ]
+              },
+              {
+                "name": "ProfSerNum",
+                "caption": "Серийный номер счетчика (для получения профилей мощности)",
+                "type": "String"
+              }
+            ]
+          }
+        ],
+        "enabled": true,
+        "_links": {
+          "self": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/42"
+          },
+          "dap:objectType": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/42"
+          },
+          "dap:dataSources": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/42/dataSources{?page,size,sort}",
+            "templated": true
+          },
+          "dap:dataSourceGroups": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/42/dataSourceGroups{?page,size,sort}",
+            "templated": true
+          }
+        }
+      },
+      {
+        "id": 40,
+        "name": "OceanConnectDevice",
+        "caption": "Устройство в OceanConnect",
+        "device": false,
+        "sections": [
+          {
+            "name": "MainSettings",
+            "caption": "Основные настройки",
+            "attributes": [
+              {
+                "name": "DeviceId",
+                "caption": "Идентификатор устройства (deviceId)",
+                "type": "String"
+              }
+            ]
+          }
+        ],
+        "enabled": true,
+        "_links": {
+          "self": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/40"
+          },
+          "dap:objectType": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/40"
+          },
+          "dap:dataSources": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/40/dataSources{?page,size,sort}",
+            "templated": true
+          },
+          "dap:dataSourceGroups": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/40/dataSourceGroups{?page,size,sort}",
+            "templated": true
+          }
+        }
+      }
+    ]
+  },
+  "_links": {
+    "first": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/search/findAllEnabled?page=0&size=2&sort=caption,desc"
+    },
+    "self": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/search/findAllEnabled?page=0&size=2&sort=caption,desc"
+    },
+    "last": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/search/findAllEnabled?page=11&size=2&sort=caption,desc"
+    },
+    "curies": [
+      {
+        "href": "http://127.0.0.1:{{serverPort}}/documentation/{rel}.html",
+        "name": "dap",
+        "templated": true
+      }
+    ]
+  },
+  "page": {
+    "size": 2,
+    "totalElements": 2,
+    "totalPages": 1,
+    "number": 0
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "dataSourceId": 2,
+  "objectTypeId": 1,
+  "caption": "Электроэнергия, A+ Тариф 1",
+  "measureItem": "кВт*ч",
+  "dataSourceGroupId": 1,
+  "_links": {
+    "self": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/1/dataSources/2"
+    },
+    "dap:dataSource": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/1/dataSources/2"
+    },
+    "dap:objectType": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/1"
+    },
+    "dap:dataSourceGroup": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/1/dataSourceGroups/1"
+    },
+    "curies": [
+      {
+        "href": "http://127.0.0.1:{{serverPort}}/documentation/{rel}.html",
+        "name": "dap",
+        "templated": true
+      }
+    ]
+  }
+}

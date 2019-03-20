@@ -1,4 +1,4 @@
-package ru.icbcom.aistdapsdkjava.integrationtest.objecttype;
+package ru.icbcom.aistdapsdkjava.api.objecttype;
 
 import java.util.Optional;
 

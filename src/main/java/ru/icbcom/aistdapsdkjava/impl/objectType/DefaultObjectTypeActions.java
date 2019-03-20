@@ -7,7 +7,7 @@ import org.springframework.hateoas.Link;
 import org.springframework.util.Assert;
 import ru.icbcom.aistdapsdkjava.api.exception.AistDapBackendException;
 import ru.icbcom.aistdapsdkjava.api.exception.LinkNotFoundException;
-import ru.icbcom.aistdapsdkjava.integrationtest.objecttype.*;
+import ru.icbcom.aistdapsdkjava.api.objecttype.*;
 import ru.icbcom.aistdapsdkjava.api.resource.VoidResource;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 import ru.icbcom.aistdapsdkjava.impl.resource.DefaultVoidResource;
