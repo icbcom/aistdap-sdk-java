@@ -17,8 +17,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockserver.matchers.MatchType.STRICT;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
+import static org.mockserver.model.JsonBody.json;
 import static org.mockserver.model.Parameter.param;
 import static ru.icbcom.aistdapsdkjava.helper.ResourceHelper.loadTemplatedResource;
 
@@ -118,7 +120,7 @@ class DataSourceGroupIntegrationTest extends AbstractIntegrationTest {
 
     @Test
     void getDataSourcesWithCriteriaShouldWorkProperly() {
-// Запрос источников данных принадлежащих конкретной группе (группа с идентификатором 2 для типа объекта 1).
+        // Запрос источников данных принадлежащих конкретной группе (группа с идентификатором 2 для типа объекта 1).
         mockServer.when(request()
                 .withMethod("GET")
                 .withHeader("Authorization", "Bearer some-access-token")
@@ -166,6 +168,55 @@ class DataSourceGroupIntegrationTest extends AbstractIntegrationTest {
                         .withHeader("Accept", "application/json, application/problem+json")
                         .withPath("/objectTypes/1/dataSourceGroups/2/dataSources")
                         .withQueryStringParameters(param("size", "2"), param("page", "0"), param("sort", "caption,desc")),
+                VerificationTimes.exactly(1));
+    }
+
+    @Test
+    void saveShouldWorkProperly() {
+        // Запрос обновления группы источников данных.
+        mockServer.when(request()
+                .withMethod("PUT")
+                .withHeader("Authorization", "Bearer some-access-token")
+                .withHeader("Accept", "application/json, application/problem+json")
+                .withPath("/objectTypes/1/dataSourceGroups/2")
+                .withBody(json(loadTemplatedResource("integration/datasourcegroup/dataSourceGroupUpdateRequest.json", Map.of("serverPort", mockServer.getLocalPort())), STRICT)))
+                .respond(response()
+                        .withHeader("Content-Type", "application/json;charset=UTF-8")
+                        .withBody(loadTemplatedResource("integration/datasourcegroup/dataSourceGroupUpdateResponse.json", Map.of("serverPort", mockServer.getLocalPort()))));
+
+        DataSourceGroup dataSourceGroup = client.objectTypes().getById(1L).orElseThrow()
+                .getDataSourceGroupById(2L).orElseThrow();
+        dataSourceGroup.setCaption("Новое название группы источнииков данных");
+        dataSourceGroup.save();
+
+        mockServer.verify(request()
+                        .withMethod("PUT")
+                        .withHeader("Authorization", "Bearer some-access-token")
+                        .withHeader("Accept", "application/json, application/problem+json")
+                        .withPath("/objectTypes/1/dataSourceGroups/2")
+                        .withBody(json(loadTemplatedResource("integration/datasourcegroup/dataSourceGroupUpdateRequest.json", Map.of("serverPort", mockServer.getLocalPort())), STRICT)),
+                VerificationTimes.exactly(1));
+    }
+
+    @Test
+    void deleteShouldWorkProperly() {
+        // Запрос удаления группы источников данных.
+        mockServer.when(request()
+                .withMethod("DELETE")
+                .withHeader("Authorization", "Bearer some-access-token")
+                .withHeader("Accept", "application/json, application/problem+json")
+                .withPath("/objectTypes/1/dataSourceGroups/2"))
+                .respond(response().withStatusCode(204));
+
+        DataSourceGroup dataSourceGroup = client.objectTypes().getById(1L).orElseThrow()
+                .getDataSourceGroupById(2L).orElseThrow();
+        dataSourceGroup.delete();
+
+        mockServer.verify(request()
+                        .withMethod("DELETE")
+                        .withHeader("Authorization", "Bearer some-access-token")
+                        .withHeader("Accept", "application/json, application/problem+json")
+                        .withPath("/objectTypes/1/dataSourceGroups/2"),
                 VerificationTimes.exactly(1));
     }
 

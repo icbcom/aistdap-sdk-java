@@ -1,0 +1,21 @@
+{
+  "dataSourceId": 2,
+  "objectTypeId": 1,
+  "caption": "Новое название иисточника данных",
+  "measureItem": "Новая единица измерениия",
+  "dataSourceGroupId": 5000,
+  "_links": {
+    "self": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/1/dataSources/2"
+    },
+    "dap:dataSource": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/1/dataSources/2"
+    },
+    "dap:objectType": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/1"
+    },
+    "dap:dataSourceGroup": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/1/dataSourceGroups/5000"
+    }
+  }
+}

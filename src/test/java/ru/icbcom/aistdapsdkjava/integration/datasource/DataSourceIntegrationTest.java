@@ -12,8 +12,10 @@ import java.util.Map;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.mockserver.matchers.MatchType.STRICT;
 import static org.mockserver.model.HttpRequest.request;
 import static org.mockserver.model.HttpResponse.response;
+import static org.mockserver.model.JsonBody.json;
 import static ru.icbcom.aistdapsdkjava.helper.ResourceHelper.loadTemplatedResource;
 
 class DataSourceIntegrationTest extends AbstractIntegrationTest {
@@ -88,6 +90,57 @@ class DataSourceIntegrationTest extends AbstractIntegrationTest {
                         .withHeader("Authorization", "Bearer some-access-token")
                         .withHeader("Accept", "application/json, application/problem+json")
                         .withPath("/objectTypes/1/dataSourceGroups/1"),
+                VerificationTimes.exactly(1));
+    }
+
+    @Test
+    void saveShouldWorkProperly() {
+        // Запрос обновления источника данных.
+        mockServer.when(request()
+                .withMethod("PUT")
+                .withHeader("Authorization", "Bearer some-access-token")
+                .withHeader("Accept", "application/json, application/problem+json")
+                .withPath("/objectTypes/1/dataSources/2")
+                .withBody(json(loadTemplatedResource("integration/datasource/dataSourceUpdateRequest.json", Map.of("serverPort", mockServer.getLocalPort())), STRICT)))
+                .respond(response()
+                        .withHeader("Content-Type", "application/json;charset=UTF-8")
+                        .withBody(loadTemplatedResource("integration/datasource/dataSourceUpdateResponse.json", Map.of("serverPort", mockServer.getLocalPort()))));
+
+        DataSource dataSource = client.objectTypes().getById(1L).orElseThrow()
+                .getDataSourceById(2L).orElseThrow();
+        dataSource.setCaption("Новое название иисточника данных")
+                .setMeasureItem("Новая единица измерениия")
+                .setDataSourceGroupId(5000L);
+        dataSource.save();
+
+        mockServer.verify(request()
+                        .withMethod("PUT")
+                        .withHeader("Authorization", "Bearer some-access-token")
+                        .withHeader("Accept", "application/json, application/problem+json")
+                        .withPath("/objectTypes/1/dataSources/2")
+                        .withBody(json(loadTemplatedResource("integration/datasource/dataSourceUpdateRequest.json", Map.of("serverPort", mockServer.getLocalPort())), STRICT)),
+                VerificationTimes.exactly(1));
+    }
+
+    @Test
+    void deleteShouldWorkProperly() {
+        // Запрос удаления источника данных.
+        mockServer.when(request()
+                .withMethod("DELETE")
+                .withHeader("Authorization", "Bearer some-access-token")
+                .withHeader("Accept", "application/json, application/problem+json")
+                .withPath("/objectTypes/1/dataSources/2"))
+                .respond(response().withStatusCode(204));
+
+        DataSource dataSource = client.objectTypes().getById(1L).orElseThrow()
+                .getDataSourceById(2L).orElseThrow();
+        dataSource.delete();
+
+        mockServer.verify(request()
+                        .withMethod("DELETE")
+                        .withHeader("Authorization", "Bearer some-access-token")
+                        .withHeader("Accept", "application/json, application/problem+json")
+                        .withPath("/objectTypes/1/dataSources/2"),
                 VerificationTimes.exactly(1));
     }
 
