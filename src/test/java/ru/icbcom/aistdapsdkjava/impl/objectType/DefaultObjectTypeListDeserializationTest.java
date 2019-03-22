@@ -79,8 +79,10 @@ class DefaultObjectTypeListDeserializationTest {
         List<ObjectType> objectTypesInCurrentPortion =  new ArrayList<>((int)objectTypes.getSize());
         Iterator<ObjectType> iterator = objectTypes.iterator();
         for (int i = 0; i < objectTypes.getSize(); i++) {
-            ObjectType objectType = iterator.next();
-            objectTypesInCurrentPortion.add(objectType);
+            if (iterator.hasNext()) {
+                ObjectType objectType = iterator.next();
+                objectTypesInCurrentPortion.add(objectType);
+            }
         }
 
         assertThat(objectTypesInCurrentPortion, contains(

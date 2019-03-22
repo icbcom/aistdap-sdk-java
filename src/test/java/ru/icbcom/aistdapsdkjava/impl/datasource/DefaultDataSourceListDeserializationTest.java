@@ -68,8 +68,10 @@ class DefaultDataSourceListDeserializationTest {
         List<DataSource> dataSourcesInCurrentPortion = new ArrayList<>((int) dataSourceList.getSize());
         Iterator<DataSource> iterator = dataSourceList.iterator();
         for (int i = 0; i < dataSourceList.getSize(); i++) {
-            DataSource dataSource = iterator.next();
-            dataSourcesInCurrentPortion.add(dataSource);
+            if (iterator.hasNext()) {
+                DataSource dataSource = iterator.next();
+                dataSourcesInCurrentPortion.add(dataSource);
+            }
         }
 
         assertThat(dataSourcesInCurrentPortion, contains(

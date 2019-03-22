@@ -32,15 +32,32 @@ class DefaultDeviceSerializationTest {
 
         String expected =
                 "{" +
-                "   \"id\": 100," +
-                "   \"objectTypeId\": 1," +
-                "   \"name\": \"Название устройства\"," +
-                "   \"attributeValues\": {" +
-                "       \"Server\": \"puma.icbcom.ru\"," +
-                "       \"Port\": \"2755\"," +
-                "       \"AdditionalAttribute\": \"some attribute value\"" +
-                "   }" +
-                "}";
+                        "   \"id\": 100," +
+                        "   \"objectTypeId\": 1," +
+                        "   \"name\": \"Название устройства\"," +
+                        "   \"attributeValues\": {" +
+                        "       \"Server\": \"puma.icbcom.ru\"," +
+                        "       \"Port\": \"2755\"," +
+                        "       \"AdditionalAttribute\": \"some attribute value\"" +
+                        "   }" +
+                        "}";
+        JSONAssert.assertEquals(expected, objectMapper.writeValueAsString(device), true);
+    }
+
+    @Test
+    void emptyAttributeValuesSerializationShouldWorkProperly() throws JsonProcessingException, JSONException {
+        Device device = new DefaultDevice(dataStore)
+                .setId(100L)
+                .setObjectTypeId(1L)
+                .setName("Название устройства");
+
+        String expected =
+                "{" +
+                        "   \"id\": 100," +
+                        "   \"objectTypeId\": 1," +
+                        "   \"name\": \"Название устройства\"," +
+                        "   \"attributeValues\": {}" +
+                        "}";
         JSONAssert.assertEquals(expected, objectMapper.writeValueAsString(device), true);
     }
 

@@ -1,0 +1,80 @@
+{
+  "_embedded": {
+    "dap:devices": [
+      {
+        "id": 10009,
+        "objectTypeId": 22,
+        "name": "Счетчик э/э Аист A100",
+        "attributeValues": {
+          "Serial": "000000000000",
+          "AccessLevel": "3",
+          "Password": "000000",
+          "RatesNumber": "4",
+          "Latitude": "0",
+          "Longitude": "0"
+        },
+        "_links": {
+          "self": {
+            "href": "http://127.0.0.1:8080/devices/10009"
+          },
+          "dap:device": {
+            "href": "http://127.0.0.1:8080/devices/10009"
+          },
+          "dap:objectType": {
+            "href": "http://127.0.0.1:8080/objectTypes/22"
+          },
+          "dap:dapObjectMeasuredDataLast": {
+            "href": "http://127.0.0.1:8080/measuredData/10009/last"
+          },
+          "dap:physicalStructureObjectAttachedTo": {
+            "href": "http://127.0.0.1:8080/physicalStructure/10008"
+          },
+          "dap:detach": {
+            "href": "http://127.0.0.1:8080/devices/10009/detach"
+          }
+        }
+      },
+      {
+        "id": 10015,
+        "objectTypeId": 200,
+        "name": "Some device without attribute values",
+        "attributeValues": {},
+        "_links": {
+          "self": {
+            "href": "http://127.0.0.1:8080/devices/10015"
+          },
+          "dap:device": {
+            "href": "http://127.0.0.1:8080/devices/10015"
+          },
+          "dap:objectType": {
+            "href": "http://127.0.0.1:8080/objectTypes/200"
+          },
+          "dap:dapObjectMeasuredDataLast": {
+            "href": "http://127.0.0.1:8080/measuredData/10015/last"
+          },
+          "dap:attach": {
+            "href": "http://127.0.0.1:8080/devices/10015/attach"
+          }
+        }
+      }
+    ]
+  },
+  "_links": {
+    "self": {
+      "href": "http://127.0.0.1:8080/devices?page=0&size=20"
+    },
+    "curies": [
+      {
+        "href": "http://127.0.0.1:8080/documentation/{rel}.html",
+        "name": "dap",
+        "templated": true
+      }
+    ]
+  },
+  "page": {
+    "size": 20,
+    "totalElements": 2,
+    "totalPages": 1,
+    "number": 0
+  }
+}

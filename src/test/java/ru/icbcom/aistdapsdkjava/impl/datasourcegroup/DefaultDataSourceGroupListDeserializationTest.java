@@ -71,8 +71,10 @@ class DefaultDataSourceGroupListDeserializationTest {
         List<DataSourceGroup> dataSourceGroupsInCurrentPortion = new ArrayList<>((int) dataSourceGroupList.getSize());
         Iterator<DataSourceGroup> iterator = dataSourceGroupList.iterator();
         for (int i = 0; i < dataSourceGroupList.getSize(); i++) {
-            DataSourceGroup dataSourceGroup = iterator.next();
-            dataSourceGroupsInCurrentPortion.add(dataSourceGroup);
+            if (iterator.hasNext()) {
+                DataSourceGroup dataSourceGroup = iterator.next();
+                dataSourceGroupsInCurrentPortion.add(dataSourceGroup);
+            }
         }
 
         assertThat(dataSourceGroupsInCurrentPortion, contains(

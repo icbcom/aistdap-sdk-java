@@ -1,4 +1,6 @@
 package ru.icbcom.aistdapsdkjava.api.device;
 
-public interface DeviceList {
+import ru.icbcom.aistdapsdkjava.api.resource.CollectionResource;
+
+public interface DeviceList extends CollectionResource<Device> {
 }

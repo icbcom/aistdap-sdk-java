@@ -1,5 +1,6 @@
 package ru.icbcom.aistdapsdkjava.api.client;
 
+import ru.icbcom.aistdapsdkjava.api.device.DeviceActions;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypeActions;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
 
@@ -8,5 +9,7 @@ public interface Client {
     <T extends Resource> T instantiate(Class<T> clazz);
 
     ObjectTypeActions objectTypes();
+
+    DeviceActions devices();
 
 }
