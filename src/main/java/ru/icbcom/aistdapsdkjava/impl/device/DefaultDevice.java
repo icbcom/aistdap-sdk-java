@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Optional;
 
 // TODO: Протестировать данный класс.
+// TODO: Реализовать тиипизиирыванные attributeValues.
 
 @ToString
 @EqualsAndHashCode(callSuper = false)
