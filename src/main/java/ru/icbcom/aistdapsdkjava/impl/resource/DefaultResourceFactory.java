@@ -1,41 +1,14 @@
 package ru.icbcom.aistdapsdkjava.impl.resource;
 
-import ru.icbcom.aistdapsdkjava.api.datasource.DataSource;
-import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroup;
-import ru.icbcom.aistdapsdkjava.api.device.Device;
 import ru.icbcom.aistdapsdkjava.api.exception.InstantiationException;
 import ru.icbcom.aistdapsdkjava.api.exception.UnknownClassException;
-import ru.icbcom.aistdapsdkjava.api.objecttype.Attribute;
-import ru.icbcom.aistdapsdkjava.api.objecttype.EnumSetValue;
-import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
-import ru.icbcom.aistdapsdkjava.api.objecttype.Section;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
-import ru.icbcom.aistdapsdkjava.api.resource.VoidResource;
-import ru.icbcom.aistdapsdkjava.impl.datasource.DefaultDataSource;
-import ru.icbcom.aistdapsdkjava.impl.datasourcegroup.DefaultDataSourceGroup;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
-import ru.icbcom.aistdapsdkjava.impl.device.DefaultDevice;
-import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultAttribute;
-import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultEnumSetValue;
-import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultObjectType;
-import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultSection;
+import ru.icbcom.aistdapsdkjava.impl.registry.ImplementationClassRegistry;
 
 import java.lang.reflect.Constructor;
-import java.util.Map;
 
 public class DefaultResourceFactory implements ResourceFactory {
-
-    // TODO: Вынести в отдельное место, вроде Classes.
-    private final static Map<Class<? extends Resource>, Class<? extends Resource>> implementationMap = Map.of(
-            EnumSetValue.class, DefaultEnumSetValue.class,
-            Attribute.class, DefaultAttribute.class,
-            Section.class, DefaultSection.class,
-            ObjectType.class, DefaultObjectType.class,
-            VoidResource.class, DefaultVoidResource.class,
-            DataSource.class, DefaultDataSource.class,
-            DataSourceGroup.class, DefaultDataSourceGroup.class,
-            Device.class, DefaultDevice.class
-    );
 
     private final DataStore dataStore;
 
@@ -81,7 +54,7 @@ public class DefaultResourceFactory implements ResourceFactory {
     }
 
     private <T extends Resource> Class<T> convertToImplClass(Class<T> clazz) {
-        Class implementationClass = implementationMap.get(clazz);
+        Class implementationClass = ImplementationClassRegistry.getImplementationClassFor(clazz);
         if (implementationClass == null) {
             throw new UnknownClassException("Implementation class not found for: " + clazz.getName());
         }

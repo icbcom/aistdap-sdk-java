@@ -203,7 +203,7 @@ class ObjectTypeActionsIntegrationTest extends AbstractIntegrationTest {
                                                         .setComment("Комментарий к данному атриибуту")
                                         )
                         );
-        ObjectType createdObjectType = client.objectTypes().createObjectType(objectType);
+        ObjectType createdObjectType = client.objectTypes().create(objectType);
         assertEquals(objectType, createdObjectType);
         mockServer.verify(request()
                         .withMethod("POST")

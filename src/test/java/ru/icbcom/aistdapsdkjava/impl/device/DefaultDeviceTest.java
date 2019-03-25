@@ -5,11 +5,9 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.hateoas.Link;
-import ru.icbcom.aistdapsdkjava.api.datasource.DataSource;
 import ru.icbcom.aistdapsdkjava.api.device.Device;
 import ru.icbcom.aistdapsdkjava.api.exception.LinkNotFoundException;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
-import ru.icbcom.aistdapsdkjava.impl.datasource.DefaultDataSource;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultObjectType;
 
@@ -22,10 +20,10 @@ import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class DefaultDeviceTest {
+    class DefaultDeviceTest {
 
-    @Mock
-    DataStore dataStore;
+        @Mock
+        DataStore dataStore;
 
     @Test
     void fieldsInitializationShouldWorkProperly() {

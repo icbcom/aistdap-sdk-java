@@ -12,10 +12,8 @@ import ru.icbcom.aistdapsdkjava.api.device.DeviceList;
 import ru.icbcom.aistdapsdkjava.api.device.Devices;
 import ru.icbcom.aistdapsdkjava.api.exception.AistDapBackendException;
 import ru.icbcom.aistdapsdkjava.api.exception.LinkNotFoundException;
-import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 import ru.icbcom.aistdapsdkjava.impl.error.DefaultError;
-import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultObjectType;
 import ru.icbcom.aistdapsdkjava.impl.resource.DefaultVoidResource;
 
 import java.util.Optional;
@@ -142,7 +140,7 @@ class DefaultDeviceActionsTest {
         DefaultDevice deviceCreationResult = new DefaultDevice(dataStore);
         when(dataStore.create(new Link("http://127.0.0.1/devices", "dap:devices"), deviceToCreate)).thenReturn(deviceCreationResult);
 
-        Device createdDevice = deviceActions.createDevice(deviceToCreate);
+        Device createdDevice = deviceActions.create(deviceToCreate);
         assertSame(deviceCreationResult, createdDevice);
 
         verify(dataStore).getResource(baseLink, DefaultVoidResource.class);

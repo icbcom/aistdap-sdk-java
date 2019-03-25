@@ -1,5 +1,7 @@
 package ru.icbcom.aistdapsdkjava.api.physicalstructure;
 
+import ru.icbcom.aistdapsdkjava.api.device.DeviceCriteria;
+import ru.icbcom.aistdapsdkjava.api.device.DeviceList;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
 import ru.icbcom.aistdapsdkjava.api.resource.Deletable;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
@@ -153,5 +155,56 @@ public interface PhysicalStructureObject extends Resource, Savable, Deletable {
      * @return тип объекта данного объекта физической структуры
      */
     ObjectType getObjectType();
+
+    /**
+     * Возвращает список дочерних объектов физической структуры.
+     *
+     * @return список дочерних объектов физической структуры
+     */
+    PhysicalStructureObjectList getDescendants();
+
+    /**
+     * Возвращает список дочерних объектов физической структуры.
+     *
+     * @return список дочерних объектов физической структуры
+     */
+    PhysicalStructureObjectList getDescendants(PhysicalStructureObjectCriteria criteria);
+
+    /**
+     * Возвращает список устройств привязанных к данному объекту физической структуры.
+     *
+     * @return список устройств привязанных к данному объекту физической структуры
+     */
+    DeviceList getAttachedDevices();
+
+    /**
+     * Возвращает список устройств привязанных к данному объекту физической структуры.
+     *
+     * @return список устройств привязанных к данному объекту физической структуры
+     */
+    DeviceList getAttachedDevices(DeviceCriteria criteria);
+
+    /**
+     * Создание нового объекта физической структуры в качестве дочернего к данному.
+     *
+     * @param physicalStructureObject создаваемый объект физической структуры
+     * @return созданный объект физической структуры
+     */
+    PhysicalStructureObject createDescendant(PhysicalStructureObject physicalStructureObject);
+
+    /**
+     * Возвращает родительский объект физической структуры.
+     *
+     * @return родительский объект физической структуры
+     */
+    PhysicalStructureObject getParent();
+
+    /**
+     * Находится ли данный объект в корне дерева физической структуры.
+     *
+     * @return true - данный объект находится в корне физической структуры, false - данный объект не находится в корне
+     * физической структуры
+     */
+    boolean isInRoot();
 
 }

@@ -50,7 +50,7 @@ public class DeviceDemo {
                 .setObjectTypeId(32L)
                 .setName("Теплосчетчик")
                 .setAttributeValue("Serial", "123");
-        device = client.devices().createDevice(device);
+        device = client.devices().create(device);
         log.info(device.toString());
     }
 

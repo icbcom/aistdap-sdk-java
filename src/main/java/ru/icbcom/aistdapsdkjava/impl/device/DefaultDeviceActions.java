@@ -5,7 +5,6 @@ import org.springframework.util.Assert;
 import ru.icbcom.aistdapsdkjava.api.device.*;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 import ru.icbcom.aistdapsdkjava.impl.resource.AbstractResourceActions;
-import ru.icbcom.aistdapsdkjava.impl.utils.LinkUtils;
 
 import java.util.Optional;
 
@@ -36,7 +35,7 @@ public class DefaultDeviceActions extends AbstractResourceActions implements Dev
     }
 
     @Override
-    public Device createDevice(Device device) {
+    public Device create(Device device) {
         Link devicesLink = getRootResourceLink("dap:devices");
         return dataStore.create(devicesLink, device);
     }

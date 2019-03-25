@@ -107,7 +107,7 @@ public class ObjectTypeDemo {
                                         )
                         );
 
-        ObjectType createdObjectType = client.objectTypes().createObjectType(objectType);
+        ObjectType createdObjectType = client.objectTypes().create(objectType);
         log.info(createdObjectType.toString());
     }
 
@@ -120,7 +120,7 @@ public class ObjectTypeDemo {
                         .setDevice(false)
                         .setEnabled(true);
 
-        ObjectType createdObjectType = client.objectTypes().createObjectType(objectType);
+        ObjectType createdObjectType = client.objectTypes().create(objectType);
 
         createdObjectType.delete();
     }

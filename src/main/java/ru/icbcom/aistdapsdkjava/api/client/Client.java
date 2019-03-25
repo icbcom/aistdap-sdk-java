@@ -2,6 +2,8 @@ package ru.icbcom.aistdapsdkjava.api.client;
 
 import ru.icbcom.aistdapsdkjava.api.device.DeviceActions;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypeActions;
+import ru.icbcom.aistdapsdkjava.api.physicalstructure.PhysicalStructureObject;
+import ru.icbcom.aistdapsdkjava.api.physicalstructure.PhysicalStructureObjectActions;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
 
 public interface Client {
@@ -11,5 +13,7 @@ public interface Client {
     ObjectTypeActions objectTypes();
 
     DeviceActions devices();
+
+    PhysicalStructureObjectActions physicalStructure();
 
 }

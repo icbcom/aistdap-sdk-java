@@ -101,7 +101,7 @@ class DefaultObjectTypeActionsTest {
         DefaultObjectType objectTypeCreationResult = new DefaultObjectType(dataStore);
         when(dataStore.create(new Link("http://127.0.0.1/objectTypes", "dap:objectTypes"), objectTypeToCreate)).thenReturn(objectTypeCreationResult);
 
-        ObjectType createdObjectType = objectTypeActions.createObjectType(objectTypeToCreate);
+        ObjectType createdObjectType = objectTypeActions.create(objectTypeToCreate);
         assertSame(objectTypeCreationResult, createdObjectType);
 
         verify(dataStore).getResource(baseLink, DefaultVoidResource.class);

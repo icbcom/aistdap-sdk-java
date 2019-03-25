@@ -32,7 +32,7 @@ public class DefaultObjectTypeActions extends AbstractResourceActions implements
     }
 
     @Override
-    public ObjectType createObjectType(ObjectType objectType) {
+    public ObjectType create(ObjectType objectType) {
         Link objectTypesLink = getRootResourceLink("dap:objectTypes");
         return dataStore.create(objectTypesLink, objectType);
     }

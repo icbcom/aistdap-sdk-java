@@ -10,6 +10,6 @@ public interface DeviceActions {
 
     Optional<Device> getById(Long deviceId);
 
-    Device createDevice(Device device);
+    Device create(Device device);
 
 }
