@@ -13,6 +13,8 @@ import ru.icbcom.aistdapsdkjava.api.physicalstructure.PhysicalStructureObject;
 import ru.icbcom.aistdapsdkjava.api.physicalstructure.PhysicalStructureObjectList;
 import ru.icbcom.aistdapsdkjava.api.physicalstructure.PhysicalStructureObjects;
 
+import java.util.Optional;
+
 @Slf4j
 @Disabled
 public class PhysicalStructureDemo {
@@ -121,6 +123,13 @@ public class PhysicalStructureDemo {
                 .setAttributeValue("ProfSerNum", "123456789");
         newPhysicalStructureObject = physicalStructureObject.createDescendant(newPhysicalStructureObject);
         log.info(newPhysicalStructureObject.toString());
+    }
+
+    @Test
+    void getParent() {
+        PhysicalStructureObject physicalStructureObject = client.physicalStructure().getById(10035L).orElseThrow();
+        Optional<PhysicalStructureObject> parentOptional = physicalStructureObject.getParent();
+        log.info(parentOptional.toString());
     }
 
 }

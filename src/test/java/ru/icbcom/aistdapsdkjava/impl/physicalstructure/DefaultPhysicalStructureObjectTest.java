@@ -5,22 +5,19 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.hateoas.Link;
-import ru.icbcom.aistdapsdkjava.api.device.Device;
 import ru.icbcom.aistdapsdkjava.api.device.DeviceCriteria;
 import ru.icbcom.aistdapsdkjava.api.device.DeviceList;
 import ru.icbcom.aistdapsdkjava.api.device.Devices;
-import ru.icbcom.aistdapsdkjava.api.exception.AistDapSdkException;
 import ru.icbcom.aistdapsdkjava.api.exception.LinkNotFoundException;
+import ru.icbcom.aistdapsdkjava.api.exception.NotPersistedException;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
 import ru.icbcom.aistdapsdkjava.api.physicalstructure.PhysicalStructureObject;
 import ru.icbcom.aistdapsdkjava.api.physicalstructure.PhysicalStructureObjectCriteria;
 import ru.icbcom.aistdapsdkjava.api.physicalstructure.PhysicalStructureObjectList;
 import ru.icbcom.aistdapsdkjava.api.physicalstructure.PhysicalStructureObjects;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
-import ru.icbcom.aistdapsdkjava.impl.device.DefaultDevice;
 import ru.icbcom.aistdapsdkjava.impl.device.DefaultDeviceList;
 import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultObjectType;
-import ru.icbcom.aistdapsdkjava.impl.resource.DefaultVoidResource;
 
 import java.util.Optional;
 
@@ -28,6 +25,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.same;
+import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -214,11 +212,45 @@ class DefaultPhysicalStructureObjectTest {
         physicalStructureObject2.add(new Link("http://127.0.0.1:8080/physicalStructure/1", "self"));
         physicalStructureObject2.add(new Link("http://127.0.0.1:8080/physicalStructure/2", "dap:parent"));
         assertFalse(physicalStructureObject2.isInRoot());
+    }
 
-        PhysicalStructureObject physicalStructureObject3 = new DefaultPhysicalStructureObject(dataStore);
+    @Test
+    void getParentShouldWorkProperly() {
+        PhysicalStructureObject physicalStructureObject = new DefaultPhysicalStructureObject(dataStore);
+        physicalStructureObject.add(new Link("http://127.0.0.1:8080/physicalStructure/1", "self"));
+        physicalStructureObject.add(new Link("http://127.0.0.1:8080/physicalStructure/2", "dap:parent"));
 
-        AistDapSdkException aistDapSdkException = assertThrows(AistDapSdkException.class, physicalStructureObject3::isInRoot);
-        assertEquals("There are no any existing links in this PhysicalStructureObject. Thus, it is impossible to check if this PhysicalStructureObject is in the root or not.", aistDapSdkException.getMessage());
+        DefaultPhysicalStructureObject physicalStructureObjectToReturn = new DefaultPhysicalStructureObject(dataStore);
+        doReturn(physicalStructureObjectToReturn).when(dataStore).getResource(new Link("http://127.0.0.1:8080/physicalStructure/2", "dap:parent"), DefaultPhysicalStructureObject.class);
+
+        Optional<PhysicalStructureObject> physicalStructureObjectOptional = physicalStructureObject.getParent();
+        assertTrue(physicalStructureObjectOptional.isPresent());
+        assertSame(physicalStructureObjectToReturn, physicalStructureObjectOptional.get());
+
+        verify(dataStore).getResource(new Link("http://127.0.0.1:8080/physicalStructure/2", "dap:parent"), DefaultPhysicalStructureObject.class);
+        verifyNoMoreInteractions(dataStore);
+    }
+
+    @Test
+    void getParentWhenInRootShouldWorkProperly() {
+        PhysicalStructureObject physicalStructureObject = new DefaultPhysicalStructureObject(dataStore);
+        physicalStructureObject.add(new Link("http://127.0.0.1:8080/physicalStructure/1", "self"));
+
+        Optional<PhysicalStructureObject> physicalStructureObjectOptional = physicalStructureObject.getParent();
+        assertFalse(physicalStructureObjectOptional.isPresent());
+
+        verifyNoMoreInteractions(dataStore);
+    }
+
+    @Test
+    void getParentShouldThrowExceptionsWhenObjectNotPersisted() {
+        PhysicalStructureObject physicalStructureObject = new DefaultPhysicalStructureObject(dataStore);
+
+        NotPersistedException exception = assertThrows(NotPersistedException.class, physicalStructureObject::getParent);
+        assertEquals("There are no any existing links in this PhysicalStructureObject. " +
+                "Method 'getParent()' may only be called on PhysicalStructureObjects that have already been persisted.", exception.getMessage());
+
+        verifyNoMoreInteractions(dataStore);
     }
 
 }

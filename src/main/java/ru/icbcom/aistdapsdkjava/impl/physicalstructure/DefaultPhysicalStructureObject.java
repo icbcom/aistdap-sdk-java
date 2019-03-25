@@ -11,6 +11,7 @@ import ru.icbcom.aistdapsdkjava.api.device.DeviceList;
 import ru.icbcom.aistdapsdkjava.api.device.Devices;
 import ru.icbcom.aistdapsdkjava.api.exception.AistDapSdkException;
 import ru.icbcom.aistdapsdkjava.api.exception.LinkNotFoundException;
+import ru.icbcom.aistdapsdkjava.api.exception.NotPersistedException;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
 import ru.icbcom.aistdapsdkjava.api.physicalstructure.PhysicalStructureObject;
 import ru.icbcom.aistdapsdkjava.api.physicalstructure.PhysicalStructureObjectCriteria;
@@ -203,22 +204,23 @@ public class DefaultPhysicalStructureObject extends AbstractInstanceResource imp
 
     @Override
     @JsonIgnore
-    public PhysicalStructureObject getParent() {
-        throw new IllegalStateException("Not implemented yet");
-    }
-
-    private Link getParentLink() {
-        return getLink("dap:parent").orElseThrow(
-                () -> new LinkNotFoundException("Link 'dap:parent' was not found in the current PhysicalStructureObject. Method 'getAttachedDevices()' " +
-                        "may only be called on PhysicalStructureObjects that have already been persisted and have an existing 'dap:attachedDevices' link.", null, "dap:parent"));
+    public Optional<PhysicalStructureObject> getParent() {
+        if (!hasLinks()) {
+            throw new NotPersistedException("There are no any existing links in this PhysicalStructureObject. " +
+                    "Method 'getParent()' may only be called on PhysicalStructureObjects that have already been persisted.");
+        }
+        Optional<Link> parentLinkOptional = getLink("dap:parent");
+        if (parentLinkOptional.isPresent()) {
+            PhysicalStructureObject parent = getDataStore().getResource(parentLinkOptional.get(), DefaultPhysicalStructureObject.class);
+            return Optional.of(parent);
+        } else {
+            return Optional.empty();
+        }
     }
 
     @Override
     @JsonIgnore
     public boolean isInRoot() {
-        if (!hasLinks()) {
-            throw new AistDapSdkException("There are no any existing links in this PhysicalStructureObject. Thus, it is impossible to check if this PhysicalStructureObject is in the root or not.");
-        }
         return !hasLink("dap:parent");
     }
 }

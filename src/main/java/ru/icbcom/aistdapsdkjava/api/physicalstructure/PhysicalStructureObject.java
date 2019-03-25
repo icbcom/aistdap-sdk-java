@@ -195,9 +195,10 @@ public interface PhysicalStructureObject extends Resource, Savable, Deletable {
     /**
      * Возвращает родительский объект физической структуры.
      *
-     * @return родительский объект физической структуры
+     * @return {@link Optional} содержащий родительский объект физической структуры, если данный объект находится не в
+     * корне, иначе возвращается пустой {@link Optional}
      */
-    PhysicalStructureObject getParent();
+    Optional<PhysicalStructureObject> getParent();
 
     /**
      * Находится ли данный объект в корне дерева физической структуры.
