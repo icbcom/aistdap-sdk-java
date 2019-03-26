@@ -1,0 +1,34 @@
+{
+  "id": 100,
+  "objectTypeId": 1,
+  "name": "Название устройства",
+  "attributeValues": {
+    "Server": "puma.icbcom.ru",
+    "Port": "2755",
+    "AdditionalAttribute": "some attribute value"
+  },
+  "_links": {
+    "self": {
+      "href": "http://127.0.0.1:{{serverPort}}/devices/100"
+    },
+    "dap:device": {
+      "href": "http://127.0.0.1:{{serverPort}}/devices/100"
+    },
+    "dap:objectType": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/1"
+    },
+    "dap:dapObjectMeasuredDataLast": {
+      "href": "http://127.0.0.1:{{serverPort}}/measuredData/100/last"
+    },
+    "dap:attach": {
+      "href": "http://127.0.0.1:{{serverPort}}/devices/100/attach"
+    },
+    "curies": [
+      {
+        "href": "http://127.0.0.1:{{serverPort}}/documentation/{rel}.html",
+        "name": "dap",
+        "templated": true
+      }
+    ]
+  }
+}

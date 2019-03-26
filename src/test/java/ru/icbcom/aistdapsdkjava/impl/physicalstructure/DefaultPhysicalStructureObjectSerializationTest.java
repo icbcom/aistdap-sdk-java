@@ -65,5 +65,30 @@ class DefaultPhysicalStructureObjectSerializationTest {
         JSONAssert.assertEquals(expected, objectMapper.writeValueAsString(physicalStructureObject), true);
     }
 
+    @Test
+    void nullIdShouldNotBeSerialized() throws JsonProcessingException, JSONException {
+        PhysicalStructureObject physicalStructureObject = new DefaultPhysicalStructureObject(dataStore)
+                .setObjectTypeId(1L)
+                .setName("Название объекта физической структуры")
+                .setAttributeValue("Server", "puma.icbcom.ru")
+                .setAttributeValue("Port", "2755")
+                .setAttributeValue("AdditionalAttribute", "some attribute value")
+                .setDescendantsCount(5L)
+                .setDevicesCount(3L);
+
+        String expected =
+                "{" +
+                        "   \"objectTypeId\": 1," +
+                        "   \"name\": \"Название объекта физической структуры\"," +
+                        "   \"attributeValues\": {" +
+                        "       \"Server\": \"puma.icbcom.ru\"," +
+                        "       \"Port\": \"2755\"," +
+                        "       \"AdditionalAttribute\": \"some attribute value\"" +
+                        "   }" +
+                        "}";
+        JSONAssert.assertEquals(expected, objectMapper.writeValueAsString(physicalStructureObject), true);
+    }
+
+
 
 }

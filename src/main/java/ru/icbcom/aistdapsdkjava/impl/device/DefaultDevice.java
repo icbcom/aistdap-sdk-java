@@ -2,6 +2,7 @@ package ru.icbcom.aistdapsdkjava.impl.device;
 
 import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.springframework.hateoas.Link;
@@ -40,6 +41,7 @@ public class DefaultDevice extends AbstractInstanceResource implements Device {
     }
 
     @Override
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Long getId() {
         return id;
     }

@@ -2,6 +2,7 @@ package ru.icbcom.aistdapsdkjava.impl.physicalstructure;
 
 import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -47,6 +48,7 @@ public class DefaultPhysicalStructureObject extends AbstractInstanceResource imp
     }
 
     @Override
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Long getId() {
         return id;
     }

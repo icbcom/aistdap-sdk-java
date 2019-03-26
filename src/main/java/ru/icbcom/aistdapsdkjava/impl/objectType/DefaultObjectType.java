@@ -2,6 +2,7 @@ package ru.icbcom.aistdapsdkjava.impl.objectType;
 
 import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.springframework.hateoas.Link;
@@ -52,6 +53,7 @@ public class DefaultObjectType extends AbstractInstanceResource implements Objec
     }
 
     @Override
+    @JsonInclude(JsonInclude.Include.NON_NULL)
     public Long getId() {
         return id;
     }

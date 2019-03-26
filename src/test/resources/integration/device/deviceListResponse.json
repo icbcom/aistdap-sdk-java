@@ -1,0 +1,81 @@
+{
+  "_embedded": {
+    "dap:devices": [
+      {
+        "id": 10033,
+        "objectTypeId": 22,
+        "name": "Счетчик э/э Аист A100",
+        "attributeValues": {
+          "Serial": "000000000000",
+          "AccessLevel": "3",
+          "Password": "000000",
+          "RatesNumber": "4",
+          "Latitude": "0",
+          "Longitude": "0"
+        },
+        "_links": {
+          "self": {
+            "href": "http://127.0.0.1:{{serverPort}}/devices/10033"
+          },
+          "dap:device": {
+            "href": "http://127.0.0.1:{{serverPort}}/devices/10033"
+          },
+          "dap:objectType": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/22"
+          },
+          "dap:dapObjectMeasuredDataLast": {
+            "href": "http://127.0.0.1:{{serverPort}}/measuredData/10033/last"
+          },
+          "dap:attach": {
+            "href": "http://127.0.0.1:{{serverPort}}/devices/10033/attach"
+          }
+        }
+      },
+      {
+        "id": 10036,
+        "objectTypeId": 37,
+        "name": "Метеостанция IMETEOLABS PWS-200",
+        "attributeValues": {
+          "Address": "5",
+          "Latitude": "122",
+          "Longitude": "157"
+        },
+        "_links": {
+          "self": {
+            "href": "http://127.0.0.1:{{serverPort}}/devices/10036"
+          },
+          "dap:device": {
+            "href": "http://127.0.0.1:{{serverPort}}/devices/10036"
+          },
+          "dap:objectType": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/37"
+          },
+          "dap:dapObjectMeasuredDataLast": {
+            "href": "http://127.0.0.1:{{serverPort}}/measuredData/10036/last"
+          },
+          "dap:attach": {
+            "href": "http://127.0.0.1:{{serverPort}}/devices/10036/attach"
+          }
+        }
+      }
+    ]
+  },
+  "_links": {
+    "self": {
+      "href": "http://127.0.0.1:{{serverPort}}/devices?page=0&size=20"
+    },
+    "curies": [
+      {
+        "href": "http://127.0.0.1:{{serverPort}}/documentation/{rel}.html",
+        "name": "dap",
+        "templated": true
+      }
+    ]
+  },
+  "page": {
+    "size": 20,
+    "totalElements": 2,
+    "totalPages": 1,
+    "number": 0
+  }
+}

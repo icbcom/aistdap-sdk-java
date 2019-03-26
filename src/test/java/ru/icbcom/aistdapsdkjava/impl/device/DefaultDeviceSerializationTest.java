@@ -61,4 +61,26 @@ class DefaultDeviceSerializationTest {
         JSONAssert.assertEquals(expected, objectMapper.writeValueAsString(device), true);
     }
 
+    @Test
+    void nullIdShouldNotBeSerialized() throws JsonProcessingException, JSONException {
+        Device device = new DefaultDevice(dataStore)
+                .setObjectTypeId(1L)
+                .setName("Название устройства")
+                .setAttributeValue("Server", "puma.icbcom.ru")
+                .setAttributeValue("Port", "2755")
+                .setAttributeValue("AdditionalAttribute", "some attribute value");
+
+        String expected =
+                "{" +
+                        "   \"objectTypeId\": 1," +
+                        "   \"name\": \"Название устройства\"," +
+                        "   \"attributeValues\": {" +
+                        "       \"Server\": \"puma.icbcom.ru\"," +
+                        "       \"Port\": \"2755\"," +
+                        "       \"AdditionalAttribute\": \"some attribute value\"" +
+                        "   }" +
+                        "}";
+        JSONAssert.assertEquals(expected, objectMapper.writeValueAsString(device), true);
+    }
+
 }

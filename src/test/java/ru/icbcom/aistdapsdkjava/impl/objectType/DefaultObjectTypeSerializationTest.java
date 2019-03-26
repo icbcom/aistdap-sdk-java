@@ -102,4 +102,69 @@ class DefaultObjectTypeSerializationTest {
         JSONAssert.assertEquals(expected, objectMapper.writeValueAsString(objectType), true);
     }
 
+    @Test
+    void nullIdShouldNotBeSerialized() throws JsonProcessingException, JSONException {
+        ObjectType objectType = new DefaultObjectType(null)
+                .setName("ObjectTypeName")
+                .setCaption("Заголовок типа объекта")
+                .setDevice(false)
+                .addSection(
+                        new DefaultSection(null)
+                                .setName("SectionName")
+                                .setCaption("Заголовок секции")
+                                .addAttribute(
+                                        new DefaultAttribute(null)
+                                                .setName("InterbyteTimeout")
+                                                .setCaption("Таймаут межсимвольного интервала (мс)")
+                                                .setType(AttributeType.INTEGER)
+                                                .setMin("0")
+                                                .setMax("500")
+                                )
+                                .addAttribute(
+                                        new DefaultAttribute(null)
+                                                .setName("Password")
+                                                .setCaption("Пароль")
+                                                .setType(AttributeType.STRING)
+                                                .setMask("\\d{6}")
+                                                .setDefaultValue("defaultPassword")
+                                                .setComment("Комментарий к атрибуту")
+                                )
+                                .setComment("Комментариий к секции")
+                )
+                .setEnabled(true);
+
+        String expected =
+                "{\n" +
+                        "\t\"name\": \"ObjectTypeName\",\n" +
+                        "\t\"caption\": \"Заголовок типа объекта\",\n" +
+                        "\t\"device\": false,\n" +
+                        "\t\"sections\": [\n" +
+                        "\t\t{  \n" +
+                        "         \"name\":\"SectionName\",\n" +
+                        "         \"caption\":\"Заголовок секции\",\n" +
+                        "         \"comment\":\"Комментариий к секции\",\n" +
+                        "         \"attributes\":[  \n" +
+                        "            {  \n" +
+                        "               \"name\":\"InterbyteTimeout\",\n" +
+                        "               \"caption\":\"Таймаут межсимвольного интервала (мс)\",\n" +
+                        "               \"type\":\"Integer\",\n" +
+                        "               \"min\":\"0\",\n" +
+                        "               \"max\":\"500\"\n" +
+                        "            },\n" +
+                        "            {  \n" +
+                        "               \"name\":\"Password\",\n" +
+                        "               \"caption\":\"Пароль\",\n" +
+                        "               \"type\":\"String\",\n" +
+                        "               \"mask\":\"\\\\d{6}\",\n" +
+                        "               \"defaultValue\":\"defaultPassword\",\n" +
+                        "               \"comment\":\"Комментарий к атрибуту\"\n" +
+                        "            }\n" +
+                        "         ]\n" +
+                        "      }\n" +
+                        "\t],\n" +
+                        "\t\"enabled\": true \n" +
+                        "}";
+        JSONAssert.assertEquals(expected, objectMapper.writeValueAsString(objectType), true);
+    }
+
 }

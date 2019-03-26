@@ -1,0 +1,37 @@
+{
+  "id": 1,
+  "objectTypeId": 22,
+  "name": "Счетчик э/э Аист A100",
+  "attributeValues": {
+    "Serial": "000000000000",
+    "AccessLevel": "3",
+    "Password": "000000",
+    "RatesNumber": "4",
+    "Latitude": "0",
+    "Longitude": "0"
+  },
+  "_links": {
+    "self": {
+      "href": "http://127.0.0.1:{{serverPort}}/devices/1"
+    },
+    "dap:device": {
+      "href": "http://127.0.0.1:{{serverPort}}/devices/1"
+    },
+    "dap:objectType": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/22"
+    },
+    "dap:dapObjectMeasuredDataLast": {
+      "href": "http://127.0.0.1:{{serverPort}}/measuredData/1/last"
+    },
+    "dap:attach": {
+      "href": "http://127.0.0.1:{{serverPort}}/devices/1/attach"
+    },
+    "curies": [
+      {
+        "href": "http://127.0.0.1:{{serverPort}}/documentation/{rel}.html",
+        "name": "dap",
+        "templated": true
+      }
+    ]
+  }
+}

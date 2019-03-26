@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "objectTypeId": 22,
+  "name": "Измененное название устройства",
+  "attributeValues": {
+    "Serial": "123456789012",
+    "AccessLevel": "3",
+    "Password": "000000",
+    "RatesNumber": "4",
+    "Latitude": "0",
+    "Longitude": "0"
+  }
+}
