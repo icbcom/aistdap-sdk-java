@@ -11,6 +11,9 @@ import ru.icbcom.aistdapsdkjava.api.device.DeviceCriteria;
 import ru.icbcom.aistdapsdkjava.api.device.DeviceList;
 import ru.icbcom.aistdapsdkjava.api.device.Devices;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
+import ru.icbcom.aistdapsdkjava.api.physicalstructure.PhysicalStructureObject;
+
+import java.util.Optional;
 
 @Slf4j
 @Disabled
@@ -73,6 +76,28 @@ public class DeviceDemo {
         log.info(device.toString());
         ObjectType objectType = device.getObjectType();
         log.info(objectType.toString());
+    }
+
+    @Test
+    void getPhysicalStructureObjectDeviceAttachedTo() {
+        Device device = client.devices().getById(10033L).orElseThrow();
+        log.info(device.toString());
+        Optional<PhysicalStructureObject> physicalStructureObjectDeviceAttachedTo = device.getPhysicalStructureObjectDeviceAttachedTo();
+        log.info(physicalStructureObjectDeviceAttachedTo.toString());
+    }
+
+    @Test
+    void detach() {
+        Device device = client.devices().getById(10033L).orElseThrow();
+        log.info(device.toString());
+        device.detach();
+    }
+
+    @Test
+    void attach() {
+        Device device = client.devices().getById(10033L).orElseThrow();
+        log.info(device.toString());
+        device.attach(10032L);
     }
 
 }

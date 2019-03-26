@@ -9,7 +9,6 @@ import org.springframework.hateoas.Link;
 import ru.icbcom.aistdapsdkjava.api.device.DeviceCriteria;
 import ru.icbcom.aistdapsdkjava.api.device.DeviceList;
 import ru.icbcom.aistdapsdkjava.api.device.Devices;
-import ru.icbcom.aistdapsdkjava.api.exception.AistDapSdkException;
 import ru.icbcom.aistdapsdkjava.api.exception.LinkNotFoundException;
 import ru.icbcom.aistdapsdkjava.api.exception.NotPersistedException;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
@@ -18,7 +17,6 @@ import ru.icbcom.aistdapsdkjava.api.physicalstructure.PhysicalStructureObjectCri
 import ru.icbcom.aistdapsdkjava.api.physicalstructure.PhysicalStructureObjectList;
 import ru.icbcom.aistdapsdkjava.api.physicalstructure.PhysicalStructureObjects;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
-import ru.icbcom.aistdapsdkjava.impl.device.DefaultDevice;
 import ru.icbcom.aistdapsdkjava.impl.device.DefaultDeviceList;
 import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultObjectType;
 import ru.icbcom.aistdapsdkjava.impl.resource.AbstractInstanceResource;

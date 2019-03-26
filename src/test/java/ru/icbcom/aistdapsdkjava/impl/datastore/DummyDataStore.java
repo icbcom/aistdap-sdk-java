@@ -2,6 +2,7 @@ package ru.icbcom.aistdapsdkjava.impl.datastore;
 
         import org.springframework.hateoas.Link;
         import ru.icbcom.aistdapsdkjava.api.query.Criteria;
+        import ru.icbcom.aistdapsdkjava.api.resource.Deletable;
         import ru.icbcom.aistdapsdkjava.api.resource.Resource;
         import ru.icbcom.aistdapsdkjava.api.resource.Savable;
 
@@ -27,7 +28,17 @@ public class DummyDataStore implements DataStore {
     }
 
     @Override
-    public <T extends Resource> void delete(T resource) {
+    public <T extends Resource & Deletable> void delete(T resource) {
+        throw new IllegalStateException("Not implemented");
+    }
+
+    @Override
+    public void callMethod(Link link) {
+        throw new IllegalStateException("Not implemented");
+    }
+
+    @Override
+    public <T extends Resource> void callMethod(Link link, T methodArgumentResource) {
         throw new IllegalStateException("Not implemented");
     }
 }

@@ -1,6 +1,7 @@
 package ru.icbcom.aistdapsdkjava.api.device;
 
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
+import ru.icbcom.aistdapsdkjava.api.physicalstructure.PhysicalStructureObject;
 import ru.icbcom.aistdapsdkjava.api.resource.Deletable;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
 import ru.icbcom.aistdapsdkjava.api.resource.Savable;
@@ -107,5 +108,36 @@ public interface Device extends Resource, Savable, Deletable {
      * @return тип объекта данного устройства
      */
     ObjectType getObjectType();
+
+    /**
+     * Привязано ли данное устройство к какому-либо объекту физической структуры.
+     * <p>Данный метод возвращает правильное значение только для тех объектов, которые были сохранены или получены из
+     * платформы (persisted objects).</p>
+     *
+     * @return true - данное устройство привязано к какому-либо объекту физической структуры, false - данное устройство
+     * не привязано ни к одному объекту физической структуры.
+     */
+    boolean isAttached();
+
+    /**
+     * Возвращает объект физической структуры, к которому привязано данное устройство.
+     *
+     * @return {@link Optional} содержащий объект физической структуры, к которому привязано данное устройство, либо
+     * пустой {@link Optional} если данное устройство не привязано ни к одному объекту физической структуры.
+     */
+    Optional<PhysicalStructureObject> getPhysicalStructureObjectDeviceAttachedTo();
+
+    /**
+     * Отвязать данное устройство от объекта физической структуры.
+     */
+    void detach();
+
+    /**
+     * Привязка данного устройства к объекту физической структуры.
+     *
+     * @param physicalStructureObjectId идентификатор объекта физической структуры, к которому производится привязка
+     *                                  данного устройства
+     */
+    void attach(Long physicalStructureObjectId);
 
 }

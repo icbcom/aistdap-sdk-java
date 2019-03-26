@@ -1,6 +1,9 @@
 package ru.icbcom.aistdapsdkjava.impl.datastore;
 
+import com.fasterxml.jackson.annotation.JacksonInject;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -8,15 +11,22 @@ import org.mockito.InOrder;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.hateoas.Link;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 import ru.icbcom.aistdapsdkjava.api.exception.AistDapSdkException;
 import ru.icbcom.aistdapsdkjava.api.query.Criteria;
+import ru.icbcom.aistdapsdkjava.api.resource.Deletable;
+import ru.icbcom.aistdapsdkjava.api.resource.Savable;
 import ru.icbcom.aistdapsdkjava.api.resource.VoidResource;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.AuthenticationServiceFactory;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.service.AuthenticationService;
 import ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper.ObjectMapperFactory;
 import ru.icbcom.aistdapsdkjava.impl.datastore.resttemplate.RestTemplateFactory;
 import ru.icbcom.aistdapsdkjava.impl.query.DefaultCriteria;
+import ru.icbcom.aistdapsdkjava.impl.resource.AbstractResource;
 import ru.icbcom.aistdapsdkjava.impl.resource.DefaultVoidResource;
 
 import java.util.ArrayList;
@@ -109,6 +119,111 @@ class DefaultDataStoreTest {
         inOrder.verify(authenticationService).ensureAuthentication();
         inOrder.verify(restTemplate).getForObject("http://127.0.0.1/resource", VoidResource.class);
         inOrder.verifyNoMoreInteractions();
+    }
+
+    @Test
+    void createShouldWorkProperly() {
+        Link link = new Link("http://127.0.0.1/resource{?page,size,sort}", "someRel");
+
+        DefaultVoidResource objectToCreate = new DefaultVoidResource(dataStore);
+
+        DefaultVoidResource resourceToReturn = new DefaultVoidResource(dataStore);
+        when(restTemplate.postForObject("http://127.0.0.1/resource", objectToCreate, DefaultVoidResource.class)).thenReturn(resourceToReturn);
+
+        DefaultVoidResource createdResource = dataStore.create(link, objectToCreate);
+        assertSame(resourceToReturn, createdResource);
+
+        InOrder inOrder = inOrder(authenticationService, restTemplate);
+        inOrder.verify(authenticationService).ensureAuthentication();
+        inOrder.verify(restTemplate).postForObject("http://127.0.0.1/resource", objectToCreate, DefaultVoidResource.class);
+        inOrder.verifyNoMoreInteractions();
+    }
+
+    @Test
+    void saveShouldWorkProperly() {
+        SavableDeletableVoidResource resourceToSave = new SavableDeletableVoidResource(dataStore);
+        resourceToSave.add(new Link("http://127.0.0.1/resource/1", "self"));
+
+        SavableDeletableVoidResource resourceToReturn = new SavableDeletableVoidResource(dataStore);
+        when(restTemplate.exchange("http://127.0.0.1/resource/1", HttpMethod.PUT, new HttpEntity<>(resourceToSave), SavableDeletableVoidResource.class))
+                .thenReturn(new ResponseEntity<>(resourceToReturn, HttpStatus.OK));
+
+        SavableDeletableVoidResource saveResult = dataStore.save(resourceToSave);
+        assertSame(resourceToReturn, saveResult);
+
+        InOrder inOrder = inOrder(authenticationService, restTemplate);
+        inOrder.verify(authenticationService).ensureAuthentication();
+        inOrder.verify(restTemplate).exchange("http://127.0.0.1/resource/1", HttpMethod.PUT, new HttpEntity<>(resourceToSave), SavableDeletableVoidResource.class);
+        inOrder.verifyNoMoreInteractions();
+    }
+
+    @Test
+    void deleteShouldWorkProperly() {
+        SavableDeletableVoidResource resourceToDelete = new SavableDeletableVoidResource(dataStore);
+        resourceToDelete.add(new Link("http://127.0.0.1/resource/1", "self"));
+
+        dataStore.delete(resourceToDelete);
+
+        InOrder inOrder = inOrder(authenticationService, restTemplate);
+        inOrder.verify(authenticationService).ensureAuthentication();
+        inOrder.verify(restTemplate).delete("http://127.0.0.1/resource/1");
+        inOrder.verifyNoMoreInteractions();
+    }
+
+    /*
+     HttpEntity<T> httpEntity = new HttpEntity<>(resource);
+        ResponseEntity<? extends Resource> responseEntity = restTemplate.exchange(expandedHref, HttpMethod.PUT, httpEntity, resource.getClass());
+     */
+
+    /*
+        <T extends Resource> T create(Link parentLink, T resource);
+
+    <T extends Resource & Savable> T save(T resource);
+
+    <T extends Resource> void delete(T resource);
+     */
+
+    @Test
+    void callMethodShouldWorkProperly() {
+        Link link = new Link("http://127.0.0.1/resource{?page,size,sort}", "someRel");
+
+        dataStore.callMethod(link);
+
+        InOrder inOrder = inOrder(authenticationService, restTemplate);
+        inOrder.verify(authenticationService).ensureAuthentication();
+        inOrder.verify(restTemplate).postForObject("http://127.0.0.1/resource", null, Void.class);
+        inOrder.verifyNoMoreInteractions();
+    }
+
+    @Test
+    void callMethodWithArgumentShouldWorkProperly() {
+        Link link = new Link("http://127.0.0.1/resource{?page,size,sort}", "someRel");
+
+        SavableDeletableVoidResource methodArgument = new SavableDeletableVoidResource(dataStore);
+        dataStore.callMethod(link, methodArgument);
+
+        InOrder inOrder = inOrder(authenticationService, restTemplate);
+        inOrder.verify(authenticationService).ensureAuthentication();
+        inOrder.verify(restTemplate).postForObject("http://127.0.0.1/resource", methodArgument, Void.class);
+        inOrder.verifyNoMoreInteractions();
+    }
+
+    @EqualsAndHashCode(callSuper = false)
+    private static class SavableDeletableVoidResource extends AbstractResource implements VoidResource, Savable, Deletable {
+        public SavableDeletableVoidResource(@JacksonInject DataStore dataStore) {
+            super(dataStore);
+        }
+
+        @Override
+        public void save() {
+            throw new IllegalStateException("Not implemented");
+        }
+
+        @Override
+        public void delete() {
+            throw new IllegalStateException("Not implemented");
+
+        }
     }
 
     private interface TestCriteria extends Criteria<TestCriteria> {

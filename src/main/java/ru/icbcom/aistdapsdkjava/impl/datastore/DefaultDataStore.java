@@ -8,6 +8,7 @@ import org.springframework.web.client.RestTemplate;
 import ru.icbcom.aistdapsdkjava.api.exception.AistDapSdkException;
 import ru.icbcom.aistdapsdkjava.api.query.Criteria;
 import ru.icbcom.aistdapsdkjava.api.resource.CollectionResource;
+import ru.icbcom.aistdapsdkjava.api.resource.Deletable;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
 import ru.icbcom.aistdapsdkjava.api.resource.Savable;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.AuthenticationServiceFactory;
@@ -20,6 +21,7 @@ import ru.icbcom.aistdapsdkjava.impl.datastore.resttemplate.RestTemplateFactory;
 import ru.icbcom.aistdapsdkjava.impl.query.DefaultCriteria;
 import ru.icbcom.aistdapsdkjava.impl.query.EmptyCriteria;
 import ru.icbcom.aistdapsdkjava.impl.resource.AbstractResource;
+import ru.icbcom.aistdapsdkjava.impl.resource.DefaultVoidResource;
 
 import java.util.List;
 
@@ -76,8 +78,8 @@ public class DefaultDataStore implements DataStore {
         Assert.isInstanceOf(AbstractResource.class, resource);
         Assert.isTrue(!CollectionResource.class.isAssignableFrom(resource.getClass()), "collections cannot be persisted");
 
-        String expandedHref = parentLink.expand().getHref();
-        Resource createdResource = restTemplate.postForObject(expandedHref, resource, resource.getClass());
+        authenticationService.ensureAuthentication();
+        Resource createdResource = restTemplate.postForObject(parentLink.expand().getHref(), resource, resource.getClass());
 
         return (T) createdResource;
     }
@@ -92,20 +94,38 @@ public class DefaultDataStore implements DataStore {
         String expandedHref = selfLink.expand().getHref();
 
         HttpEntity<T> httpEntity = new HttpEntity<>(resource);
+        authenticationService.ensureAuthentication();
         ResponseEntity<? extends Resource> responseEntity = restTemplate.exchange(expandedHref, HttpMethod.PUT, httpEntity, resource.getClass());
 
         return (T) responseEntity.getBody();
     }
 
     @Override
-    public <T extends Resource> void delete(T resource) {
+    public <T extends Resource & Deletable> void delete(T resource) {
         Assert.notNull(resource, "resource argument cannot be null");
         Assert.isInstanceOf(AbstractResource.class, resource, "resource argument must be an AbstractResource");
         Assert.isTrue(!CollectionResource.class.isAssignableFrom(resource.getClass()), "collections cannot be deleted");
 
         Link selfLink = resource.getLink("self").orElseThrow(() -> new IllegalArgumentException(CANNOT_DELETE_NO_SELF_LINK_MSG));
         String expandedHref = selfLink.expand().getHref();
+        authenticationService.ensureAuthentication();
         restTemplate.delete(expandedHref);
+    }
+
+    @Override
+    public void callMethod(Link link) {
+        Assert.notNull(link, "link argument cannot be null");
+        authenticationService.ensureAuthentication();
+        restTemplate.postForObject(link.expand().getHref(), null, Void.class);
+    }
+
+    @Override
+    public <T extends Resource> void callMethod(Link link, T methodArgumentResource) {
+        Assert.notNull(link, "link argument cannot be null");
+        Assert.notNull(methodArgumentResource, "argumentResource argument cannot be null");
+        Assert.isInstanceOf(AbstractResource.class, methodArgumentResource, "argumentResource argument must be an AbstractResource");
+        authenticationService.ensureAuthentication();
+        restTemplate.postForObject(link.expand().getHref(), methodArgumentResource, Void.class);
     }
 
 }

@@ -2,6 +2,7 @@ package ru.icbcom.aistdapsdkjava.impl.datastore;
 
 import org.springframework.hateoas.Link;
 import ru.icbcom.aistdapsdkjava.api.query.Criteria;
+import ru.icbcom.aistdapsdkjava.api.resource.Deletable;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
 import ru.icbcom.aistdapsdkjava.api.resource.Savable;
 
@@ -15,6 +16,10 @@ public interface DataStore {
 
     <T extends Resource & Savable> T save(T resource);
 
-    <T extends Resource> void delete(T resource);
+    <T extends Resource & Deletable> void delete(T resource);
+
+    void callMethod(Link link);
+
+    <T extends Resource> void callMethod(Link link, T methodArgumentResource);
 
 }
