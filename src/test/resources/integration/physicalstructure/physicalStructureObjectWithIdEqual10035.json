@@ -1,0 +1,41 @@
+{
+  "id": 10035,
+  "objectTypeId": 42,
+  "name": "Новой объект физической структуры",
+  "attributeValues": {
+    "Bsid": "1",
+    "DeviceNumber": "1",
+    "ProfSerNum": "123456789"
+  },
+  "descendantsCount": 0,
+  "devicesCount": 0,
+  "_links": {
+    "self": {
+      "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/10035"
+    },
+    "dap:physicalStructureObject": {
+      "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/10035"
+    },
+    "dap:objectType": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/42"
+    },
+    "dap:descendants": {
+      "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/10035/descendants{?page,size,sort}",
+      "templated": true
+    },
+    "dap:attachedDevices": {
+      "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/10035/attachedDevices{?page,size,sort}",
+      "templated": true
+    },
+    "dap:parent": {
+      "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/10007"
+    },
+    "curies": [
+      {
+        "href": "http://127.0.0.1:{{serverPort}}/documentation/{rel}.html",
+        "name": "dap",
+        "templated": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "id": 10007,
+  "objectTypeId": 41,
+  "name": "Система АСКУЭ",
+  "attributeValues": {
+    "Host": "localhost",
+    "Port": "1433",
+    "Database": "aeinfov2_mts",
+    "Login": "sa",
+    "Password": "a2lsa2Fib3Q=",
+    "MeasurementsPollRate": "10",
+    "EnergyProfilesPollRate": "3600"
+  },
+  "descendantsCount": 1,
+  "devicesCount": 0,
+  "_links": {
+    "self": {
+      "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/10007"
+    },
+    "dap:physicalStructureObject": {
+      "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/10007"
+    },
+    "dap:objectType": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/41"
+    },
+    "dap:descendants": {
+      "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/10007/descendants{?page,size,sort}",
+      "templated": true
+    },
+    "dap:attachedDevices": {
+      "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/10007/attachedDevices{?page,size,sort}",
+      "templated": true
+    },
+    "curies": [
+      {
+        "href": "http://127.0.0.1:{{serverPort}}/documentation/{rel}.html",
+        "name": "dap",
+        "templated": true
+      }
+    ]
+  }
+}

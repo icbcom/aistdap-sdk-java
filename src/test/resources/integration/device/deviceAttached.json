@@ -1,0 +1,37 @@
+{
+  "id": 10036,
+  "objectTypeId": 37,
+  "name": "Метеостанция IMETEOLABS PWS-200",
+  "attributeValues": {
+    "Address": "5",
+    "Latitude": "122",
+    "Longitude": "157"
+  },
+  "_links": {
+    "self": {
+      "href": "http://127.0.0.1:{{serverPort}}/devices/10036"
+    },
+    "dap:device": {
+      "href": "http://127.0.0.1:{{serverPort}}/devices/10036"
+    },
+    "dap:objectType": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/37"
+    },
+    "dap:dapObjectMeasuredDataLast": {
+      "href": "http://127.0.0.1:{{serverPort}}/measuredData/10036/last"
+    },
+    "dap:physicalStructureObjectAttachedTo": {
+      "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/10032"
+    },
+    "dap:detach": {
+      "href": "http://127.0.0.1:{{serverPort}}/devices/10036/detach"
+    },
+    "curies": [
+      {
+        "href": "http://127.0.0.1:{{serverPort}}/documentation/{rel}.html",
+        "name": "dap",
+        "templated": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "id": 123,
+  "objectTypeId": 1,
+  "name": "Название объекта",
+  "attributeValues": {
+    "Server": "puma.icbcom.ru",
+    "Port": "2755",
+    "AdditionalAttribute": "some attribute value"
+  },
+  "descendantsCount": 0,
+  "devicesCount": 0,
+  "_links": {
+    "self": {
+      "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/123"
+    },
+    "dap:physicalStructureObject": {
+      "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/123"
+    },
+    "dap:objectType": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/1"
+    },
+    "dap:descendants": {
+      "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/123/descendants{?page,size,sort}",
+      "templated": true
+    },
+    "dap:attachedDevices": {
+      "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/123/attachedDevices{?page,size,sort}",
+      "templated": true
+    },
+    "curies": [
+      {
+        "href": "http://127.0.0.1:{{serverPort}}/documentation/{rel}.html",
+        "name": "dap",
+        "templated": true
+      }
+    ]
+  }
+}

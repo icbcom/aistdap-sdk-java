@@ -1,0 +1,77 @@
+{
+  "id": 41,
+  "name": "AskueSystem",
+  "caption": "Система АСКУЭ",
+  "device": false,
+  "sections": [
+    {
+      "name": "Settings",
+      "caption": "Настройки",
+      "attributes": [
+        {
+          "name": "Host",
+          "caption": "Имя хоста",
+          "type": "String"
+        },
+        {
+          "name": "Port",
+          "caption": "Порт",
+          "type": "Integer",
+          "min": "0",
+          "max": "65535"
+        },
+        {
+          "name": "Database",
+          "caption": "Имя базы данных",
+          "type": "String"
+        },
+        {
+          "name": "Login",
+          "caption": "Имя пользователя",
+          "type": "String"
+        },
+        {
+          "name": "Password",
+          "caption": "Пароль пользователя (base64)",
+          "type": "String"
+        },
+        {
+          "name": "MeasurementsPollRate",
+          "caption": " Частота опроса измерений (сек)",
+          "type": "Integer",
+          "min": "1"
+        },
+        {
+          "name": "EnergyProfilesPollRate",
+          "caption": " Частота опроса профилей мощности (сек)",
+          "type": "Integer",
+          "min": "1"
+        }
+      ]
+    }
+  ],
+  "enabled": true,
+  "_links": {
+    "self": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/41"
+    },
+    "dap:objectType": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/41"
+    },
+    "dap:dataSources": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/41/dataSources{?page,size,sort}",
+      "templated": true
+    },
+    "dap:dataSourceGroups": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/41/dataSourceGroups{?page,size,sort}",
+      "templated": true
+    },
+    "curies": [
+      {
+        "href": "http://127.0.0.1:{{serverPort}}/documentation/{rel}.html",
+        "name": "dap",
+        "templated": true
+      }
+    ]
+  }
+}

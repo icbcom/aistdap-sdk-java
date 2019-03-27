@@ -1,0 +1,41 @@
+{
+  "id": 10032,
+  "objectTypeId": 34,
+  "name": "UDP транспорт",
+  "attributeValues": {
+    "Period": "1000",
+    "DefaultReadTimeout": "1000",
+    "RepeatEnabled": "False",
+    "DelayBetweenPolls": "1000",
+    "IpAddress": "1000",
+    "Port": "31337"
+  },
+  "descendantsCount": 0,
+  "devicesCount": 1,
+  "_links": {
+    "self": {
+      "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/10032"
+    },
+    "dap:physicalStructureObject": {
+      "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/10032"
+    },
+    "dap:objectType": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/34"
+    },
+    "dap:descendants": {
+      "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/10032/descendants{?page,size,sort}",
+      "templated": true
+    },
+    "dap:attachedDevices": {
+      "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/10032/attachedDevices{?page,size,sort}",
+      "templated": true
+    },
+    "curies": [
+      {
+        "href": "http://127.0.0.1:{{serverPort}}/documentation/{rel}.html",
+        "name": "dap",
+        "templated": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "id": 22,
+  "name": "AistOnePhaseElectricalMeter",
+  "caption": "Счетчик э/э Аист A100",
+  "device": true,
+  "sections": [
+    {
+      "name": "Settings",
+      "caption": "Параметры",
+      "attributes": [
+        {
+          "name": "Serial",
+          "caption": "Серийный номер",
+          "type": "String",
+          "mask": "\\d{12}"
+        },
+        {
+          "name": "AccessLevel",
+          "caption": "Уровень доступа",
+          "type": "Enumeration",
+          "enumSetValues": [
+            {
+              "number": 1,
+              "caption": "00"
+            },
+            {
+              "number": 2,
+              "caption": "01"
+            },
+            {
+              "number": 3,
+              "caption": "02"
+            },
+            {
+              "number": 4,
+              "caption": "03"
+            },
+            {
+              "number": 5,
+              "caption": "04"
+            },
+            {
+              "number": 6,
+              "caption": "05"
+            },
+            {
+              "number": 7,
+              "caption": "06"
+            },
+            {
+              "number": 8,
+              "caption": "07"
+            },
+            {
+              "number": 9,
+              "caption": "08"
+            },
+            {
+              "number": 10,
+              "caption": "09"
+            },
+            {
+              "number": 11,
+              "caption": "98"
+            },
+            {
+              "number": 12,
+              "caption": "99"
+            }
+          ]
+        },
+        {
+          "name": "Password",
+          "caption": "Пароль",
+          "type": "String",
+          "mask": "\\d{6}"
+        },
+        {
+          "name": "RatesNumber",
+          "caption": "Число тарифов",
+          "type": "Integer"
+        }
+      ]
+    },
+    {
+      "name": "Coordinates",
+      "caption": "Географические координаты",
+      "attributes": [
+        {
+          "name": "Latitude",
+          "caption": "Широта",
+          "type": "Float"
+        },
+        {
+          "name": "Longitude",
+          "caption": "Долгота",
+          "type": "Float"
+        }
+      ]
+    }
+  ],
+  "enabled": true,
+  "_links": {
+    "self": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/22"
+    },
+    "dap:objectType": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/22"
+    },
+    "dap:dataSources": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/22/dataSources{?page,size,sort}",
+      "templated": true
+    },
+    "dap:dataSourceGroups": {
+      "href": "http://127.0.0.1:{{serverPort}}/objectTypes/22/dataSourceGroups{?page,size,sort}",
+      "templated": true
+    },
+    "curies": [
+      {
+        "href": "http://127.0.0.1:{{serverPort}}/documentation/{rel}.html",
+        "name": "dap",
+        "templated": true
+      }
+    ]
+  }
+}

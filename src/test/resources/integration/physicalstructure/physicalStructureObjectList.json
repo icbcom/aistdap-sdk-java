@@ -1,0 +1,128 @@
+{
+  "_embedded": {
+    "dap:physicalStructureObjects": [
+      {
+        "id": 10007,
+        "objectTypeId": 41,
+        "name": "Система АСКУЭ",
+        "attributeValues": {
+          "Host": "localhost",
+          "Port": "1433",
+          "Database": "aeinfov2_mts",
+          "Login": "sa",
+          "Password": "a2lsa2Fib3Q=",
+          "MeasurementsPollRate": "10",
+          "EnergyProfilesPollRate": "3600"
+        },
+        "descendantsCount": 1,
+        "devicesCount": 0,
+        "_links": {
+          "self": {
+            "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/10007"
+          },
+          "dap:physicalStructureObject": {
+            "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/10007"
+          },
+          "dap:objectType": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/41"
+          },
+          "dap:descendants": {
+            "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/10007/descendants{?page,size,sort}",
+            "templated": true
+          },
+          "dap:attachedDevices": {
+            "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/10007/attachedDevices{?page,size,sort}",
+            "templated": true
+          }
+        }
+      },
+      {
+        "id": 10032,
+        "objectTypeId": 34,
+        "name": "UDP транспорт",
+        "attributeValues": {
+          "Period": "1000",
+          "DefaultReadTimeout": "1000",
+          "RepeatEnabled": "False",
+          "DelayBetweenPolls": "1000",
+          "IpAddress": "1000",
+          "Port": "31337"
+        },
+        "descendantsCount": 0,
+        "devicesCount": 1,
+        "_links": {
+          "self": {
+            "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/10032"
+          },
+          "dap:physicalStructureObject": {
+            "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/10032"
+          },
+          "dap:objectType": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/34"
+          },
+          "dap:descendants": {
+            "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/10032/descendants{?page,size,sort}",
+            "templated": true
+          },
+          "dap:attachedDevices": {
+            "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/10032/attachedDevices{?page,size,sort}",
+            "templated": true
+          }
+        }
+      },
+      {
+        "id": 10027,
+        "objectTypeId": 41,
+        "name": "New ASKUE system",
+        "attributeValues": {
+          "Host": "localhost",
+          "Port": "1433",
+          "Database": "aeinfov2_mts",
+          "Login": "sa",
+          "Password": "pswd",
+          "MeasurementsPollRate": "10",
+          "EnergyProfilesPollRate": "3600"
+        },
+        "descendantsCount": 0,
+        "devicesCount": 0,
+        "_links": {
+          "self": {
+            "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/10027"
+          },
+          "dap:physicalStructureObject": {
+            "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/10027"
+          },
+          "dap:objectType": {
+            "href": "http://127.0.0.1:{{serverPort}}/objectTypes/41"
+          },
+          "dap:descendants": {
+            "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/10027/descendants{?page,size,sort}",
+            "templated": true
+          },
+          "dap:attachedDevices": {
+            "href": "http://127.0.0.1:{{serverPort}}/physicalStructure/10027/attachedDevices{?page,size,sort}",
+            "templated": true
+          }
+        }
+      }
+    ]
+  },
+  "_links": {
+    "self": {
+      "href": "http://127.0.0.1:{{serverPort}}/physicalStructure?page=0&size=20&sort=name,desc"
+    },
+    "curies": [
+      {
+        "href": "http://127.0.0.1:{{serverPort}}/documentation/{rel}.html",
+        "name": "dap",
+        "templated": true
+      }
+    ]
+  },
+  "page": {
+    "size": 20,
+    "totalElements": 3,
+    "totalPages": 1,
+    "number": 0
+  }
+}
