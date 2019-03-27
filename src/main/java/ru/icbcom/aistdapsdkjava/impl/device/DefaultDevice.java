@@ -13,12 +13,10 @@ import ru.icbcom.aistdapsdkjava.api.exception.LinkNotFoundException;
 import ru.icbcom.aistdapsdkjava.api.exception.NotPersistedException;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
 import ru.icbcom.aistdapsdkjava.api.physicalstructure.PhysicalStructureObject;
-import ru.icbcom.aistdapsdkjava.api.resource.Resource;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultObjectType;
 import ru.icbcom.aistdapsdkjava.impl.physicalstructure.DefaultPhysicalStructureObject;
 import ru.icbcom.aistdapsdkjava.impl.resource.AbstractInstanceResource;
-import ru.icbcom.aistdapsdkjava.impl.resource.AbstractResource;
 
 import java.util.LinkedHashMap;
 import java.util.Map;

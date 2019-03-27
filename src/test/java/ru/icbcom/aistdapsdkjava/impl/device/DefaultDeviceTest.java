@@ -24,10 +24,10 @@ import static org.mockito.ArgumentMatchers.same;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-    class DefaultDeviceTest {
+class DefaultDeviceTest {
 
-        @Mock
-        DataStore dataStore;
+    @Mock
+    DataStore dataStore;
 
     @Test
     void fieldsInitializationShouldWorkProperly() {

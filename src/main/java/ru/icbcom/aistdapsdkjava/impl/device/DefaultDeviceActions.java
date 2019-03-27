@@ -8,8 +8,6 @@ import ru.icbcom.aistdapsdkjava.impl.resource.AbstractResourceActions;
 
 import java.util.Optional;
 
-// TODO: Протестировать данный класс.
-
 public class DefaultDeviceActions extends AbstractResourceActions implements DeviceActions {
 
     public DefaultDeviceActions(Link baseLink, DataStore dataStore) {
