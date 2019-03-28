@@ -4,10 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.hateoas.Link;
 import ru.icbcom.aistdapsdkjava.api.client.Client;
 import ru.icbcom.aistdapsdkjava.api.device.DeviceActions;
+import ru.icbcom.aistdapsdkjava.api.measureddata.MeasuredDataActions;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypeActions;
 import ru.icbcom.aistdapsdkjava.api.physicalstructure.PhysicalStructureObjectActions;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
 import ru.icbcom.aistdapsdkjava.impl.device.DefaultDeviceActions;
+import ru.icbcom.aistdapsdkjava.impl.measureddata.DefaultMeasuredDataActions;
 import ru.icbcom.aistdapsdkjava.impl.physicalstructure.DefaultPhysicalStructureObjectActions;
 import ru.icbcom.aistdapsdkjava.impl.resource.ResourceFactory;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
@@ -35,6 +37,7 @@ public class DefaultClient implements Client {
     private final ObjectTypeActions objectTypeActions;
     private final DeviceActions deviceActions;
     private final PhysicalStructureObjectActions physicalStructureObjectActions;
+    private final MeasuredDataActions measuredDataActions;
 
     DefaultClient(String baseUrl, String login, String password) {
         this.dataStore = new DefaultDataStore(baseUrl, login, password, objectMapperFactory, authenticationServiceFactory, restTemplateFactory);
@@ -42,6 +45,7 @@ public class DefaultClient implements Client {
         this.objectTypeActions = new DefaultObjectTypeActions(new Link(baseUrl), dataStore);
         this.deviceActions = new DefaultDeviceActions(new Link(baseUrl), dataStore);
         this.physicalStructureObjectActions = new DefaultPhysicalStructureObjectActions(new Link(baseUrl), dataStore);
+        this.measuredDataActions = new DefaultMeasuredDataActions(new Link(baseUrl), dataStore);
     }
 
     @Override
@@ -62,5 +66,10 @@ public class DefaultClient implements Client {
     @Override
     public PhysicalStructureObjectActions physicalStructure() {
         return physicalStructureObjectActions;
+    }
+
+    @Override
+    public MeasuredDataActions measuredData() {
+        return measuredDataActions;
     }
 }

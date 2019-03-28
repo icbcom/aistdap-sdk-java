@@ -84,10 +84,15 @@ public class DefaultMeasuredData extends AbstractInstanceResource implements Mea
     @Override
     @JsonIgnore
     public MeasuredData setBigDecimalValue(BigDecimal value) {
-        long longValue = value.unscaledValue().longValue();
-        long devConst = BigInteger.valueOf(10).pow(value.scale()).longValue();
-        setValue(longValue);
-        setDevConst(devConst);
+        int scale = value.scale();
+        if (scale >= 0) {
+            setValue(value.unscaledValue().longValue());
+            setDevConst(BigInteger.valueOf(10).pow(value.scale()).longValue());
+        } else {
+            BigInteger val = value.unscaledValue().multiply(BigInteger.valueOf(10).pow(-value.scale()));
+            setValue(val.longValue());
+            setDevConst(1L);
+        }
         return this;
     }
 

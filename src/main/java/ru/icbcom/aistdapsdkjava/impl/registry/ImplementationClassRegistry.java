@@ -3,6 +3,7 @@ package ru.icbcom.aistdapsdkjava.impl.registry;
 import ru.icbcom.aistdapsdkjava.api.datasource.DataSource;
 import ru.icbcom.aistdapsdkjava.api.datasourcegroup.DataSourceGroup;
 import ru.icbcom.aistdapsdkjava.api.device.Device;
+import ru.icbcom.aistdapsdkjava.api.measureddata.MeasuredData;
 import ru.icbcom.aistdapsdkjava.api.objecttype.Attribute;
 import ru.icbcom.aistdapsdkjava.api.objecttype.EnumSetValue;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectType;
@@ -13,6 +14,7 @@ import ru.icbcom.aistdapsdkjava.api.resource.VoidResource;
 import ru.icbcom.aistdapsdkjava.impl.datasource.DefaultDataSource;
 import ru.icbcom.aistdapsdkjava.impl.datasourcegroup.DefaultDataSourceGroup;
 import ru.icbcom.aistdapsdkjava.impl.device.DefaultDevice;
+import ru.icbcom.aistdapsdkjava.impl.measureddata.DefaultMeasuredData;
 import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultAttribute;
 import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultEnumSetValue;
 import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultObjectType;
@@ -33,7 +35,8 @@ public final class ImplementationClassRegistry {
             DataSource.class, DefaultDataSource.class,
             DataSourceGroup.class, DefaultDataSourceGroup.class,
             Device.class, DefaultDevice.class,
-            PhysicalStructureObject.class, DefaultPhysicalStructureObject.class
+            PhysicalStructureObject.class, DefaultPhysicalStructureObject.class,
+            MeasuredData.class, DefaultMeasuredData.class
     );
 
     public static Class<? extends Resource> getImplementationClassFor(Class<? extends Resource> interfaceClass) {

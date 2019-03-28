@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.type.ClassKey;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.hateoas.hal.Jackson2HalModule;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
@@ -25,6 +26,8 @@ public class DefaultObjectMapperFactory implements ObjectMapperFactory {
 
     private void configureMainParameters(ObjectMapper objectMapper) {
         objectMapper.registerModule(new Jackson2HalModule());
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
     }
 

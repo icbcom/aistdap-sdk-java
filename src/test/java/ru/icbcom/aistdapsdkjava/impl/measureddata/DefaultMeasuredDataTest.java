@@ -59,6 +59,24 @@ class DefaultMeasuredDataTest {
     }
 
     @Test
+    void setBigDecimalValueForSmallNumbersShouldWorkProperly() {
+        MeasuredData measuredData = new DefaultMeasuredData(dataStore).setBigDecimalValue(new BigDecimal("0.0000123"));
+        assertThat(measuredData, allOf(
+                hasProperty("value", is(123L)),
+                hasProperty("devConst", is(10000000L))
+        ));
+    }
+
+    @Test
+    void setBigDecimalValueWithNegativeScaleShouldWorkProperly() {
+        MeasuredData measuredData = new DefaultMeasuredData(dataStore).setBigDecimalValue(new BigDecimal(BigInteger.valueOf(6), -2));
+        assertThat(measuredData, allOf(
+                hasProperty("value", is(600L)),
+                hasProperty("devConst", is(1L))
+        ));
+    }
+
+    @Test
     void setBigIntegerValueShouldWorkProperly() {
         MeasuredData measuredData = new DefaultMeasuredData(dataStore).setBigIntegerValue(new BigInteger("12345"));
         assertThat(measuredData, allOf(
