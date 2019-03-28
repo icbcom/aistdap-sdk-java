@@ -1,7 +1,7 @@
 package ru.icbcom.aistdapsdkjava.api.exception;
 
 /**
- *
+ * Исключение, используемое при проблемах создания экземпляров ресурсов.
  */
 public class InstantiationException extends AistDapSdkException {
 

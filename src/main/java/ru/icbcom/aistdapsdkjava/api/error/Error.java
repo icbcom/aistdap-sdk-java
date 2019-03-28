@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface Error {
 
     /**
-     * Короткое, человеко-читаемое описание данной проблемы.
+     * Краткое, человеко-читаемое описание данной проблемы.
      */
     String getTitle();
 

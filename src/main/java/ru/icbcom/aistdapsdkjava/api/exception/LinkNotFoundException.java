@@ -3,7 +3,11 @@ package ru.icbcom.aistdapsdkjava.api.exception;
 import lombok.Getter;
 import org.springframework.hateoas.Link;
 import ru.icbcom.aistdapsdkjava.api.exception.AistDapSdkException;
+import ru.icbcom.aistdapsdkjava.api.resource.Resource;
 
+/**
+ * Исключение, используемое при ошибках отсутствия необходимых ссылок {@link Link} внутри ресурсов {@link Resource}.
+ */
 @Getter
 public class LinkNotFoundException extends AistDapSdkException {
 
