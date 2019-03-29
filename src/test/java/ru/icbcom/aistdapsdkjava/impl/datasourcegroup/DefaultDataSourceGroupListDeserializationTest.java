@@ -20,6 +20,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.sameInstance;
 import static org.junit.jupiter.api.Assertions.*;
+import static ru.icbcom.aistdapsdkjava.helper.ResourceHelper.loadResource;
 
 class DefaultDataSourceGroupListDeserializationTest {
 
@@ -28,8 +29,7 @@ class DefaultDataSourceGroupListDeserializationTest {
 
     @Test
     void deserializationShouldWorkProperly() throws IOException {
-        ClassPathResource resource = new ClassPathResource("deserialization/dataSourceGroupList.json");
-        String json = new String(Files.readAllBytes(resource.getFile().toPath()));
+        String json = loadResource("deserialization/dataSourceGroupList.json");
 
         DataSourceGroupList dataSourceGroupList = objectMapper.readValue(json, DefaultDataSourceGroupList.class);
 

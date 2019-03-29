@@ -18,6 +18,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static ru.icbcom.aistdapsdkjava.helper.ResourceHelper.loadResource;
 
 class DefaultObjectTypeListDeserializationTest {
 
@@ -31,8 +32,7 @@ class DefaultObjectTypeListDeserializationTest {
 
     @Test
     void deserializationShouldWorkProperly() throws IOException {
-        ClassPathResource resource = new ClassPathResource("deserialization/objectTypeList.json");
-        String json = new String(Files.readAllBytes(resource.getFile().toPath()));
+        String json = loadResource("deserialization/objectTypeList.json");
 
         ObjectTypeList objectTypes = objectMapper.readValue(json, DefaultObjectTypeList.class);
 

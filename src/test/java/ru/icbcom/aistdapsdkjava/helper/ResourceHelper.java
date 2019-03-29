@@ -7,13 +7,15 @@ import lombok.SneakyThrows;
 import org.springframework.core.io.ClassPathResource;
 
 import java.io.StringWriter;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
 public final class ResourceHelper {
     @SneakyThrows
     public static String loadResource(String path) {
         ClassPathResource resource = new ClassPathResource(path);
-        return new String(Files.readAllBytes(resource.getFile().toPath()));
+        byte[] bytes = Files.readAllBytes(resource.getFile().toPath());
+        return new String(bytes, StandardCharsets.UTF_8);
     }
 
     @SneakyThrows

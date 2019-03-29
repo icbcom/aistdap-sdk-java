@@ -17,6 +17,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static ru.icbcom.aistdapsdkjava.helper.ResourceHelper.loadResource;
 
 class DefaultDataSourceListDeserializationTest {
 
@@ -25,8 +26,7 @@ class DefaultDataSourceListDeserializationTest {
 
     @Test
     void deserializationShouldWorkProperly() throws IOException {
-        ClassPathResource resource = new ClassPathResource("deserialization/dataSourceList.json");
-        String json = new String(Files.readAllBytes(resource.getFile().toPath()));
+        String json = loadResource("deserialization/dataSourceList.json");
 
         DataSourceList dataSourceList = objectMapper.readValue(json, DefaultDataSourceList.class);
 
