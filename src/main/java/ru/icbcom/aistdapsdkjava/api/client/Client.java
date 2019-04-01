@@ -15,7 +15,7 @@ import ru.icbcom.aistdapsdkjava.api.resource.Resource;
  * JVM проект, взаимодействующий с платформой Aist Dap первым делом должен получить соответствующий экземпляр {@link Client}.
  * После получения экземпляра {@link Client}, REST API платформы Aist Dap может быть использован с помощью обычных Java
  * вызовов сделанных на объектах полученных от {@link Client}.
- * <p/>
+ * <p></p>
  * Например:
  * <pre>
  *      Client client = Clients.builder()
