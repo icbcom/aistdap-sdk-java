@@ -1,20 +1,37 @@
+/*
+ * Copyright © 2018-2019 Icbcom
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
 package ru.icbcom.aistdapsdkjava.impl.datastore.auth.service;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.hateoas.Link;
 import org.springframework.web.client.RestTemplate;
 import ru.icbcom.aistdapsdkjava.api.exception.AistDapBackendException;
+import ru.icbcom.aistdapsdkjava.api.exception.LinkNotFoundException;
 import ru.icbcom.aistdapsdkjava.api.resource.VoidResource;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.key.AuthenticationKey;
-import ru.icbcom.aistdapsdkjava.impl.datastore.auth.tokens.DefaultTokens;
-import ru.icbcom.aistdapsdkjava.impl.datastore.auth.tokens.Tokens;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.request.AuthenticationRequest;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.request.DefaultAuthenticationRequest;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.request.DefaultRefreshTokenRequest;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.request.RefreshTokenRequest;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.response.AuthenticationResponse;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.response.DefaultAuthenticationResponse;
-import ru.icbcom.aistdapsdkjava.api.exception.LinkNotFoundException;
+import ru.icbcom.aistdapsdkjava.impl.datastore.auth.tokens.DefaultTokens;
+import ru.icbcom.aistdapsdkjava.impl.datastore.auth.tokens.Tokens;
 import ru.icbcom.aistdapsdkjava.impl.resource.DefaultVoidResource;
 import ru.icbcom.aistdapsdkjava.impl.utils.Utils;
 
@@ -59,7 +76,7 @@ public class DefaultAuthenticationService implements AuthenticationService {
         } catch (AistDapBackendException e) {
             boolean refreshTokenExpired = e.getStatus() == 401 && e.getDetail().equals("Refresh token expired");
             if (refreshTokenExpired) {
-                log.info("Cannot refresh access token due to refresh token expiration. Trying to re-login instead.");
+                log.warn("Cannot refresh access token due to refresh token expiration. Trying to re-login instead.");
                 login();
             } else {
                 throw e;
@@ -68,21 +85,21 @@ public class DefaultAuthenticationService implements AuthenticationService {
     }
 
     private void refreshToken() {
-        log.info("Refreshing tokens...");
+        log.debug("Refreshing tokens...");
         RefreshTokenRequest refreshTokenRequest = new DefaultRefreshTokenRequest(tokens.getRefreshToken());
         AuthenticationResponse authenticationResponse = restTemplate.postForObject(refreshTokenLink.getHref(), refreshTokenRequest, DefaultAuthenticationResponse.class);
         Utils.assertResourceNotNull(authenticationResponse, "Received authentication response was null");
         tokens = createTokensFor(authenticationResponse);
-        log.info("Successfully refreshed tokens.");
+        log.debug("Successfully refreshed tokens.");
     }
 
     private void login() {
-        log.info("Trying to login...");
+        log.debug("Trying to login...");
         AuthenticationRequest authenticationRequest = new DefaultAuthenticationRequest(authentication.getLogin(), authentication.getPassword());
         AuthenticationResponse authenticationResponse = restTemplate.postForObject(loginLink.getHref(), authenticationRequest, DefaultAuthenticationResponse.class);
         Utils.assertResourceNotNull(authenticationResponse, "Received authentication response was null");
         tokens = createTokensFor(authenticationResponse);
-        log.info("Successfully logged in.");
+        log.debug("Successfully logged in.");
     }
 
     private void requestAndSaveTokenRelatedLinks() {

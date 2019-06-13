@@ -1,6 +1,22 @@
+/*
+ * Copyright © 2018-2019 Icbcom
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ */
+
 package ru.icbcom.aistdapsdkjava.impl.client;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.hateoas.Link;
 import ru.icbcom.aistdapsdkjava.api.client.Client;
 import ru.icbcom.aistdapsdkjava.api.device.DeviceActions;
@@ -8,10 +24,6 @@ import ru.icbcom.aistdapsdkjava.api.measureddata.MeasuredDataActions;
 import ru.icbcom.aistdapsdkjava.api.objecttype.ObjectTypeActions;
 import ru.icbcom.aistdapsdkjava.api.physicalstructure.PhysicalStructureObjectActions;
 import ru.icbcom.aistdapsdkjava.api.resource.Resource;
-import ru.icbcom.aistdapsdkjava.impl.device.DefaultDeviceActions;
-import ru.icbcom.aistdapsdkjava.impl.measureddata.DefaultMeasuredDataActions;
-import ru.icbcom.aistdapsdkjava.impl.physicalstructure.DefaultPhysicalStructureObjectActions;
-import ru.icbcom.aistdapsdkjava.impl.resource.ResourceFactory;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DefaultDataStore;
 import ru.icbcom.aistdapsdkjava.impl.datastore.auth.AuthenticationServiceFactory;
@@ -20,12 +32,15 @@ import ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper.DefaultObjectMapperF
 import ru.icbcom.aistdapsdkjava.impl.datastore.objectmapper.ObjectMapperFactory;
 import ru.icbcom.aistdapsdkjava.impl.datastore.resttemplate.DefaultRestTemplateFactory;
 import ru.icbcom.aistdapsdkjava.impl.datastore.resttemplate.RestTemplateFactory;
+import ru.icbcom.aistdapsdkjava.impl.device.DefaultDeviceActions;
+import ru.icbcom.aistdapsdkjava.impl.measureddata.DefaultMeasuredDataActions;
 import ru.icbcom.aistdapsdkjava.impl.objectType.DefaultObjectTypeActions;
+import ru.icbcom.aistdapsdkjava.impl.physicalstructure.DefaultPhysicalStructureObjectActions;
 import ru.icbcom.aistdapsdkjava.impl.resource.DefaultResourceFactory;
+import ru.icbcom.aistdapsdkjava.impl.resource.ResourceFactory;
 
 // TODO: Рефакториинг и тестирование.
 
-@Slf4j
 public class DefaultClient implements Client {
 
     private final static ObjectMapperFactory objectMapperFactory = new DefaultObjectMapperFactory();
