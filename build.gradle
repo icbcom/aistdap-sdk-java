@@ -18,6 +18,7 @@
 plugins {
 	id 'java-library'
 	id 'maven-publish'
+    id 'signing'
 	id "io.spring.dependency-management" version "1.0.7.RELEASE"
 }
 
@@ -57,7 +58,7 @@ publishing {
 			pom {
 				name = 'Aist Dap Java SDK'
 				description = 'A client library for working with Aist Dap resources'
-				url = 'https://icbcom.ru/aistdap'
+				url = 'https://github.com/icbcom/aistdap-sdk-java'
 				licenses {
 					license {
 						name = 'The Apache License, Version 2.0'
@@ -80,6 +81,10 @@ publishing {
 			}
 		}
 	}
+}
+
+signing {
+	sign publishing.publications.mavenJava
 }
 
 test {

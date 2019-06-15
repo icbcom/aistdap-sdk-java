@@ -44,7 +44,7 @@ public class ObjectTypeDemo {
         client = Clients.builder()
                 .setBaseUrl("http://127.0.0.1:8080/")
                 .setLogin("Admin")
-                .setPassword("newPassword")
+                .setPassword("Admin")
                 .build();
     }
 
