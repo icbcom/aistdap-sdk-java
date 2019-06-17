@@ -24,6 +24,8 @@ import ru.icbcom.aistdapsdkjava.api.resource.Resource;
 import ru.icbcom.aistdapsdkjava.impl.datastore.DataStore;
 
 import java.util.Iterator;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 public abstract class AbstractCollectionResource<T extends Resource> extends AbstractResource implements CollectionResource<T> {
 
@@ -52,6 +54,11 @@ public abstract class AbstractCollectionResource<T extends Resource> extends Abs
     @Override
     public long getNumber() {
         return pagedResources.getMetadata().getNumber();
+    }
+
+    @Override
+    public Stream<T> stream() {
+        return StreamSupport.stream(spliterator(), false);
     }
 
     @Override

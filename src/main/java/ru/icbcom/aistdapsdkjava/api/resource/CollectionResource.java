@@ -17,6 +17,8 @@
 
 package ru.icbcom.aistdapsdkjava.api.resource;
 
+import java.util.stream.Stream;
+
 /**
  * Коллекция ресурсов.
  */
@@ -44,5 +46,12 @@ public interface CollectionResource<T extends Resource> extends Resource, Iterab
      * Возвращает номер текущей страницы.
      */
     long getNumber();
+
+    /**
+     * Возвращает объект {@link Stream} содержащий объекты данной коллекции.
+     *
+     * @return {@link Stream} объектов данной коллекции
+     */
+    Stream<T> stream();
 
 }
